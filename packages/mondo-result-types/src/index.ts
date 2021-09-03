@@ -37,6 +37,6 @@ export function flatMapResults<Data, Errors extends ErrorType>(inputs: Result<Da
   const successes = flatMapSuccesses(inputs)
   return {
     failures,
-    successes
+    successes,
   }
 }
