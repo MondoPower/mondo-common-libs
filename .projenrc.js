@@ -9,6 +9,10 @@ const commonOptions = {
   packageManager: NodePackageManager.NPM,
   sampleCode: false,
   jest: false,
+  npmignore: [
+    '.mocharc.json',
+    'docs',
+  ],
 };
 
 const additionalRules = {
@@ -35,7 +39,7 @@ const mondoResultTypeProject = new TypeScriptProject({
   ...commonOptions,
   description: '',
   parent: project,
-  name: 'mondo-result-types',
+  name: '@mondopower/result-types',
   outdir: 'packages/mondo-result-types',
   devDeps: [
     'chai',
@@ -51,10 +55,13 @@ const mondoResultTypeProject = new TypeScriptProject({
       target: 'ES2019',
       lib: ['ES2019'],
     },
-    exclude: [
-      '.mocharc.json',
-    ],
   },
+  keywords: [
+    'typescript',
+    'projen',
+    'mondo',
+    'result'
+  ]
 });
 mondoResultTypeProject.eslint.addRules(additionalRules);
 const mochaConfig = new JsonFile(mondoResultTypeProject, '.mocharc.json', {
