@@ -28,6 +28,7 @@ const additionalRules = {
 const project = new LernaProject({
   ...commonOptions,
   name: 'mondo-common-libs',
+  releaseToNpm: true,
 });
 
 const mondoResultTypeProject = new TypeScriptProject({
