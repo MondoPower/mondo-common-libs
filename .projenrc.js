@@ -13,6 +13,7 @@ const commonOptions = {
     '.mocharc.json',
     'docs',
   ],
+  npmAccess: NpmAccess.PUBLIC
 };
 
 const additionalRules = {
@@ -33,7 +34,6 @@ const project = new LernaProject({
   ...commonOptions,
   name: 'mondo-common-libs',
   releaseToNpm: true,
-  npmAccess: NpmAccess.PUBLIC
 });
 
 const mondoResultTypeProject = new TypeScriptProject({
