@@ -76,7 +76,7 @@
           "exec": "lerna run build --stream"
         },
         {
-          "exec": "rm -rf ./dist/*"
+          "exec": "rm -rf ./dist/*/*"
         },
         {
           "exec": "cp -r ./packages/mondo-result-types/dist/* ./dist/"
