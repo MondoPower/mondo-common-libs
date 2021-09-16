@@ -23,7 +23,7 @@ export type Result<ResponseType, T extends ErrorType> = Success<ResponseType> | 
 export type ResultVoid<T extends ErrorType> = SuccessVoid | Failure<T>
 
 export interface ResultArray<Data, Errors extends ErrorType> {
-  successes: Data[],
-  failures: CustomError<Errors>[]
+  successes: Data[];
+  failures: CustomError<Errors>[];
 }
 

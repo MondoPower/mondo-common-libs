@@ -1,8 +1,8 @@
-import {expect} from '../../testing/test_helper'
-import {flatMapResults, flatMapSuccessVoidFailures, raiseFailure, raiseSuccess, Result, ResultVoid} from '..'
+import {expect} from 'chai'
+import {flatMapResults, flatMapSuccessVoidFailures, raiseFailure, raiseSuccess, Result, ResultVoid} from '../src'
 
 enum FailureTest {
-    TestFailure = 'TestFailure'
+  TestFailure = 'TestFailure'
 }
 
 describe('#ResultHandling', () => {
@@ -15,11 +15,11 @@ describe('#ResultHandling', () => {
       const successTwo = raiseSuccess(successTwoString)
       const failureOne = raiseFailure({
         message: 'FailureOne',
-        errorType: FailureTest.TestFailure
+        errorType: FailureTest.TestFailure,
       })
       const failureTwo = raiseFailure({
         message: 'FailureTwo',
-        errorType: FailureTest.TestFailure
+        errorType: FailureTest.TestFailure,
       })
 
       const payload: Result<string, FailureTest>[] = [successOne, successTwo, failureOne, failureTwo]
@@ -36,11 +36,11 @@ describe('#ResultHandling', () => {
     //setup
       const failureOne = raiseFailure({
         message: 'FailureOne',
-        errorType: FailureTest.TestFailure
+        errorType: FailureTest.TestFailure,
       })
       const failureTwo = raiseFailure({
         message: 'FailureTwo',
-        errorType: FailureTest.TestFailure
+        errorType: FailureTest.TestFailure,
       })
 
       const payload: Result<string, FailureTest>[] = [failureOne, failureTwo]
@@ -76,11 +76,11 @@ describe('#ResultHandling', () => {
       //setup
       const failureOne = raiseFailure({
         message: 'FailureOne',
-        errorType: FailureTest.TestFailure
+        errorType: FailureTest.TestFailure,
       })
       const failureTwo = raiseFailure({
         message: 'FailureTwo',
-        errorType: FailureTest.TestFailure
+        errorType: FailureTest.TestFailure,
       })
 
       const payload: ResultVoid<FailureTest>[] = [failureOne, failureTwo]
