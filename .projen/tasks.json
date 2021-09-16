@@ -206,6 +206,9 @@
       "steps": [
         {
           "exec": "node .projenrc.js"
+        },
+        {
+          "exec": "lerna run default --stream"
         }
       ]
     },
