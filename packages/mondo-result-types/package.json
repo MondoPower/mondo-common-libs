@@ -1,6 +1,6 @@
 {
   "name": "@mondopower/result-types",
-  "description": "",
+  "description": "Library to use for result type of typescript functions and helper functions.",
   "repository": {
     "type": "git",
     "url": "https://github.com/MondoPower/mondo-common-libs.git"
