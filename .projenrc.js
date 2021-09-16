@@ -1,5 +1,5 @@
 const { LernaProject } = require('lerna-projen');
-const { TypeScriptProject, NodePackageManager, JsonFile } = require('projen');
+const { TypeScriptProject, NodePackageManager, JsonFile, NpmAccess } = require('projen');
 
 const commonOptions = {
   author: 'Mondo Power',
@@ -33,6 +33,7 @@ const project = new LernaProject({
   ...commonOptions,
   name: 'mondo-common-libs',
   releaseToNpm: true,
+  npmAccess: NpmAccess.PUBLIC
 });
 
 const mondoResultTypeProject = new TypeScriptProject({
