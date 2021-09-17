@@ -18,6 +18,7 @@
     "package": "npx projen package",
     "eslint": "npx projen eslint",
     "docgen": "npx projen docgen",
+    "bump": "npx projen bump",
     "projen": "npx projen"
   },
   "devDependencies": {
