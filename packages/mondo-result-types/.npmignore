@@ -4,6 +4,7 @@ docs
 projects
 /.projen/
 /test/
+/tsconfig.dev.json
 /src/
 !/lib/
 !/lib/**/*.js
@@ -16,4 +17,3 @@ dist
 /.projenrc.js
 tsconfig.tsbuildinfo
 /.eslintrc.json
-/tsconfig.eslint.json

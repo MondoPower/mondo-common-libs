@@ -1,7 +1,8 @@
-const { TypeScriptProject } = require('projen');
-const {additionalRules, commonOptions, addMocha} = require('./common');
+import {LernaProject} from 'lerna-projen'
+import {TypeScriptProject} from 'projen'
+import {additionalRules, addMocha, commonOptions} from './common'
 
-function getMondoResultTypeProject(parentProject) {
+export function getMondoResultTypeProject(parentProject: LernaProject): void {
   const mondoResultTypeProject = new TypeScriptProject({
     ...commonOptions,
     description: 'Library to use for result type of typescript functions and helper functions.',
@@ -34,8 +35,4 @@ function getMondoResultTypeProject(parentProject) {
   addMocha(mondoResultTypeProject);
 
   parentProject.addSubProject(mondoResultTypeProject);
-}
-
-module.exports = {
-  getMondoResultTypeProject
 }

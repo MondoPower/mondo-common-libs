@@ -31,9 +31,9 @@ jspm_packages/
 !/.projenrc.js
 !/test/
 !/tsconfig.json
+!/tsconfig.dev.json
 !/src/
 /lib
 /dist/
 !/.eslintrc.json
-!/tsconfig.eslint.json
 !/.mocharc.json

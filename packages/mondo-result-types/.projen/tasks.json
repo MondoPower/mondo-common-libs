@@ -1,5 +1,41 @@
 {
   "tasks": {
+    "build": {
+      "name": "build",
+      "description": "Full release build",
+      "steps": [
+        {
+          "spawn": "pre-compile"
+        },
+        {
+          "spawn": "compile"
+        },
+        {
+          "spawn": "post-compile"
+        },
+        {
+          "spawn": "test"
+        },
+        {
+          "spawn": "package"
+        }
+      ]
+    },
+    "bump": {
+      "name": "bump",
+      "description": "Bumps version based on latest git tag and generates a changelog entry",
+      "env": {
+        "OUTFILE": "package.json",
+        "CHANGELOG": "dist/changelog.md",
+        "BUMPFILE": "dist/version.txt"
+      },
+      "steps": [
+        {
+          "builtin": "release/bump-version"
+        }
+      ],
+      "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
+    },
     "clobber": {
       "name": "clobber",
       "description": "hard resets to HEAD of origin and cleans the local repo",
@@ -41,17 +77,60 @@
         }
       ]
     },
-    "test:compile": {
-      "name": "test:compile",
-      "description": "compiles the test code"
+    "default": {
+      "name": "default",
+      "description": "Synthesize project files"
+    },
+    "docgen": {
+      "name": "docgen",
+      "description": "Generate TypeScript API reference docs/",
+      "steps": [
+        {
+          "exec": "typedoc src --disableSources --out docs/"
+        }
+      ]
+    },
+    "eslint": {
+      "name": "eslint",
+      "description": "Runs eslint against the codebase",
+      "steps": [
+        {
+          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js"
+        }
+      ]
+    },
+    "package": {
+      "name": "package",
+      "description": "Creates the distribution package",
+      "steps": [
+        {
+          "exec": "mkdir -p dist/js"
+        },
+        {
+          "exec": "npm pack"
+        },
+        {
+          "exec": "mv *.tgz dist/js/"
+        }
+      ]
+    },
+    "post-compile": {
+      "name": "post-compile",
+      "description": "Runs after successful compilation",
+      "steps": [
+        {
+          "spawn": "docgen"
+        }
+      ]
+    },
+    "pre-compile": {
+      "name": "pre-compile",
+      "description": "Prepare the project for compilation"
     },
     "test": {
       "name": "test",
       "description": "Run tests",
       "steps": [
-        {
-          "spawn": "test:compile"
-        },
         {
           "spawn": "eslint"
         },
@@ -60,21 +139,17 @@
         }
       ]
     },
-    "build": {
-      "name": "build",
-      "description": "Full release build (test+compile)",
+    "unbump": {
+      "name": "unbump",
+      "description": "Restores version to 0.0.0",
+      "env": {
+        "OUTFILE": "package.json",
+        "CHANGELOG": "dist/changelog.md",
+        "BUMPFILE": "dist/version.txt"
+      },
       "steps": [
         {
-          "spawn": "test"
-        },
-        {
-          "spawn": "compile"
-        },
-        {
-          "spawn": "package"
-        },
-        {
-          "spawn": "docgen"
+          "builtin": "release/reset-version"
         }
       ]
     },
@@ -86,7 +161,19 @@
       },
       "steps": [
         {
-          "exec": "npm-check-updates --upgrade --target=minor --reject='projen'"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'"
+        },
+        {
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'"
+        },
+        {
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'"
+        },
+        {
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'"
+        },
+        {
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'"
         },
         {
           "exec": "npm install"
@@ -107,7 +194,19 @@
       },
       "steps": [
         {
-          "exec": "npm-check-updates --upgrade --target=minor --filter='projen'"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'"
+        },
+        {
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'"
+        },
+        {
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'"
+        },
+        {
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'"
+        },
+        {
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'"
         },
         {
           "exec": "npm install"
@@ -120,77 +219,12 @@
         }
       ]
     },
-    "default": {
-      "name": "default"
-    },
     "watch": {
       "name": "watch",
       "description": "Watch & compile in the background",
       "steps": [
         {
           "exec": "tsc --build -w"
-        }
-      ]
-    },
-    "package": {
-      "name": "package",
-      "description": "Create an npm tarball",
-      "steps": [
-        {
-          "exec": "mkdir -p dist/js"
-        },
-        {
-          "exec": "npm pack"
-        },
-        {
-          "exec": "mv *.tgz dist/js/"
-        }
-      ]
-    },
-    "eslint": {
-      "name": "eslint",
-      "description": "Runs eslint against the codebase",
-      "steps": [
-        {
-          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js"
-        }
-      ]
-    },
-    "docgen": {
-      "name": "docgen",
-      "description": "Generate TypeScript API reference docs/",
-      "steps": [
-        {
-          "exec": "typedoc src --disableSources --out docs/"
-        }
-      ]
-    },
-    "bump": {
-      "name": "bump",
-      "description": "Bumps version based on latest git tag and generates a changelog entry",
-      "env": {
-        "OUTFILE": "package.json",
-        "CHANGELOG": "dist/changelog.md",
-        "BUMPFILE": "dist/version.txt"
-      },
-      "steps": [
-        {
-          "builtin": "release/bump-version"
-        }
-      ],
-      "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
-    },
-    "unbump": {
-      "name": "unbump",
-      "description": "Restores version to 0.0.0",
-      "env": {
-        "OUTFILE": "package.json",
-        "CHANGELOG": "dist/changelog.md",
-        "BUMPFILE": "dist/version.txt"
-      },
-      "steps": [
-        {
-          "builtin": "release/reset-version"
         }
       ]
     }

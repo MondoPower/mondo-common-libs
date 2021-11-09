@@ -1,6 +1,6 @@
-const { NodePackageManager, NpmAccess, JsonFile } = require('projen');
+import {NodePackageManager, NpmAccess, JsonFile} from 'projen'
 
-const commonOptions = {
+export const commonOptions = {
   author: 'Mondo Power',
   authorAddress: 'MondoUbiDevelopers@mondo.com.au',
   defaultReleaseBranch: 'main',
@@ -16,7 +16,7 @@ const commonOptions = {
   npmAccess: NpmAccess.PUBLIC
 };
 
-const additionalRules = {
+export const additionalRules = {
   'curly': [
     'error',
     'multi',
@@ -30,7 +30,7 @@ const additionalRules = {
   'nonblock-statement-body-position': ['error', 'below'],
 };
 
-function addMocha(project) {
+export function addMocha(project) {
   const mochaConfig = new JsonFile(project, '.mocharc.json', {
     obj: {
       recursive: true,
@@ -38,13 +38,7 @@ function addMocha(project) {
       extension: ['ts'],
       spec: ['tests/*.spec.ts'],
     },
-  });
-  project.files.push(mochaConfig);
-  project.testTask.exec('mocha');
-}
+  })
 
-module.exports = {
-  commonOptions,
-  additionalRules,
-  addMocha
+  project.testTask.exec('mocha')
 }

@@ -1,5 +1,48 @@
 {
   "tasks": {
+    "build": {
+      "name": "build",
+      "description": "Full release build",
+      "steps": [
+        {
+          "spawn": "default"
+        },
+        {
+          "spawn": "pre-compile"
+        },
+        {
+          "spawn": "compile"
+        },
+        {
+          "spawn": "post-compile"
+        },
+        {
+          "spawn": "test"
+        },
+        {
+          "spawn": "package"
+        }
+      ]
+    },
+    "bump": {
+      "name": "bump",
+      "description": "Bumps version based on latest git tag and generates a changelog entry",
+      "env": {
+        "OUTFILE": "package.json",
+        "CHANGELOG": "dist/changelog.md",
+        "BUMPFILE": "dist/version.txt",
+        "RELEASETAG": "dist/releasetag.txt"
+      },
+      "steps": [
+        {
+          "builtin": "release/bump-version"
+        },
+        {
+          "exec": "lerna run bump --stream"
+        }
+      ],
+      "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
+    },
     "clobber": {
       "name": "clobber",
       "description": "hard resets to HEAD of origin and cleans the local repo",
@@ -44,77 +87,54 @@
         }
       ]
     },
-    "test:compile": {
-      "name": "test:compile",
-      "description": "compiles the test code",
+    "default": {
+      "name": "default",
+      "description": "Synthesize project files",
       "steps": [
         {
-          "exec": "lerna run test:compile --stream"
+          "exec": "npm i lerna-projen --package-lock=false"
+        },
+        {
+          "exec": "ts-eager .projenrc.ts"
+        },
+        {
+          "exec": "lerna run default --stream"
+        },
+        {
+          "exec": "lerna run default --stream"
         }
       ]
     },
-    "test": {
-      "name": "test",
-      "description": "Run tests",
+    "package": {
+      "name": "package",
+      "description": "Creates the distribution package",
       "steps": [
         {
-          "spawn": "test:compile"
-        },
-        {
-          "exec": "lerna run test --stream"
+          "exec": "lerna run package --stream"
         }
       ]
     },
-    "build": {
-      "name": "build",
-      "description": "Full release build (test+compile)",
+    "post-compile": {
+      "name": "post-compile",
+      "description": "Runs after successful compilation",
       "steps": [
         {
-          "exec": "npx projen"
+          "exec": "lerna run post-compile --stream"
         },
         {
-          "exec": "lerna run build --stream"
-        },
-        {
-          "exec": "rm -rf ./dist/*/*"
-        },
-        {
-          "exec": "cp -r ./packages/mondo-result-types/dist/* ./dist/"
+          "exec": "lerna-projen copy-dist packages/mondo-result-types"
         }
       ]
     },
-    "bump": {
-      "name": "bump",
-      "description": "Bumps version based on latest git tag and generates a changelog entry",
-      "env": {
-        "OUTFILE": "package.json",
-        "CHANGELOG": "dist/changelog.md",
-        "BUMPFILE": "dist/version.txt"
-      },
+    "pre-compile": {
+      "name": "pre-compile",
+      "description": "Prepare the project for compilation",
       "steps": [
         {
-          "builtin": "release/bump-version"
+          "exec": "lerna run pre-compile --stream"
         },
         {
-          "exec": "lerna run bump --stream"
-        }
-      ],
-      "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
-    },
-    "unbump": {
-      "name": "unbump",
-      "description": "Restores version to 0.0.0",
-      "env": {
-        "OUTFILE": "package.json",
-        "CHANGELOG": "dist/changelog.md",
-        "BUMPFILE": "dist/version.txt"
-      },
-      "steps": [
-        {
-          "builtin": "release/reset-version"
-        },
-        {
-          "exec": "lerna run unbump --stream"
+          "exec": "lerna-projen clean-dist"
         }
       ]
     },
@@ -123,11 +143,12 @@
       "description": "Publish this package to GitHub Releases",
       "requiredEnv": [
         "GITHUB_TOKEN",
-        "GITHUB_REPOSITORY"
+        "GITHUB_REPOSITORY",
+        "GITHUB_REF"
       ],
       "steps": [
         {
-          "exec": "errout=$(mktemp); gh release create v$(cat dist/version.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t v$(cat dist/version.txt) 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \"Release.tag_name already exists\" $errout; then cat $errout; exit $exitcode; fi"
+          "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \"Release.tag_name already exists\" $errout; then cat $errout; exit $exitcode; fi"
         },
         {
           "exec": "lerna run publish:github --stream"
@@ -153,65 +174,6 @@
         }
       ]
     },
-    "upgrade": {
-      "name": "upgrade",
-      "description": "upgrade dependencies",
-      "env": {
-        "CI": "0"
-      },
-      "steps": [
-        {
-          "exec": "npm-check-updates --upgrade --target=minor --reject='projen'"
-        },
-        {
-          "exec": "npm install"
-        },
-        {
-          "exec": "npm update lerna lerna-projen npm-check-updates standard-version"
-        },
-        {
-          "exec": "npx projen"
-        },
-        {
-          "exec": "lerna run upgrade --stream"
-        }
-      ]
-    },
-    "upgrade-projen": {
-      "name": "upgrade-projen",
-      "description": "upgrade projen",
-      "env": {
-        "CI": "0"
-      },
-      "steps": [
-        {
-          "exec": "npm-check-updates --upgrade --target=minor --filter='projen'"
-        },
-        {
-          "exec": "npm install"
-        },
-        {
-          "exec": "npm update projen"
-        },
-        {
-          "exec": "npx projen"
-        },
-        {
-          "exec": "lerna run upgrade-projen --stream"
-        }
-      ]
-    },
-    "default": {
-      "name": "default",
-      "steps": [
-        {
-          "exec": "node .projenrc.js"
-        },
-        {
-          "exec": "lerna run default --stream"
-        }
-      ]
-    },
     "release": {
       "name": "release",
       "description": "Prepare a release from \"main\" branch",
@@ -233,6 +195,66 @@
         },
         {
           "exec": "git diff --ignore-space-at-eol --exit-code"
+        }
+      ]
+    },
+    "test": {
+      "name": "test",
+      "description": "Run tests",
+      "steps": [
+        {
+          "exec": "lerna run test --stream"
+        }
+      ]
+    },
+    "unbump": {
+      "name": "unbump",
+      "description": "Restores version to 0.0.0",
+      "env": {
+        "OUTFILE": "package.json",
+        "CHANGELOG": "dist/changelog.md",
+        "BUMPFILE": "dist/version.txt",
+        "RELEASETAG": "dist/releasetag.txt"
+      },
+      "steps": [
+        {
+          "builtin": "release/reset-version"
+        },
+        {
+          "exec": "lerna run unbump --stream"
+        }
+      ]
+    },
+    "upgrade": {
+      "name": "upgrade",
+      "description": "upgrade dependencies",
+      "env": {
+        "CI": "0"
+      },
+      "steps": [
+        {
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor"
+        },
+        {
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor"
+        },
+        {
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor"
+        },
+        {
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor"
+        },
+        {
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor"
+        },
+        {
+          "exec": "npm install"
+        },
+        {
+          "exec": "npm update"
+        },
+        {
+          "exec": "npx projen"
         }
       ]
     }
