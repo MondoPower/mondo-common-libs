@@ -17,7 +17,6 @@ export function getMondoResultTypeProject(parentProject: LernaProject): void {
       '@types/babel__core',
       'ts-eager',
     ],
-    docgen: true,
     tsconfig: {
       compilerOptions: {
         target: 'ES2019',

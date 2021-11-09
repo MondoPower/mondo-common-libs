@@ -122,6 +122,9 @@
           "exec": "lerna run post-compile --stream"
         },
         {
+          "exec": "lerna-projen move-docs docs packages/mondo-result-types docs"
+        },
+        {
           "exec": "lerna-projen copy-dist packages/mondo-result-types"
         }
       ]

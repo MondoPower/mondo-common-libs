@@ -4,6 +4,7 @@ export const commonOptions = {
   author: 'Mondo Power',
   authorAddress: 'MondoUbiDevelopers@mondo.com.au',
   defaultReleaseBranch: 'main',
+  docgen: true,
   repository: 'https://github.com/MondoPower/mondo-common-libs.git',
   packageManager: NodePackageManager.NPM,
   sampleCode: false,

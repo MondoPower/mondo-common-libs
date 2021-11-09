@@ -1,0 +1,182 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@mondopower/result-types</title>
+	<meta name="description" content="Documentation for @mondopower/result-types">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@mondopower/result-types</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>@mondopower/result-types</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#mondo-result-types" id="mondo-result-types" style="color: inherit; text-decoration: none;">
+					<h1>Mondo Result Types</h1>
+				</a>
+				<p>Library to use for result type of typescript functions and helper functions.</p>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h2>Install</h2>
+				</a>
+				<pre><code class="language-bash"><span style="color: #000000">npm i @mondopower/result-types</span>
+</code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<p>This library consists of two major result types.</p>
+				<a href="#1-resultvoid" id="1-resultvoid" style="color: inherit; text-decoration: none;">
+					<h3>1) ResultVoid</h3>
+				</a>
+				<p>Used whenever the function will return void in the case of success or failure</p>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> {</span><span style="color: #001080">raiseFailure</span><span style="color: #000000">, </span><span style="color: #001080">raiseSuccessVoid</span><span style="color: #000000">, </span><span style="color: #001080">ResultVoid</span><span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@mondopower/result-types&#039;</span>
+
+<span style="color: #0000FF">enum</span><span style="color: #000000"> </span><span style="color: #267F99">FooErrorType</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #0070C1">someError</span><span style="color: #000000">= </span><span style="color: #A31515">&#039;someError&#039;</span>
+<span style="color: #000000">  ...</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">foo</span><span style="color: #000000">(</span><span style="color: #001080">flag</span><span style="color: #000000">: </span><span style="color: #267F99">boolean</span><span style="color: #000000">): </span><span style="color: #267F99">ResultVoid</span><span style="color: #000000">&lt;</span><span style="color: #267F99">FooErrorType</span><span style="color: #000000">&gt; {</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">flag</span><span style="color: #000000">)</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #795E26">raiseFailure</span><span style="color: #000000">({</span>
+<span style="color: #000000">      </span><span style="color: #001080">errorType:</span><span style="color: #000000"> </span><span style="color: #001080">FooErrorType</span><span style="color: #000000">.</span><span style="color: #001080">someError</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">message:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&lt;my error message&gt;&#039;</span>
+<span style="color: #000000">    })</span>
+
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #795E26">raiseSuccessVoid</span><span style="color: #000000">()</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">fooResponse</span><span style="color: #000000"> = </span><span style="color: #795E26">foo</span><span style="color: #000000">(</span><span style="color: #001080">flag</span><span style="color: #000000">)</span>
+
+<span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">fooResponse</span><span style="color: #000000">.</span><span style="color: #001080">isErrored</span><span style="color: #000000">)</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Failure Handling</span>
+<span style="color: #AF00DB">else</span>
+<span style="color: #000000">  </span><span style="color: #008000">// success handling</span>
+</code></pre>
+				<a href="#2-result" id="2-result" style="color: inherit; text-decoration: none;">
+					<h3>2) Result</h3>
+				</a>
+				<p>Used whenever the function will return a value/object in the case of success or failure</p>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> {</span><span style="color: #001080">raiseFailure</span><span style="color: #000000">, </span><span style="color: #001080">raiseSuccess</span><span style="color: #000000">, </span><span style="color: #001080">Result</span><span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@mondopower/result-types&#039;</span>
+
+<span style="color: #0000FF">enum</span><span style="color: #000000"> </span><span style="color: #267F99">FooErrorType</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #0070C1">someError</span><span style="color: #000000">= </span><span style="color: #A31515">&#039;someError&#039;</span>
+<span style="color: #000000">  ...</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">foo</span><span style="color: #000000">(</span><span style="color: #001080">flag</span><span style="color: #000000">: </span><span style="color: #267F99">boolean</span><span style="color: #000000">): </span><span style="color: #267F99">Result</span><span style="color: #000000">&lt;</span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #267F99">FooErrorType</span><span style="color: #000000">&gt; {</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">flag</span><span style="color: #000000">)</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #795E26">raiseFailure</span><span style="color: #000000">({</span>
+<span style="color: #000000">      </span><span style="color: #001080">errorType:</span><span style="color: #000000"> </span><span style="color: #001080">FooErrorType</span><span style="color: #000000">.</span><span style="color: #001080">someError</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">message:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&lt;my error message&gt;&#039;</span>
+<span style="color: #000000">    })</span>
+
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #795E26">raiseSuccess</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;success-result&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">fooResponse</span><span style="color: #000000"> = </span><span style="color: #795E26">foo</span><span style="color: #000000">(</span><span style="color: #001080">flag</span><span style="color: #000000">)</span>
+
+<span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">fooResponse</span><span style="color: #000000">.</span><span style="color: #001080">isErrored</span><span style="color: #000000">)</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Failure Handling</span>
+<span style="color: #AF00DB">else</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #008000">// success handling</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">result</span><span style="color: #000000"> = </span><span style="color: #001080">fooResponse</span><span style="color: #000000">.</span><span style="color: #001080">data</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#helpers" id="helpers" style="color: inherit; text-decoration: none;">
+					<h2>Helpers</h2>
+				</a>
+				<p>This library also includes some helper functions to manage success and failures which all can be found in the <a href="https://github.com/MondoPower/mondo-common-libs/docs/packages/mondo-result-types">API documentation</a>.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Modules</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/index.html">index</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/types.html">types</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
