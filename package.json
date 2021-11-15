@@ -23,9 +23,9 @@
   },
   "devDependencies": {
     "lerna": "^4.0.0",
-    "lerna-projen": "0.0.42",
+    "lerna-projen": "0.0.43",
     "npm-check-updates": "^11",
-    "projen": "^0.33.2",
+    "projen": "^0.33.8",
     "standard-version": "^9",
     "ts-eager": "^2.0.2",
     "typescript": "^4.4.4"
