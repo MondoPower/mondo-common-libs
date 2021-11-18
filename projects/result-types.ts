@@ -30,7 +30,7 @@ export function getMondoResultTypeProject(parentProject: LernaProject): void {
       'result'
     ]
   });
-  mondoResultTypeProject.eslint.addRules(additionalRules);
+  mondoResultTypeProject.eslint?.addRules(additionalRules);
   addMocha(mondoResultTypeProject);
 
   parentProject.addSubProject(mondoResultTypeProject);

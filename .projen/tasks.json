@@ -95,7 +95,7 @@
           "exec": "npm i lerna-projen --package-lock=false"
         },
         {
-          "exec": "ts-eager .projenrc.ts"
+          "exec": "ts-node --skip-project .projenrc.ts"
         },
         {
           "exec": "lerna run default --stream"
