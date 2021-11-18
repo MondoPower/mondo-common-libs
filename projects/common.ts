@@ -1,4 +1,4 @@
-import {NodePackageManager, NpmAccess, JsonFile} from 'projen'
+import {NodePackageManager, NpmAccess, JsonFile, NodeProject} from 'projen'
 
 export const commonOptions = {
   author: 'Mondo Power',
@@ -31,7 +31,7 @@ export const additionalRules = {
   'nonblock-statement-body-position': ['error', 'below'],
 };
 
-export function addMocha(project) {
+export function addMocha(project: NodeProject) {
   const mochaConfig = new JsonFile(project, '.mocharc.json', {
     obj: {
       recursive: true,
