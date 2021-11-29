@@ -198,6 +198,9 @@
         },
         {
           "exec": "git diff --ignore-space-at-eol --exit-code"
+        },
+        {
+          "exec": "lerna run release --stream"
         }
       ]
     },
