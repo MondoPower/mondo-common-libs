@@ -6,10 +6,7 @@ const project = new LernaProject({
   ...commonOptions,
   projenrcTs: true,
   name: 'mondo-common-libs',
-  releaseToNpm: true,
-  depsUpgradeOptions: {
-    ignoreProjen: false
-  }
+  releaseToNpm: true
 });
 
 getMondoResultTypeProject(project)

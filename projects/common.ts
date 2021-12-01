@@ -14,7 +14,10 @@ export const commonOptions = {
     'docs',
     'projects'
   ],
-  npmAccess: NpmAccess.PUBLIC
+  npmAccess: NpmAccess.PUBLIC,
+  depsUpgradeOptions: {
+    ignoreProjen: false
+  }
 };
 
 export const additionalRules = {
