@@ -1,4 +1,4 @@
-import {NodePackageManager, NpmAccess, JsonFile, NodeProject} from 'projen'
+import {javascript, JsonFile} from 'projen'
 
 export const commonOptions = {
   author: 'Mondo Power',
@@ -6,7 +6,7 @@ export const commonOptions = {
   defaultReleaseBranch: 'main',
   docgen: true,
   repository: 'https://github.com/MondoPower/mondo-common-libs.git',
-  packageManager: NodePackageManager.NPM,
+  packageManager: javascript.NodePackageManager.NPM,
   sampleCode: false,
   jest: false,
   npmignore: [
@@ -14,7 +14,7 @@ export const commonOptions = {
     'docs',
     'projects'
   ],
-  npmAccess: NpmAccess.PUBLIC,
+  npmAccess: javascript.NpmAccess.PUBLIC,
   depsUpgradeOptions: {
     ignoreProjen: false
   }
@@ -34,7 +34,7 @@ export const additionalRules = {
   'nonblock-statement-body-position': ['error', 'below'],
 };
 
-export function addMocha(project: NodeProject) {
+export function addMocha(project: javascript.NodeProject) {
   const mochaConfig = new JsonFile(project, '.mocharc.json', {
     obj: {
       recursive: true,
