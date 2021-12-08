@@ -1,9 +1,9 @@
 import {LernaProject} from 'lerna-projen'
-import {TypeScriptProject} from 'projen'
+import {typescript} from 'projen'
 import {additionalRules, addMocha, commonOptions} from './common'
 
 export function getMondoResultTypeProject(parentProject: LernaProject): void {
-  const mondoResultTypeProject = new TypeScriptProject({
+  const mondoResultTypeProject = new typescript.TypeScriptProject({
     ...commonOptions,
     description: 'Library to use for result type of typescript functions and helper functions.',
     parent: parentProject,
