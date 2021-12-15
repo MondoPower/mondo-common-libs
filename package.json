@@ -23,12 +23,12 @@
   },
   "devDependencies": {
     "lerna": "^4.0.0",
-    "lerna-projen": "0.0.52",
-    "npm-check-updates": "^11",
-    "projen": "^0.39.3",
+    "lerna-projen": "0.0.55",
+    "npm-check-updates": "^12",
+    "projen": "^0.43.2",
     "standard-version": "^9",
     "ts-node": "^10.4.0",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.4"
   },
   "bundledDependencies": [],
   "main": "lib/index.js",
