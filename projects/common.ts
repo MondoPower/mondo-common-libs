@@ -1,4 +1,4 @@
-import {javascript, JsonFile} from 'projen'
+import {javascript, JsonFile, TextFile} from 'projen'
 
 export const commonOptions = {
   author: 'Mondo Power',
@@ -45,4 +45,10 @@ export function addMocha(project: javascript.NodeProject) {
   })
 
   project.testTask.exec('mocha')
+}
+
+export function addNvmrc(project: javascript.NodeProject, nodeVersion: string): void {
+  new TextFile(project, '.nvmrc', {
+    lines: [nodeVersion]
+  });
 }

@@ -1,14 +1,21 @@
 import {LernaProject} from 'lerna-projen'
-import {commonOptions} from './projects/common'
+import {commonOptions, addNvmrc} from './projects/common'
 import {getMondoResultTypeProject} from './projects/result-types'
+
+const workflowNodeVersion = '14.18.1'
 
 const project = new LernaProject({
   ...commonOptions,
   projenrcTs: true,
   name: 'mondo-common-libs',
   releaseToNpm: true,
-  publishTasks: true
-});
+  publishTasks: true,
+  docgen: true,
+  workflowNodeVersion,
+  sinceLastRelease: true
+})
+
+addNvmrc(project, workflowNodeVersion)
 
 getMondoResultTypeProject(project)
 
