@@ -38,7 +38,7 @@
           "builtin": "release/bump-version"
         },
         {
-          "exec": "lerna run bump --stream"
+          "exec": "lerna run bump --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         }
       ],
       "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
@@ -73,7 +73,7 @@
           "say": "ready to rock! (unpushed commits are under the \"scratch\" branch)"
         },
         {
-          "exec": "lerna run clobber --stream"
+          "exec": "lerna run clobber --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         }
       ],
       "condition": "git diff --exit-code > /dev/null"
@@ -83,7 +83,7 @@
       "description": "Only compile",
       "steps": [
         {
-          "exec": "lerna run compile --stream"
+          "exec": "lerna run compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         }
       ]
     },
@@ -98,7 +98,7 @@
           "exec": "ts-node --skip-project .projenrc.ts"
         },
         {
-          "exec": "lerna run default --stream"
+          "exec": "lerna run default --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         }
       ]
     },
@@ -113,7 +113,7 @@
           "spawn": "default"
         },
         {
-          "exec": "lerna run eject --stream"
+          "exec": "lerna run eject --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         }
       ]
     },
@@ -125,7 +125,7 @@
           "exec": "mkdir -p dist/js"
         },
         {
-          "exec": "lerna run package --stream"
+          "exec": "lerna run package --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         },
         {
           "exec": "lerna-projen copy-dist packages/mondo-result-types"
@@ -137,7 +137,7 @@
       "description": "Runs after successful compilation",
       "steps": [
         {
-          "exec": "lerna run post-compile --stream"
+          "exec": "lerna run post-compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         },
         {
           "exec": "lerna-projen move-docs docs packages/mondo-result-types docs"
@@ -149,13 +149,13 @@
       "description": "Runs after upgrading dependencies",
       "steps": [
         {
-          "exec": "lerna run upgrade --stream"
+          "exec": "lerna run upgrade --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         },
         {
           "exec": "npx projen"
         },
         {
-          "exec": "lerna run post-upgrade --stream"
+          "exec": "lerna run post-upgrade --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         }
       ]
     },
@@ -164,7 +164,7 @@
       "description": "Prepare the project for compilation",
       "steps": [
         {
-          "exec": "lerna run pre-compile --stream"
+          "exec": "lerna run pre-compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         },
         {
           "exec": "lerna-projen clean-dist"
@@ -230,7 +230,7 @@
           "exec": "git diff --ignore-space-at-eol --exit-code"
         },
         {
-          "exec": "lerna run release --stream"
+          "exec": "lerna run release --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         }
       ]
     },
@@ -239,7 +239,7 @@
       "description": "Run tests",
       "steps": [
         {
-          "exec": "lerna run test --stream"
+          "exec": "lerna run test --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         }
       ]
     },
@@ -257,7 +257,7 @@
           "builtin": "release/reset-version"
         },
         {
-          "exec": "lerna run unbump --stream"
+          "exec": "lerna run unbump --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         }
       ]
     },
