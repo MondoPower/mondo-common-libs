@@ -99,9 +99,21 @@
         },
         {
           "exec": "lerna run default --stream"
+        }
+      ]
+    },
+    "eject": {
+      "name": "eject",
+      "description": "Remove projen from the project",
+      "env": {
+        "PROJEN_EJECTING": "true"
+      },
+      "steps": [
+        {
+          "spawn": "default"
         },
         {
-          "exec": "lerna run default --stream"
+          "exec": "lerna run eject --stream"
         }
       ]
     },
@@ -109,6 +121,9 @@
       "name": "package",
       "description": "Creates the distribution package",
       "steps": [
+        {
+          "exec": "mkdir -p dist/js"
+        },
         {
           "exec": "lerna run package --stream"
         },
@@ -126,6 +141,21 @@
         },
         {
           "exec": "lerna-projen move-docs docs packages/mondo-result-types docs"
+        }
+      ]
+    },
+    "post-upgrade": {
+      "name": "post-upgrade",
+      "description": "Runs after upgrading dependencies",
+      "steps": [
+        {
+          "exec": "lerna run upgrade --stream"
+        },
+        {
+          "exec": "npx projen"
+        },
+        {
+          "exec": "lerna run post-upgrade --stream"
         }
       ]
     },
@@ -261,6 +291,9 @@
         },
         {
           "exec": "npx projen"
+        },
+        {
+          "spawn": "post-upgrade"
         }
       ]
     }

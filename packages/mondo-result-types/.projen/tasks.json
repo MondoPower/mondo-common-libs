@@ -90,6 +90,18 @@
         }
       ]
     },
+    "eject": {
+      "name": "eject",
+      "description": "Remove projen from the project",
+      "env": {
+        "PROJEN_EJECTING": "true"
+      },
+      "steps": [
+        {
+          "spawn": "default"
+        }
+      ]
+    },
     "eslint": {
       "name": "eslint",
       "description": "Runs eslint against the codebase",
@@ -107,10 +119,7 @@
           "exec": "mkdir -p dist/js"
         },
         {
-          "exec": "npm pack"
-        },
-        {
-          "exec": "mv *.tgz dist/js/"
+          "exec": "mv $(npm pack) dist/js/"
         }
       ]
     },
@@ -122,6 +131,10 @@
           "spawn": "docgen"
         }
       ]
+    },
+    "post-upgrade": {
+      "name": "post-upgrade",
+      "description": "Runs after upgrading dependencies"
     },
     "pre-compile": {
       "name": "pre-compile",
@@ -183,6 +196,9 @@
         },
         {
           "exec": "npx projen"
+        },
+        {
+          "spawn": "post-upgrade"
         }
       ]
     },
