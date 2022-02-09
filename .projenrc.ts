@@ -12,7 +12,10 @@ const project = new LernaProject({
   publishTasks: true,
   docgen: true,
   workflowNodeVersion,
-  sinceLastRelease: true
+  sinceLastRelease: true,
+  devDeps: [
+    'lerna-projen'
+  ],
 })
 
 addNvmrc(project, workflowNodeVersion)
