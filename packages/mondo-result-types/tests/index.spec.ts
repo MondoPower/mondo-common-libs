@@ -1,5 +1,5 @@
 import {expect} from 'chai'
-import {flatMapResults, flatMapSuccessVoidFailures, raiseFailure, raiseSuccess, Result, ResultVoid} from '../src'
+import {flatMapResults, flatMapSuccessVoidFailures, raiseFailure, raiseSuccess, Result, ResultVoid, splitResults} from '../src'
 
 enum FailureTest {
   TestFailure = 'TestFailure'
@@ -67,6 +67,71 @@ describe('#ResultHandling', () => {
 
       //assert
       expect(successes).to.deep.equal([successOneString, successTwoString])
+      expect(failures.length).to.eql(0)
+    })
+  })
+
+  describe('Split Results', () => {
+    it('Multiple success and failures', () => {
+      //setup
+      const successOneData = ['one']
+      const successTwoData = ['two', '2']
+      const successOne = raiseSuccess(successOneData)
+      const successTwo = raiseSuccess(successTwoData)
+      const failureOne = raiseFailure({
+        message: 'FailureOne',
+        errorType: FailureTest.TestFailure,
+      })
+      const failureTwo = raiseFailure({
+        message: 'FailureTwo',
+        errorType: FailureTest.TestFailure,
+      })
+
+      const payload: Result<string[], FailureTest>[] = [successOne, successTwo, failureOne, failureTwo]
+
+      //act
+      const {successes, failures} = splitResults(payload)
+
+      //assert
+      expect(successes).to.deep.equal([successOneData, successTwoData])
+      expect(failures).to.deep.equal([failureOne.error, failureTwo.error])
+    })
+
+    it('No success and multiple failures', () => {
+    //setup
+      const failureOne = raiseFailure({
+        message: 'FailureOne',
+        errorType: FailureTest.TestFailure,
+      })
+      const failureTwo = raiseFailure({
+        message: 'FailureTwo',
+        errorType: FailureTest.TestFailure,
+      })
+
+      const payload: Result<string, FailureTest>[] = [failureOne, failureTwo]
+
+      //act
+      const {successes, failures} = splitResults(payload)
+
+      //assert
+      expect(successes.length).to.eql(0)
+      expect(failures).to.deep.equal([failureOne.error, failureTwo.error])
+    })
+
+    it('Multiple success and no failures', () => {
+      //setup
+      const successOneData = ['one']
+      const successTwoData = ['two', '2']
+      const successOne = raiseSuccess(successOneData)
+      const successTwo = raiseSuccess(successTwoData)
+
+      const payload: Result<string[], FailureTest>[] = [successOne, successTwo]
+
+      //act
+      const {successes, failures} = splitResults(payload)
+
+      //assert
+      expect(successes).to.deep.equal([successOneData, successTwoData])
       expect(failures.length).to.eql(0)
     })
   })

@@ -14,6 +14,15 @@ export function flatMapSuccesses<Data, Errors extends ErrorType>(inputs: Result<
     })
 }
 
+export function splitSuccesses<Data, Errors extends ErrorType>(inputs: Result<Data, Errors>[]): Data[] {
+  return inputs
+    .filter((x) => !x.isErrored)
+    .map(x => {
+      const success = x as Success<Data>
+      return success.data
+    })
+}
+
 export function flatMapSuccessVoidFailures<Errors extends ErrorType>(inputs: ResultVoid<Errors>[]): CustomError<Errors>[] {
   return inputs
     .filter((x) => x.isErrored)
@@ -32,9 +41,27 @@ export function flatMapFailures<Data, Errors extends ErrorType>(inputs: Result<D
     })
 }
 
+export function splitFailures<Data, Errors extends ErrorType>(inputs: Result<Data, Errors>[]): CustomError<Errors>[] {
+  return inputs
+    .filter((x) => x.isErrored)
+    .map(x => {
+      const failure = x as Failure<Errors>
+      return failure.error
+    })
+}
+
 export function flatMapResults<Data, Errors extends ErrorType>(inputs: Result<Data, Errors>[]): ResultArray<Data, Errors> {
   const failures = flatMapFailures(inputs)
   const successes = flatMapSuccesses(inputs)
+  return {
+    failures,
+    successes,
+  }
+}
+
+export function splitResults<Data, Errors extends ErrorType>(inputs: Result<Data, Errors>[]): ResultArray<Data, Errors> {
+  const failures = splitFailures(inputs)
+  const successes = splitSuccesses(inputs)
   return {
     failures,
     successes,
