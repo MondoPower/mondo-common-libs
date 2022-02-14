@@ -92,6 +92,9 @@
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="index.html#raiseFailure" class="tsd-kind-icon">raise<wbr>Failure</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="index.html#raiseSuccess" class="tsd-kind-icon">raise<wbr>Success</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="index.html#raiseSuccessVoid" class="tsd-kind-icon">raise<wbr>Success<wbr>Void</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="index.html#splitFailures" class="tsd-kind-icon">split<wbr>Failures</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="index.html#splitResults" class="tsd-kind-icon">split<wbr>Results</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="index.html#splitSuccesses" class="tsd-kind-icon">split<wbr>Successes</a></li>
 							</ul>
 						</section>
 					</div>
@@ -321,6 +324,93 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="splitFailures" class="tsd-anchor"></a>
+					<h3>split<wbr>Failures</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">split<wbr>Failures&lt;Data, Errors&gt;<span class="tsd-signature-symbol">(</span>inputs<span class="tsd-signature-symbol">: </span><a href="types.html#Result" class="tsd-signature-type" data-tsd-kind="Type alias">Result</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Data</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Errors</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/types.CustomError.html" class="tsd-signature-type" data-tsd-kind="Interface">CustomError</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Errors</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>Data</h4>
+								</li>
+								<li>
+									<h4>Errors<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>inputs: <a href="types.html#Result" class="tsd-signature-type" data-tsd-kind="Type alias">Result</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Data</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Errors</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/types.CustomError.html" class="tsd-signature-type" data-tsd-kind="Interface">CustomError</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Errors</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="splitResults" class="tsd-anchor"></a>
+					<h3>split<wbr>Results</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">split<wbr>Results&lt;Data, Errors&gt;<span class="tsd-signature-symbol">(</span>inputs<span class="tsd-signature-symbol">: </span><a href="types.html#Result" class="tsd-signature-type" data-tsd-kind="Type alias">Result</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Data</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Errors</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/types.ResultArray.html" class="tsd-signature-type" data-tsd-kind="Interface">ResultArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Data</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Errors</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>Data</h4>
+								</li>
+								<li>
+									<h4>Errors<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>inputs: <a href="types.html#Result" class="tsd-signature-type" data-tsd-kind="Type alias">Result</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Data</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Errors</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/types.ResultArray.html" class="tsd-signature-type" data-tsd-kind="Interface">ResultArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Data</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Errors</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="splitSuccesses" class="tsd-anchor"></a>
+					<h3>split<wbr>Successes</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">split<wbr>Successes&lt;Data, Errors&gt;<span class="tsd-signature-symbol">(</span>inputs<span class="tsd-signature-symbol">: </span><a href="types.html#Result" class="tsd-signature-type" data-tsd-kind="Type alias">Result</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Data</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Errors</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Data</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>Data</h4>
+								</li>
+								<li>
+									<h4>Errors<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>inputs: <a href="types.html#Result" class="tsd-signature-type" data-tsd-kind="Type alias">Result</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Data</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Errors</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Data</span><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -383,6 +473,15 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="index.html#raiseSuccessVoid" class="tsd-kind-icon">raise<wbr>Success<wbr>Void</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="index.html#splitFailures" class="tsd-kind-icon">split<wbr>Failures</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="index.html#splitResults" class="tsd-kind-icon">split<wbr>Results</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="index.html#splitSuccesses" class="tsd-kind-icon">split<wbr>Successes</a>
 					</li>
 				</ul>
 			</nav>
