@@ -203,7 +203,7 @@
           "exec": "test \"$(git branch --show-current)\" = \"main\""
         },
         {
-          "exec": "npx -p jsii-release@latest jsii-release-npm"
+          "exec": "npx -p publib@latest publib-npm"
         }
       ]
     },
@@ -211,7 +211,8 @@
       "name": "release",
       "description": "Prepare a release from \"main\" branch",
       "env": {
-        "RELEASE": "true"
+        "RELEASE": "true",
+        "MAJOR": "1"
       },
       "steps": [
         {
@@ -294,6 +295,9 @@
         },
         {
           "spawn": "post-upgrade"
+        },
+        {
+          "exec": "lerna run upgrade --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         }
       ]
     }

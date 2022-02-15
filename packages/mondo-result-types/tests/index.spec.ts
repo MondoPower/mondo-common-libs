@@ -1,18 +1,19 @@
 import {expect} from 'chai'
-import {flatMapResults, flatMapSuccessVoidFailures, raiseFailure, raiseSuccess, Result, ResultVoid} from '../src'
+import {raiseFailure, raiseSuccess, Result, ResultVoid, mapResults, flatMapSuccessVoidFailures} from '../src'
 
 enum FailureTest {
   TestFailure = 'TestFailure'
 }
 
 describe('#ResultHandling', () => {
-  describe('Flatten Results', () => {
+
+  describe('Map Results', () => {
     it('Multiple success and failures', () => {
       //setup
-      const successOneString = 'one'
-      const successTwoString = 'two'
-      const successOne = raiseSuccess(successOneString)
-      const successTwo = raiseSuccess(successTwoString)
+      const successOneData = ['one']
+      const successTwoData = ['two', '2']
+      const successOne = raiseSuccess(successOneData)
+      const successTwo = raiseSuccess(successTwoData)
       const failureOne = raiseFailure({
         message: 'FailureOne',
         errorType: FailureTest.TestFailure,
@@ -22,13 +23,13 @@ describe('#ResultHandling', () => {
         errorType: FailureTest.TestFailure,
       })
 
-      const payload: Result<string, FailureTest>[] = [successOne, successTwo, failureOne, failureTwo]
+      const payload: Result<string[], FailureTest>[] = [successOne, successTwo, failureOne, failureTwo]
 
       //act
-      const {successes, failures} = flatMapResults(payload)
+      const {successes, failures} = mapResults(payload)
 
       //assert
-      expect(successes).to.deep.equal([successOneString, successTwoString])
+      expect(successes).to.deep.equal([successOneData, successTwoData])
       expect(failures).to.deep.equal([failureOne.error, failureTwo.error])
     })
 
@@ -46,7 +47,7 @@ describe('#ResultHandling', () => {
       const payload: Result<string, FailureTest>[] = [failureOne, failureTwo]
 
       //act
-      const {successes, failures} = flatMapResults(payload)
+      const {successes, failures} = mapResults(payload)
 
       //assert
       expect(successes.length).to.eql(0)
@@ -55,18 +56,18 @@ describe('#ResultHandling', () => {
 
     it('Multiple success and no failures', () => {
       //setup
-      const successOneString = 'one'
-      const successTwoString = 'two'
-      const successOne = raiseSuccess(successOneString)
-      const successTwo = raiseSuccess(successTwoString)
+      const successOneData = ['one']
+      const successTwoData = ['two', '2']
+      const successOne = raiseSuccess(successOneData)
+      const successTwo = raiseSuccess(successTwoData)
 
-      const payload: Result<string, FailureTest>[] = [successOne, successTwo]
+      const payload: Result<string[], FailureTest>[] = [successOne, successTwo]
 
       //act
-      const {successes, failures} = flatMapResults(payload)
+      const {successes, failures} = mapResults(payload)
 
       //assert
-      expect(successes).to.deep.equal([successOneString, successTwoString])
+      expect(successes).to.deep.equal([successOneData, successTwoData])
       expect(failures.length).to.eql(0)
     })
   })
