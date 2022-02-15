@@ -16,6 +16,7 @@ const project = new LernaProject({
   devDeps: [
     'lerna-projen'
   ],
+  majorVersion: 1
 })
 
 addNvmrc(project, workflowNodeVersion)
