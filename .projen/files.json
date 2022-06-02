@@ -14,6 +14,8 @@
     ".projen/deps.json",
     ".projen/files.json",
     ".projen/tasks.json",
+    "docs/index.html",
+    "docs/index.md",
     "lerna.json",
     "LICENSE"
   ],

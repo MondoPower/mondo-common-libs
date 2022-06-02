@@ -41,3 +41,5 @@ jspm_packages/
 !/.github/pull_request_template.md
 !/.nvmrc
 !/lerna.json
+!/docs/index.md
+!/docs/index.html
