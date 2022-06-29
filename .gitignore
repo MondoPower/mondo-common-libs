@@ -40,6 +40,7 @@ jspm_packages/
 !/.github/workflows/upgrade-main.yml
 !/.github/pull_request_template.md
 !/.nvmrc
+!/.github/workflows/auto-merge.yml
 !/lerna.json
 !/docs/index.md
 !/docs/index.html
