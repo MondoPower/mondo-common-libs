@@ -1,4 +1,5 @@
 import {javascript, JsonFile, TextFile} from 'projen'
+import {LernaProject} from 'lerna-projen'
 
 export const commonOptions = {
   author: 'Mondo Power',
@@ -48,4 +49,40 @@ export function addNvmrc(project: javascript.NodeProject, nodeVersion: string): 
   new TextFile(project, '.nvmrc', {
     lines: [nodeVersion]
   });
+}
+
+export function addAutoMergeWorkflow(project: LernaProject): void {
+  const workflow = project.github?.addWorkflow('auto-merge')
+  if (!workflow)
+    throw new Error('Failed to create auto-merge workflow')
+
+  workflow.on({
+    pullRequestTarget: {
+      branches: ['main'],
+      types: [
+        'labeled',
+        'opened',
+        'synchronize',
+        'reopened',
+        'ready_for_review'
+      ]
+    }
+  })
+  workflow.addJob('auto-merge', {
+    name: 'Enable Auto Merge',
+    permissions: {},
+    runsOn: ['ubuntu-latest'],
+    steps: [
+      {
+        name: 'Enable Pull Request Automatic merge',
+        if: `contains(github.event.pull_request.labels.*.name, 'auto-approve') && (github.event.pull_request.user.login == 'ci-mondo')`,
+        uses: 'peter-evans/enable-pull-request-automerge@v1',
+        with: {
+          token: '${{ secrets.PROJEN_GITHUB_TOKEN }}',
+          'pull-request-number': '${{ github.event.pull_request.number }}',
+          'merge-method': 'squash'
+        }
+      }
+    ]
+  })
 }
