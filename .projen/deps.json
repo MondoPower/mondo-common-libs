@@ -1,16 +1,17 @@
 {
   "dependencies": [
     {
-      "name": "lerna",
-      "type": "build"
-    },
-    {
       "name": "lerna-projen",
       "type": "build"
     },
     {
+      "name": "lerna",
+      "version": "5",
+      "type": "build"
+    },
+    {
       "name": "npm-check-updates",
-      "version": "^12",
+      "version": "^15",
       "type": "build"
     },
     {

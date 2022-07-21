@@ -17,7 +17,12 @@ const project = new LernaProject({
     'lerna-projen'
   ],
   majorVersion: 1,
-  stale: true
+  stale: true,
+  depsUpgradeOptions: {
+    workflowOptions: {
+      labels: ['auto-approve']
+    }
+  },
 })
 
 addNvmrc(project, workflowNodeVersion)
