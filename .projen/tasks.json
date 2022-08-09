@@ -129,7 +129,7 @@
           "exec": "lerna run package --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         },
         {
-          "exec": "lerna-projen copy-dist packages/mondo-result-types"
+          "exec": "lerna-projen copy-dist packages/mondo-result-types/dist dist"
         }
       ]
     },
@@ -150,7 +150,7 @@
       "description": "Runs after upgrading dependencies",
       "steps": [
         {
-          "exec": "lerna run upgrade --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna run upgrade --stream"
         },
         {
           "exec": "npx projen"
@@ -168,7 +168,7 @@
           "exec": "lerna run pre-compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         },
         {
-          "exec": "lerna-projen clean-dist"
+          "exec": "lerna-projen clean-dist dist"
         }
       ]
     },
