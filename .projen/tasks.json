@@ -93,9 +93,6 @@
       "description": "Synthesize project files",
       "steps": [
         {
-          "exec": "npm i lerna-projen --package-lock=false"
-        },
-        {
           "exec": "ts-node --skip-project .projenrc.ts"
         },
         {
