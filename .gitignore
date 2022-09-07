@@ -43,4 +43,5 @@ jspm_packages/
 !/.github/workflows/auto-merge.yml
 !/lerna.json
 !/docs/index.md
+!/docs/README.md
 !/docs/index.html

@@ -17,6 +17,7 @@
     ".projen/tasks.json",
     "docs/index.html",
     "docs/index.md",
+    "docs/README.md",
     "lerna.json",
     "LICENSE"
   ],
