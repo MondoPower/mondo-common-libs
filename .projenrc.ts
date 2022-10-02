@@ -2,7 +2,7 @@ import {LernaProject} from 'lerna-projen'
 import {commonOptions, addNvmrc, addAutoMergeWorkflow} from './projects/common'
 import {getMondoResultTypeProject} from './projects/result-types'
 
-const workflowNodeVersion = '14.18.1'
+const workflowNodeVersion = '14'
 
 const project = new LernaProject({
   ...commonOptions,
