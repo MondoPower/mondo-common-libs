@@ -39,7 +39,7 @@
     "json-schema": "^0.4.0",
     "mocha": "^9.2.2",
     "npm-check-updates": "^16",
-    "projen": "^0.65.33",
+    "projen": "^0.65.34",
     "ts-eager": "^2.0.2",
     "typedoc": "^0.23.21",
     "typescript": "^4.9.3"
