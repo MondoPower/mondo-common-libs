@@ -162,10 +162,10 @@
       "description": "Prepare the project for compilation",
       "steps": [
         {
-          "exec": "lerna run pre-compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna-projen clean-dist dist"
         },
         {
-          "exec": "lerna-projen clean-dist dist"
+          "exec": "lerna run pre-compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         }
       ]
     },
