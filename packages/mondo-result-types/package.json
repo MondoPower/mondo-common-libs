@@ -39,9 +39,9 @@
     "json-schema": "^0.4.0",
     "mocha": "^9.2.2",
     "npm-check-updates": "^16",
-    "projen": "^0.65.53",
+    "projen": "^0.65.54",
     "ts-eager": "^2.0.2",
-    "typedoc": "^0.23.21",
+    "typedoc": "^0.23.22",
     "typescript": "^4.9.4"
   },
   "keywords": [
