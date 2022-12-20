@@ -72,9 +72,6 @@
         },
         {
           "say": "ready to rock! (unpushed commits are under the \"scratch\" branch)"
-        },
-        {
-          "exec": "lerna run clobber --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
         }
       ],
       "condition": "git diff --exit-code > /dev/null"
