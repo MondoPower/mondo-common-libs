@@ -25,12 +25,12 @@
   },
   "devDependencies": {
     "lerna": "5",
-    "lerna-projen": "0.0.389",
+    "lerna-projen": "0.0.390",
     "npm-check-updates": "^16",
-    "projen": "^0.67.21",
+    "projen": "^0.67.24",
     "standard-version": "^9",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.5"
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
