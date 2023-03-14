@@ -112,6 +112,30 @@
         }
       ]
     },
+    "install": {
+      "name": "install",
+      "description": "Install project dependencies and update lockfile (non-frozen)",
+      "steps": [
+        {
+          "exec": "npm install"
+        },
+        {
+          "exec": "lerna run install --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+        }
+      ]
+    },
+    "install:ci": {
+      "name": "install:ci",
+      "description": "Install project dependencies using frozen lockfile",
+      "steps": [
+        {
+          "exec": "npm ci"
+        },
+        {
+          "exec": "lerna run install:ci --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+        }
+      ]
+    },
     "package": {
       "name": "package",
       "description": "Creates the distribution package",
