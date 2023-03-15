@@ -8,11 +8,9 @@
   "scripts": {
     "build": "npx projen build",
     "bump": "npx projen bump",
-    "clobber": "npx projen clobber",
     "compile": "npx projen compile",
     "default": "npx projen default",
     "docgen": "npx projen docgen",
-    "eject": "npx projen eject",
     "eslint": "npx projen eslint",
     "package": "npx projen package",
     "post-compile": "npx projen post-compile",
@@ -38,7 +36,7 @@
     "eslint-plugin-import": "^2.27.5",
     "mocha": "^9.2.2",
     "npm-check-updates": "^16",
-    "projen": "^0.67.85",
+    "projen": "^0.68.1",
     "ts-eager": "^2.0.2",
     "typedoc": "^0.23.26",
     "typescript": "^4.9.5"
