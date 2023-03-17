@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "lerna": "5",
-    "lerna-projen": "0.1.39",
+    "lerna-projen": "0.1.40",
     "npm-check-updates": "^16",
     "projen": "^0.68.5",
     "standard-version": "^9",
