@@ -36,9 +36,9 @@
     "eslint-plugin-import": "^2.27.5",
     "mocha": "^9.2.2",
     "npm-check-updates": "^16",
-    "projen": "^0.71.9",
+    "projen": "^0.71.11",
     "ts-eager": "^2.0.2",
-    "typedoc": "^0.24.2",
+    "typedoc": "^0.24.4",
     "typescript": "^4.9.5"
   },
   "keywords": [
