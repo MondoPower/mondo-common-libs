@@ -1,12 +1,11 @@
 {
   "dependencies": [
     {
-      "name": "lerna-projen",
+      "name": "lerna",
       "type": "build"
     },
     {
-      "name": "lerna",
-      "version": "5",
+      "name": "lerna-projen",
       "type": "build"
     },
     {
