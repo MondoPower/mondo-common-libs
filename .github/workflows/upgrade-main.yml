@@ -18,6 +18,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: main
+      - name: Fetch tags
+        run: if [ $(git rev-parse --is-shallow-repository) != "false" ] ; then git fetch origin main --tags --unshallow; fi
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:

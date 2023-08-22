@@ -19,6 +19,8 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - name: Fetch tags
+        run: if [ $(git rev-parse --is-shallow-repository) != "false" ] ; then git fetch origin main --tags --unshallow; fi
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
