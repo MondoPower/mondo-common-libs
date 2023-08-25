@@ -25,6 +25,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
       - name: Fetch tags
+        if: ${{ github.workflow == 'build' }}
         run: if [ $(git rev-parse --is-shallow-repository) != "false" ] ; then git fetch origin main --tags --unshallow; fi
       - name: Setup Node.js
         uses: actions/setup-node@v3
