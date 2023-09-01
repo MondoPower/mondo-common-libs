@@ -290,7 +290,7 @@
           "exec": "npm update npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --upgrade --target=minor --filter=lerna,lerna-projen,npm-check-updates,projen,standard-version,ts-node,typescript"
+          "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=lerna,lerna-projen,npm-check-updates,projen,standard-version,ts-node,typescript"
         },
         {
           "exec": "npm install"
