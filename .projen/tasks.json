@@ -290,13 +290,13 @@
           "exec": "npm update npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=lerna,lerna-projen,npm-check-updates,projen,standard-version,ts-node,typescript"
+          "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,lerna,lerna-projen,npm-check-updates,projen,standard-version,ts-node,typescript"
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update lerna lerna-projen npm-check-updates projen standard-version ts-node typescript"
+          "exec": "npm update constructs lerna lerna-projen npm-check-updates projen standard-version ts-node typescript"
         },
         {
           "exec": "npx projen"
