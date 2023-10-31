@@ -145,9 +145,6 @@
         },
         {
           "exec": "lerna run package --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
-        },
-        {
-          "exec": "lerna-projen copy-dist packages/mondo-result-types/dist dist"
         }
       ]
     },
@@ -157,9 +154,6 @@
       "steps": [
         {
           "exec": "lerna run post-compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
-        },
-        {
-          "exec": "lerna-projen move-docs docs packages/mondo-result-types docs"
         }
       ]
     },
