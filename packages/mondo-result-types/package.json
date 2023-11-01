@@ -7,6 +7,7 @@
   },
   "scripts": {
     "build": "npx projen build",
+    "bump": "npx projen bump",
     "compile": "npx projen compile",
     "default": "npx projen default",
     "docgen": "npx projen docgen",
@@ -16,6 +17,7 @@
     "post-upgrade": "npx projen post-upgrade",
     "pre-compile": "npx projen pre-compile",
     "test": "npx projen test",
+    "unbump": "npx projen unbump",
     "upgrade": "npx projen upgrade",
     "watch": "npx projen watch",
     "projen": "npx projen"
@@ -35,7 +37,7 @@
     "eslint-plugin-import": "^2.29.0",
     "mocha": "^9.2.2",
     "npm-check-updates": "^16",
-    "projen": "^0.76.13",
+    "projen": "^0.76.15",
     "ts-eager": "^2.0.2",
     "typedoc": "^0.25.3",
     "typescript": "^4.9.5"
