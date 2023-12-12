@@ -1,4 +1,5 @@
 import {expect} from 'chai'
+import {describe, it} from 'mocha'
 import {raiseFailure, raiseSuccess, Result, ResultVoid, mapResults, flatMapSuccessVoidFailures} from '../src'
 
 enum FailureTest {
