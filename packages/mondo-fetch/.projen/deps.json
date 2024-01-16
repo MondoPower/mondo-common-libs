@@ -1,15 +1,7 @@
 {
   "dependencies": [
     {
-      "name": "@types/babel__core",
-      "type": "build"
-    },
-    {
-      "name": "@types/chai",
-      "type": "build"
-    },
-    {
-      "name": "@types/mocha",
+      "name": "@types/jest",
       "type": "build"
     },
     {
@@ -25,10 +17,6 @@
     {
       "name": "@typescript-eslint/parser",
       "version": "^6",
-      "type": "build"
-    },
-    {
-      "name": "chai",
       "type": "build"
     },
     {
@@ -50,7 +38,16 @@
       "type": "build"
     },
     {
-      "name": "mocha",
+      "name": "jest",
+      "type": "build"
+    },
+    {
+      "name": "jest-fetch-mock",
+      "type": "build"
+    },
+    {
+      "name": "jest-junit",
+      "version": "^15",
       "type": "build"
     },
     {
@@ -58,7 +55,7 @@
       "type": "build"
     },
     {
-      "name": "ts-eager",
+      "name": "ts-jest",
       "type": "build"
     },
     {

@@ -7,7 +7,20 @@
     - Pass in interfaces for response?
     - Check
 
-
     In progress
-    createTimedFetchRequest, needs to add error handling. 
-    Need to check if the set timeout is working. Need a way to slow down our request  
+
+
+## Test cases
+
+- Post endpoint
+    - Happy path
+        - We can trigger the request
+        - We get back the expected payload
+
+    - Unhappy path
+        - Fetch error
+        - Unknown error
+        - Timeout Error
+
+- Get endpoint
+- Happy path

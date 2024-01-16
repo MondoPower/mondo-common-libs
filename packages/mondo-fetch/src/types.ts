@@ -19,12 +19,18 @@ export enum FetchErrorTypes {
   FailedToGet = 'FailedToGet',
   FailedToPost = 'FailedToPost',
   RequestTimedOut = 'RequestTimedOut',
+  InvalidStatus = 'InvalidStatus',
+  FetchError = 'FetchError',
+  UnknownFailure = 'UnknownFailure'
 }
 
 export interface PostRequestOptions extends BaseRequestOptions {
-  body: string;
 }
 
 export interface BaseRequestOptions {
   contentType?: ContentTypes;
+}
+
+export interface AbortError {
+  name: string;
 }

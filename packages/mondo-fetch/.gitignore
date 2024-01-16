@@ -30,6 +30,9 @@ jspm_packages/
 .yarn-integrity
 .cache
 !/.projenrc.js
+/test-reports/
+junit.xml
+/coverage/
 !/test/
 !/tsconfig.json
 !/tsconfig.dev.json
@@ -37,4 +40,3 @@ jspm_packages/
 /lib
 /dist/
 !/.eslintrc.json
-!/.mocharc.json

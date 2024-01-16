@@ -121,10 +121,20 @@
       "description": "Run tests",
       "steps": [
         {
-          "spawn": "eslint"
+          "exec": "jest --passWithNoTests --updateSnapshot",
+          "receiveArgs": true
         },
         {
-          "exec": "mocha"
+          "spawn": "eslint"
+        }
+      ]
+    },
+    "test:watch": {
+      "name": "test:watch",
+      "description": "Run jest in watch mode",
+      "steps": [
+        {
+          "exec": "jest --watch"
         }
       ]
     },
@@ -152,13 +162,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/babel__core,@types/chai,@types/mocha,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,chai,constructs,eslint-import-resolver-typescript,eslint-plugin-import,eslint,mocha,projen,ts-eager,typedoc,typescript,@mondopower/result-types"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,constructs,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest,jest-fetch-mock,jest-junit,projen,ts-jest,typedoc,typescript,@mondopower/result-types"
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update @types/babel__core @types/chai @types/mocha @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser chai constructs eslint-import-resolver-typescript eslint-plugin-import eslint mocha projen ts-eager typedoc typescript @mondopower/result-types"
+          "exec": "npm update @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-fetch-mock jest-junit projen ts-jest typedoc typescript @mondopower/result-types"
         },
         {
           "exec": "npx projen"

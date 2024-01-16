@@ -1,19 +1,24 @@
 import {stringify} from 'querystring'
 import {expect} from 'chai'
 import {describe, it} from 'mocha'
-import {FetchClient} from '../src/index'
+import {ContentTypes, FetchClient} from '../src/index'
 
 enum FailureTest {
   TestFailure = 'TestFailure'
 }
 
-interface ResponseType {
+interface TokenResponse {
   access_token: string;
   expires_in: number;
   token_type: string;
   scope: string;
-  thing: string;
 }
+// Test cases
+// Post endpoint
+
+
+// Get endpoint
+
 
 describe('blah', () => {
   it('blahtry', async () => {
@@ -28,12 +33,13 @@ describe('blah', () => {
     })
 
     // act
-    const result = await client.post<ResponseType>('https://identity.dev.mondopower.com.au/connect/token', payload)
+    const result = await client.post<TokenResponse>('https://identity.dev.mondopower.com.au/connect/token', payload, {contentType: ContentTypes.XFORM})
+
     if (result.isErrored)
       throw new Error(result.error.message)
 
     // assert
-
+    console.log('result:', result.data) // TODO: Delete
 
   })
 })

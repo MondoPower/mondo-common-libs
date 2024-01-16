@@ -6,7 +6,7 @@ export function getMondoFetchProject(parentProject: LernaProject): void {
   const getMondoFetchProject = new typescript.TypeScriptProject({
     ...commonOptions,
     description: 'Library to use to wrap node fetch',
-    // jest: true, // TODO: May want to get jest working.
+    jest: true, // TODO: May want to get jest working.
     parent: parentProject,
     name: '@mondopower/fetch',
     outdir: 'packages/mondo-fetch',
@@ -14,12 +14,7 @@ export function getMondoFetchProject(parentProject: LernaProject): void {
     '@mondopower/result-types',
     ],
     devDeps: [
-      'chai',
-      '@types/chai',
-      'mocha',
-      '@types/mocha',
-      '@types/babel__core',
-      'ts-eager',
+      'jest-fetch-mock'
     ],
     tsconfig: {
       compilerOptions: {
@@ -34,6 +29,6 @@ export function getMondoFetchProject(parentProject: LernaProject): void {
       'fetch'
     ]
   });
+
   getMondoFetchProject.eslint?.addRules(additionalRules);
-  addMocha(getMondoFetchProject);
 }
