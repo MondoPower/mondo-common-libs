@@ -3,6 +3,7 @@
     ".eslintrc.json",
     ".gitattributes",
     ".gitignore",
+    ".mocharc.json",
     ".npmignore",
     ".projen/deps.json",
     ".projen/files.json",
