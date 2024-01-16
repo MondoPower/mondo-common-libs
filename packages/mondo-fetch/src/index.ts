@@ -1,6 +1,6 @@
 import {Result, raiseFailure, raiseSuccess} from '@mondopower/result-types'
 import {createTimedFetchRequest} from './helpers'
-import {BaseRequestOptions, ContentTypes, FetchClientOptions, FetchErrorTypes, HttpMethods, PostRequestOptions} from './types'
+import {BaseRequestOptions, ContentTypes, FetchClientOptions, FetchErrorTypes, HttpMethods} from './types'
 export * from './types'
 
 export class FetchClient {
@@ -18,8 +18,6 @@ export class FetchClient {
 
 
   // async get(url: string, requestOptions?: BaseRequestOptions): Promise<Result<Response, FetchErrorTypes>> {
-
-
   //   try {
   //     const result = await fetch(url, {method: HttpMethods.GET, headers})
   //     console.log('result:', result) // TODO: Delete
@@ -34,13 +32,17 @@ export class FetchClient {
 
   // }
 
-  async post<ResponseType>(url: string, requestOptions?: PostRequestOptions): Promise<Result<ResponseType, FetchErrorTypes>> {
-    const result = await createTimedFetchRequest<ResponseType>(url, HttpMethods.POST, this.timeoutInMilliseconds, requestOptions?.contentType)
+  async post<ResponseType>(url: string, body: string, requestOptions?: BaseRequestOptions): Promise<Result<ResponseType, FetchErrorTypes>> {
+    const result = await createTimedFetchRequest<ResponseType>(url, HttpMethods.POST, this.timeoutInMilliseconds, body, requestOptions?.contentType)
 
-    if (result.isErrored)
-      throw (result.error.message)
+    if (result.isErrored) {
+      console.error(result.error.message)
+      return raiseFailure({
+        errorType: result.error.errorType,
+        message: 'The post request has failed',
+      })
+    }
 
-    console.log('result:', result) // TODO: Delete
     return raiseSuccess(result.data)
   }
 }
