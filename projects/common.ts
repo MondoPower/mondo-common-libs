@@ -33,12 +33,12 @@ export const additionalRules = {
 };
 
 export function addMocha(project: javascript.NodeProject) {
-  const mochaConfig = new JsonFile(project, '.mocharc.json', {
+  new JsonFile(project, '.mocharc.json', {
     obj: {
       recursive: true,
       require: ['ts-eager/register'],
       extension: ['ts'],
-      spec: ['tests/*.spec.ts'],
+      spec: ['test/*.spec.ts'],
     },
   })
 
