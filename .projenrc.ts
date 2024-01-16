@@ -1,6 +1,7 @@
 import {LernaProject} from 'lerna-projen'
 import {commonOptions, addNvmrc, addAutoMergeWorkflow} from './projects/common'
 import {getMondoResultTypeProject} from './projects/result-types'
+import {getMondoFetchProject} from './projects/mondo-fetch'
 
 const workflowNodeVersion = '20'
 
@@ -29,5 +30,6 @@ addNvmrc(project, workflowNodeVersion)
 addAutoMergeWorkflow(project)
 
 getMondoResultTypeProject(project)
+getMondoFetchProject(project)
 
-project.synth();
+project.synth()

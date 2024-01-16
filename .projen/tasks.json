@@ -148,6 +148,9 @@
         },
         {
           "exec": "lerna-projen copy-dist packages/mondo-result-types/dist dist"
+        },
+        {
+          "exec": "lerna-projen copy-dist packages/mondo-fetch/dist dist"
         }
       ]
     },
@@ -160,6 +163,9 @@
         },
         {
           "exec": "lerna-projen move-docs docs packages/mondo-result-types docs"
+        },
+        {
+          "exec": "lerna-projen move-docs docs packages/mondo-fetch docs"
         }
       ]
     },
