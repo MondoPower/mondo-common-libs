@@ -1,6 +1,11 @@
 {
   "dependencies": [
     {
+      "name": "@mondo/projen-projects",
+      "version": "^2",
+      "type": "build"
+    },
+    {
       "name": "@types/babel__core",
       "type": "build"
     },
@@ -41,7 +46,15 @@
       "type": "build"
     },
     {
+      "name": "eslint-plugin-check-file",
+      "type": "build"
+    },
+    {
       "name": "eslint-plugin-import",
+      "type": "build"
+    },
+    {
+      "name": "eslint-plugin-no-only-tests",
       "type": "build"
     },
     {

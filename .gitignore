@@ -31,7 +31,6 @@ jspm_packages/
 *.tgz
 .yarn-integrity
 .cache
-!/.projenrc.js
 !/.github/workflows/build.yml
 /dist/changelog.md
 /dist/version.txt
@@ -45,3 +44,4 @@ jspm_packages/
 !/docs/index.md
 !/docs/README.md
 !/docs/index.html
+!/.projenrc.js

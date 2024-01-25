@@ -1,6 +1,10 @@
 {
   "dependencies": [
     {
+      "name": "@mondo/projen-projects",
+      "type": "build"
+    },
+    {
       "name": "constructs",
       "version": "^10.0.0",
       "type": "build"

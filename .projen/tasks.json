@@ -293,13 +293,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,lerna,lerna-projen,projen,standard-version,ts-node,typescript"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@mondo/projen-projects,constructs,lerna,lerna-projen,projen,standard-version,ts-node,typescript"
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update constructs lerna lerna-projen projen standard-version ts-node typescript"
+          "exec": "npm update @mondo/projen-projects constructs lerna lerna-projen projen standard-version ts-node typescript"
         },
         {
           "exec": "npx projen"

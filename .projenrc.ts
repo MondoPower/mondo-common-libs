@@ -15,7 +15,8 @@ const project = new LernaProject({
   workflowNodeVersion,
   sinceLastRelease: true,
   devDeps: [
-    'lerna-projen'
+    'lerna-projen',
+    '@mondo/projen-projects',
   ],
   majorVersion: 1,
   stale: true,

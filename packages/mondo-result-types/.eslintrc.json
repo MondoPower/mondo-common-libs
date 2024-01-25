@@ -7,7 +7,9 @@
   "root": true,
   "plugins": [
     "@typescript-eslint",
-    "import"
+    "import",
+    "check-file",
+    "no-only-tests"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -216,7 +218,41 @@
     "nonblock-statement-body-position": [
       "error",
       "below"
-    ]
+    ],
+    "check-file/filename-naming-convention": [
+      "error",
+      {
+        "**/*.{js,ts}": "CAMEL_CASE"
+      },
+      {
+        "ignoreMiddleExtensions": true
+      }
+    ],
+    "check-file/folder-naming-convention": [
+      "error",
+      {
+        "src/**/": "CAMEL_CASE",
+        "test*/**/": "CAMEL_CASE",
+        "stack*/**/": "CAMEL_CASE"
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "vars": "local"
+      }
+    ],
+    "no-unused-vars": "off",
+    "no-only-tests/no-only-tests": "error"
   },
-  "overrides": []
+  "overrides": [
+    {
+      "files": [
+        "tests/testHarness/**"
+      ],
+      "rules": {
+        "@typescript-eslint/no-floating-promises": "off"
+      }
+    }
+  ]
 }

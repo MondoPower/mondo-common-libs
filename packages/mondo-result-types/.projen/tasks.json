@@ -65,7 +65,8 @@
       "description": "Runs eslint against the codebase",
       "steps": [
         {
-          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools"
+          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools",
+          "receiveArgs": true
         }
       ]
     },
@@ -152,13 +153,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/babel__core,@types/chai,@types/mocha,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,chai,constructs,eslint-import-resolver-typescript,eslint-plugin-import,eslint,mocha,projen,ts-eager,typedoc,typescript"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@mondo/projen-projects,@types/babel__core,@types/chai,@types/mocha,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,chai,constructs,eslint-import-resolver-typescript,eslint-plugin-check-file,eslint-plugin-import,eslint-plugin-no-only-tests,eslint,mocha,projen,ts-eager,typedoc,typescript"
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update @types/babel__core @types/chai @types/mocha @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser chai constructs eslint-import-resolver-typescript eslint-plugin-import eslint mocha projen ts-eager typedoc typescript"
+          "exec": "npm update @mondo/projen-projects @types/babel__core @types/chai @types/mocha @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser chai constructs eslint-import-resolver-typescript eslint-plugin-check-file eslint-plugin-import eslint-plugin-no-only-tests eslint mocha projen ts-eager typedoc typescript"
         },
         {
           "exec": "npx projen"

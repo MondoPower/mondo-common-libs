@@ -1,6 +1,15 @@
 {
   "dependencies": [
     {
+      "name": "@mondo/projen-projects",
+      "version": "^2",
+      "type": "build"
+    },
+    {
+      "name": "@types/mocha",
+      "type": "build"
+    },
+    {
       "name": "@types/node",
       "version": "^18",
       "type": "build"
@@ -16,6 +25,14 @@
       "type": "build"
     },
     {
+      "name": "chai",
+      "type": "build"
+    },
+    {
+      "name": "chai-as-promised",
+      "type": "build"
+    },
+    {
       "name": "constructs",
       "version": "^10.0.0",
       "type": "build"
@@ -25,7 +42,15 @@
       "type": "build"
     },
     {
+      "name": "eslint-plugin-check-file",
+      "type": "build"
+    },
+    {
       "name": "eslint-plugin-import",
+      "type": "build"
+    },
+    {
+      "name": "eslint-plugin-no-only-tests",
       "type": "build"
     },
     {
@@ -34,11 +59,15 @@
       "type": "build"
     },
     {
-      "name": "jest-fetch-mock",
+      "name": "projen",
       "type": "build"
     },
     {
-      "name": "projen",
+      "name": "sinon",
+      "type": "build"
+    },
+    {
+      "name": "sinon-chai",
       "type": "build"
     },
     {

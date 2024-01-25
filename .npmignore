@@ -2,9 +2,10 @@
 .mocharc.json
 docs
 projects
-/.projenrc.js
 /.projen/
 permissions-backup.acl
 /dist/changelog.md
 /dist/version.txt
 /.mergify.yml
+/.projenrc.js
+/.gitattributes
