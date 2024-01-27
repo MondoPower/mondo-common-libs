@@ -27,7 +27,7 @@
     "constructs": "^10.0.0",
     "lerna": "5",
     "lerna-projen": "0.1.336",
-    "projen": "^0.79.3",
+    "projen": "^0.79.6",
     "standard-version": "^9",
     "ts-node": "^10.9.2",
     "typescript": "^4.9.5"
