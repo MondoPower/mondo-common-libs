@@ -123,9 +123,6 @@
       "steps": [
         {
           "spawn": "eslint"
-        },
-        {
-          "exec": "mocha"
         }
       ]
     },
@@ -153,13 +150,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@mondo/projen-projects,@types/mocha,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,chai,chai-as-promised,constructs,eslint-import-resolver-typescript,eslint-plugin-check-file,eslint-plugin-import,eslint-plugin-no-only-tests,eslint,projen,sinon,sinon-chai,typedoc,typescript,@mondopower/result-types"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@mondo/projen-projects,@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,constructs,eslint-import-resolver-typescript,eslint-plugin-check-file,eslint-plugin-import,eslint-plugin-no-only-tests,eslint,projen,typedoc,typescript,@mondopower/result-types"
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update @mondo/projen-projects @types/mocha @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser chai chai-as-promised constructs eslint-import-resolver-typescript eslint-plugin-check-file eslint-plugin-import eslint-plugin-no-only-tests eslint projen sinon sinon-chai typedoc typescript @mondopower/result-types"
+          "exec": "npm update @mondo/projen-projects @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-typescript eslint-plugin-check-file eslint-plugin-import eslint-plugin-no-only-tests eslint projen typedoc typescript @mondopower/result-types"
         },
         {
           "exec": "npx projen"

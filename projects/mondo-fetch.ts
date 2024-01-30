@@ -14,11 +14,6 @@ export function getMondoFetchProject(parentProject: LernaProject): void {
     '@mondopower/result-types',
     ],
     devDeps: [
-      'chai',
-      'chai-as-promised',
-      'sinon-chai',
-      'sinon',
-      '@types/mocha'
     ],
     tsconfig: {
       compilerOptions: {

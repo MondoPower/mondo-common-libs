@@ -36,4 +36,3 @@ jspm_packages/
 /lib
 /dist/
 !/.eslintrc.json
-!/.mocharc.json

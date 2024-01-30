@@ -6,7 +6,7 @@
       "type": "build"
     },
     {
-      "name": "@types/mocha",
+      "name": "@types/jest",
       "type": "build"
     },
     {
@@ -22,14 +22,6 @@
     {
       "name": "@typescript-eslint/parser",
       "version": "^6",
-      "type": "build"
-    },
-    {
-      "name": "chai",
-      "type": "build"
-    },
-    {
-      "name": "chai-as-promised",
       "type": "build"
     },
     {
@@ -60,14 +52,6 @@
     },
     {
       "name": "projen",
-      "type": "build"
-    },
-    {
-      "name": "sinon",
-      "type": "build"
-    },
-    {
-      "name": "sinon-chai",
       "type": "build"
     },
     {

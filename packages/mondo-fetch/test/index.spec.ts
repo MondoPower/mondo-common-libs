@@ -1,5 +1,4 @@
 import {stringify} from 'querystring'
-import {expect} from 'chai'
 import {describe, it} from 'mocha'
 import {ContentTypes, FetchClient} from '../src/index'
 
