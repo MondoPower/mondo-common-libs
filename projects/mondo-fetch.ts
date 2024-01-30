@@ -1,6 +1,7 @@
 import {LernaProject} from 'lerna-projen'
 import {additionalRules, commonOptions} from './common'
 import {MondoTsProject} from '@mondo/projen-projects'
+import { NodePackageManager } from 'projen/lib/javascript';
 
 export function getMondoFetchProject(parentProject: LernaProject): void {
   const mondoFetchProject = new MondoTsProject({
@@ -11,6 +12,7 @@ export function getMondoFetchProject(parentProject: LernaProject): void {
     outdir: 'packages/mondo-fetch',
     minMajorVersion: 20,
     jest: true,
+    packageManager: NodePackageManager.PNPM,
     deps: [
     '@mondopower/result-types',
     ],
@@ -23,6 +25,7 @@ export function getMondoFetchProject(parentProject: LernaProject): void {
         lib: ['ES2019'],
       },
     },
+    docgen: true,
     keywords: [
       'typescript',
       'projen',

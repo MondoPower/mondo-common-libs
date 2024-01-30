@@ -1,47 +1,37 @@
 import {stringify} from 'querystring'
-import {describe, it} from 'mocha'
+import {generateFetchMock, jestSpy} from './testHelper'
 import {ContentTypes, FetchClient} from '../src/index'
 
-enum FailureTest {
-  TestFailure = 'TestFailure'
-}
-
-interface TokenResponse {
-  access_token: string;
-  expires_in: number;
-  token_type: string;
-  scope: string;
-}
-// Test cases
-// Post endpoint
-
-
-// Get endpoint
-
-
-describe('blah', () => {
-  it('blahtry', async () => {
+describe('Post', () => {
+  describe('Happy Path', () => {
+    it('When we call the post method on our client, it should make a fetch post request with our input parameters', async () => {
     // arrange
-    const client = new FetchClient()
+      const stubData = {test: 100}
+      const mock = generateFetchMock(stubData)
+      jestSpy.mockImplementation(mock)
 
-    const payload = stringify({
-      client_id: 'capacityEngine.apiClient',
-      client_secret: '0l6csZW63ZslJeEccJJl',
-      grant_type: 'client_credentials',
-      scope: 'mondoapi',
+      const client = new FetchClient()
+      const payload = stringify({
+        client_id: 'stub-client-id',
+        client_secret: 'stub-secret',
+        grant_type: 'client_credentials',
+        scope: 'stub-scope',
+      })
+
+      const url = 'https://stub-url.com.au'
+
+      // act
+      const result = await client.post(url, payload, {contentType: ContentTypes.XFORM})
+
+
+      // assert
+      expect(jestSpy).toHaveBeenCalledTimes(1)
+      expect(jestSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: {'Content-Type': ContentTypes.XFORM}, method: 'POST'}))
+      expect(result).toStrictEqual({isErrored: false, data: stubData})
     })
-
-    // act
-    const result = await client.post<TokenResponse>('https://identity.dev.mondopower.com.au/connect/token', payload, {contentType: ContentTypes.XFORM})
-
-    if (result.isErrored)
-      throw new Error(result.error.message)
-
-    // assert
-    console.log('result:', result.data) // TODO: Delete
-
   })
 })
+
 
 // describe('#ResultHandling', () => {
 //   describe('Map Results', () => {

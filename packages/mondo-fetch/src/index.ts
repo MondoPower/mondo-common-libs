@@ -1,6 +1,6 @@
 import {Result, raiseFailure, raiseSuccess} from '@mondopower/result-types'
 import {createTimedFetchRequest} from './helpers'
-import {BaseRequestOptions, ContentTypes, FetchClientOptions, FetchErrorTypes, HttpMethods} from './types'
+import {BaseRequestOptions, FetchClientOptions, FetchErrorTypes, HttpMethods} from './types'
 export * from './types'
 
 export class FetchClient {
