@@ -5,13 +5,13 @@ export * from './types'
 
 export class FetchClient {
 
-  private readonly defaultContentType: ContentTypes
+  // private readonly defaultContentType: ContentTypes | undefined
   private readonly timeoutInMilliseconds: number
 
   constructor(options?: FetchClientOptions) {
     const tenSecondsInMilliseconds = 10 * 1000
 
-    this.defaultContentType = ContentTypes.JSON
+    // this.defaultContentType = ContentTypes.JSON
     this.timeoutInMilliseconds = options?.timeoutInMilliseconds ?? tenSecondsInMilliseconds
 
   }

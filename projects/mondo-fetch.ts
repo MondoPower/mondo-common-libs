@@ -1,6 +1,5 @@
 import {LernaProject} from 'lerna-projen'
-import {typescript} from 'projen'
-import {additionalRules, addMocha, commonOptions} from './common'
+import {additionalRules, commonOptions} from './common'
 import {MondoTsProject} from '@mondo/projen-projects'
 
 export function getMondoFetchProject(parentProject: LernaProject): void {
@@ -10,10 +9,13 @@ export function getMondoFetchProject(parentProject: LernaProject): void {
     parent: parentProject,
     name: '@mondopower/fetch',
     outdir: 'packages/mondo-fetch',
+    minMajorVersion: 20,
+    jest: true,
     deps: [
     '@mondopower/result-types',
     ],
     devDeps: [
+      '@types/jest'
     ],
     tsconfig: {
       compilerOptions: {
@@ -30,6 +32,4 @@ export function getMondoFetchProject(parentProject: LernaProject): void {
   })
 
   mondoFetchProject.eslint?.addRules(additionalRules);
-  addMocha(mondoFetchProject);
-
 }

@@ -51,7 +51,7 @@
       "type": "build"
     },
     {
-      "name": "projen",
+      "name": "jest",
       "type": "build"
     },
     {
