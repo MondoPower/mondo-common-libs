@@ -13,15 +13,46 @@ describe('#FetchClient', () => {
     scope: 'stub-scope',
   })
 
-  describe('Post', () => {
+  describe('Requests', () => {
     describe('Happy Path', () => {
-      it('Should make a make a fetch request with the parameters we provide', async () => {
+      it('Should make a make a GET fetch request with the parameters we provide', async () => {
         // arrange
         const mock = generateFetchMock(stubData)
         fetchSpy.mockImplementation(mock)
 
         // act
-        const result = await client.post(url, payload)
+        const result = await client.get(url)
+
+        // assert
+        expect(fetchSpy).toHaveBeenCalledTimes(1)
+        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: {'Content-Type': ContentTypes.JSON}, method: 'GET'}))
+        expect(result).toStrictEqual({isErrored: false, data: stubData})
+      })
+
+      it('Should prepend the base url when it is set by the class constructor', async () => {
+        // arrange
+        const mock = generateFetchMock(stubData)
+        fetchSpy.mockImplementation(mock)
+
+        const clientWithBaseUrl = new FetchClient('https://stub-base-url.com')
+        const path = '/stub/test'
+
+        // act
+        const result = await clientWithBaseUrl.get(path)
+
+        // assert
+        expect(fetchSpy).toHaveBeenCalledTimes(1)
+        expect(fetchSpy).toHaveBeenCalledWith('https://stub-base-url.com/stub/test', expect.objectContaining({headers: {'Content-Type': ContentTypes.JSON}, method: 'GET'}))
+        expect(result).toStrictEqual({isErrored: false, data: stubData})
+      })
+
+      it('Should make a make a POST fetch request with the parameters we provide', async () => {
+        // arrange
+        const mock = generateFetchMock(stubData)
+        fetchSpy.mockImplementation(mock)
+
+        // act
+        const result = await client.post(url, {body: payload})
 
         // assert
         expect(fetchSpy).toHaveBeenCalledTimes(1)
@@ -35,7 +66,7 @@ describe('#FetchClient', () => {
         fetchSpy.mockImplementation(mock)
 
         // act
-        const result = await client.post(url, payload, {contentType: ContentTypes.XFORM})
+        const result = await client.post(url, {body: payload, contentType: ContentTypes.XFORM})
 
         // assert
         expect(fetchSpy).toHaveBeenCalledTimes(1)
@@ -52,7 +83,7 @@ describe('#FetchClient', () => {
         const timeoutSpy = jest.spyOn(global, 'setTimeout')
 
         // act
-        await client.post(url, payload, {timeout})
+        await client.post(url, {body: payload, timeout})
 
         // assert
         expect(timeoutSpy).toHaveBeenCalledWith(expect.anything(), timeout)
@@ -66,7 +97,7 @@ describe('#FetchClient', () => {
         const timeoutSpy = jest.spyOn(global, 'setTimeout')
 
         // act
-        await client.post(url, payload)
+        await client.post(url, {body: payload})
 
         // assert
         expect(timeoutSpy).toHaveBeenCalledWith(expect.anything(), 30000)
@@ -79,7 +110,7 @@ describe('#FetchClient', () => {
         fetchSpy.mockImplementation(mock)
 
         // act
-        await client.post(url, payload)
+        await client.post(url, {body: payload})
 
         // assert
         expect(abortSpy).toHaveBeenCalledTimes(1)
@@ -97,7 +128,7 @@ describe('#FetchClient', () => {
         fetchSpy.mockImplementation(mock)
 
         // act
-        const result = await client.post(url, payload)
+        const result = await client.post(url, {body: payload})
 
         // assert
         expect(result).toStrictEqual({isErrored: true, error: {errorType: FetchErrorTypes.RequestTimedOut, message: 'The request has reached the maximum duration of 30000 milliseconds'}})
@@ -109,7 +140,7 @@ describe('#FetchClient', () => {
         fetchSpy.mockImplementation(mock)
 
         // act
-        const result = await client.post(url, payload)
+        const result = await client.post(url, {body: payload})
 
         // assert
         expect(result).toStrictEqual({isErrored: true, error: {errorType: FetchErrorTypes.FetchError, message: 'The request failed due to Unauthorized'}})
@@ -125,7 +156,7 @@ describe('#FetchClient', () => {
         fetchSpy.mockImplementation(mock)
 
         // act
-        const result = await client.post(url, payload)
+        const result = await client.post(url, {body: payload})
 
         // assert
         expect(result).toStrictEqual({isErrored: true, error: {errorType: FetchErrorTypes.UnknownFailure, message: 'We were not able to determine the type of error for the failed request'}})

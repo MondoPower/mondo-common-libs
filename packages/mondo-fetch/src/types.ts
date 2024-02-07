@@ -23,6 +23,7 @@ export enum FetchErrorTypes {
 }
 
 export interface PostRequestOptions extends BaseRequestOptions {
+  body?: string;
 }
 
 export interface BaseRequestOptions {

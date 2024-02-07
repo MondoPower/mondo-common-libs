@@ -1,30 +1,38 @@
 import {Result, raiseFailure, raiseSuccess} from '@mondopower/result-types'
-import {AbortError, BaseRequestOptions, ContentTypes, FetchErrorTypes, HttpMethods} from './types'
+import {AbortError, BaseRequestOptions, ContentTypes, FetchErrorTypes, HttpMethods, PostRequestOptions} from './types'
 export * from './types'
 
 export class FetchClient {
-  // constructor(options?: FetchClientOptions) {
+  /**
+   * @param baseUrl An optional parameter that if provided will be prepended to each request
+   */
+  public baseUrl?: string | undefined
 
-  // }
+  constructor(baseUrl?: string) {
+    this.baseUrl = baseUrl
+  }
 
+  /**
+   * If a baseUrl is provided it will combine it with the provider url, otherwise returns the provided url
+   * @param providedUrl the url or path that you are targeting for your request
+   * @param baseUrl optional parameter that can be set when the client is created
+   * @returns A url
+   */
+  private getUrl(providedUrl: string, baseUrl?: string): string {
+    if (!baseUrl)
+      return providedUrl
 
-  // async get(url: string, requestOptions?: BaseRequestOptions): Promise<Result<Response, FetchErrorTypes>> {
-  //   try {
-  //     const result = await fetch(url, {method: HttpMethods.GET, headers})
-  //     console.log('result:', result) // TODO: Delete
-  //     return raiseSuccess(result)
-  //   } catch (error) {
-  //     console.error(error) // TODO: Want to redact this
-  //     return raiseFailure({
-  //       errorType: FetchErrorTypes.FailedToGet,
-  //       message: 'Failed to get',
-  //     })
-  //   }
+    return `${baseUrl}${providedUrl}`
+  }
 
-  // }
-
-  public async post<ResponseType>(url: string, body: string, requestOptions?: BaseRequestOptions): Promise<Result<ResponseType, FetchErrorTypes>> {
-    const result = await this.createTimedFetchRequest<ResponseType>(url, HttpMethods.POST, body, requestOptions?.timeout, requestOptions?.contentType)
+  /**
+   * Makes a timed fetch GET request to the provided url
+   * @param url target for the request, this can either be a path built on the base url or a full url
+   * @param requestOptions optional parameters that can be provided
+   * @returns Promise<Result<T, FetchErrorTypes>>
+   */
+  async get<T>(url: string, requestOptions?: BaseRequestOptions): Promise<Result<T, FetchErrorTypes>> {
+    const result = await this.createTimedFetchRequest<T>(this.getUrl(url, this.baseUrl), HttpMethods.GET, requestOptions)
     if (result.isErrored) {
       console.error(result.error.message)
       return raiseFailure(result.error)
@@ -33,6 +41,27 @@ export class FetchClient {
     return raiseSuccess(result.data)
   }
 
+  /**
+   * Makes a timed fetch POST request to the provided url
+   * @param url target for the request, this can either be a path built on the base url or a full url
+   * @param requestOptions optional parameters that can be provided
+   * @returns Promise<Result<T, FetchErrorTypes>>
+   */
+  public async post<T>(url: string, requestOptions?: PostRequestOptions): Promise<Result<T, FetchErrorTypes>> {
+    const result = await this.createTimedFetchRequest<T>(this.getUrl(url, this.baseUrl), HttpMethods.POST, requestOptions)
+    if (result.isErrored) {
+      console.error(result.error.message)
+      return raiseFailure(result.error)
+    }
+
+    return raiseSuccess(result.data)
+  }
+
+  /**
+   * Checks if the error is caused by a request timeout
+   * @param error the error we want to check
+   * @returns true or false
+   */
   private isTimeoutError(error: unknown): error is AbortError {
     if (typeof error !== 'object' || !error)
       return false
@@ -41,10 +70,19 @@ export class FetchClient {
     return typedError.name === 'AbortError'
   }
 
-  // eslint-disable-next-line max-len
-  private async createTimedFetchRequest<ResponseType>(url: string, method: HttpMethods, body: string, timeout = 30000, contentType?: ContentTypes): Promise<Result<ResponseType, FetchErrorTypes>> {
+  /**
+   * Creates a timed fetch request using an Abort Controller
+   * @param url The url we are targeting for our request
+   * @param method The method was are invoking
+   * @param requestOptions optional parameters that can be provided
+   * @returns Promise<Result<T, FetchErrorTypes>>
+   */
+  private async createTimedFetchRequest<T>(url: string, method: HttpMethods, requestOptions?: PostRequestOptions)
+    : Promise<Result<T, FetchErrorTypes>> {
+
+    const {body, contentType = ContentTypes.JSON, timeout = 30000} = requestOptions ?? {}
     const headers = {
-      'Content-Type': contentType ?? ContentTypes.JSON,
+      'Content-Type': contentType,
     }
 
     const controller = new AbortController()
@@ -61,7 +99,7 @@ export class FetchClient {
           message: `The request failed due to ${result.statusText}`,
         })
 
-      return raiseSuccess(await result.json() as ResponseType)
+      return raiseSuccess(await result.json() as T)
     } catch (error) {
       clearTimeout(timeoutId)
 
