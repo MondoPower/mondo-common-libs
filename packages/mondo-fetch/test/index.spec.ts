@@ -1,33 +1,135 @@
-import {stringify} from 'querystring'
-import {generateFetchMock, jestSpy} from './testHelper'
-import {ContentTypes, FetchClient} from '../src/index'
+import {generateFetchMock, fetchSpy} from './testHelper'
+import {ContentTypes, FetchClient, FetchErrorTypes} from '../src/index'
 
-describe('Post', () => {
-  describe('Happy Path', () => {
-    it('When we call the post method on our client, it should make a fetch post request with our input parameters', async () => {
-    // arrange
-      const stubData = {test: 100}
-      const mock = generateFetchMock(stubData)
-      jestSpy.mockImplementation(mock)
+describe('#FetchClient', () => {
+  // top level arrange
+  const url = 'https://stub-url.com.au'
+  const client = new FetchClient()
+  const stubData = {test: 100}
+  const payload = JSON.stringify({
+    client_id: 'stub-client-id',
+    client_secret: 'stub-secret',
+    grant_type: 'client_credentials',
+    scope: 'stub-scope',
+  })
 
-      const client = new FetchClient()
-      const payload = stringify({
-        client_id: 'stub-client-id',
-        client_secret: 'stub-secret',
-        grant_type: 'client_credentials',
-        scope: 'stub-scope',
+  describe('Post', () => {
+    describe('Happy Path', () => {
+      it('Should make a make a fetch request with the parameters we provide', async () => {
+        // arrange
+        const mock = generateFetchMock(stubData)
+        fetchSpy.mockImplementation(mock)
+
+        // act
+        const result = await client.post(url, payload)
+
+        // assert
+        expect(fetchSpy).toHaveBeenCalledTimes(1)
+        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: {'Content-Type': ContentTypes.JSON}, method: 'POST'}))
+        expect(result).toStrictEqual({isErrored: false, data: stubData})
       })
 
-      const url = 'https://stub-url.com.au'
+      it('Should make a make a fetch request with an x-form content type', async () => {
+        // arrange
+        const mock = generateFetchMock(stubData, true)
+        fetchSpy.mockImplementation(mock)
 
-      // act
-      const result = await client.post(url, payload, {contentType: ContentTypes.XFORM})
+        // act
+        const result = await client.post(url, payload, {contentType: ContentTypes.XFORM})
 
+        // assert
+        expect(fetchSpy).toHaveBeenCalledTimes(1)
+        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: {'Content-Type': ContentTypes.XFORM}, method: 'POST'}))
+        expect(result).toStrictEqual({isErrored: false, data: stubData})
+      })
 
-      // assert
-      expect(jestSpy).toHaveBeenCalledTimes(1)
-      expect(jestSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: {'Content-Type': ContentTypes.XFORM}, method: 'POST'}))
-      expect(result).toStrictEqual({isErrored: false, data: stubData})
+      it('Should be setting the timeout for the request to the value provided by us', async () => {
+        // arrange
+        const mock = generateFetchMock(stubData)
+        fetchSpy.mockImplementation(mock)
+        const timeout = 99999
+
+        const timeoutSpy = jest.spyOn(global, 'setTimeout')
+
+        // act
+        await client.post(url, payload, {timeout})
+
+        // assert
+        expect(timeoutSpy).toHaveBeenCalledWith(expect.anything(), timeout)
+      })
+
+      it('Should use the default timeout if none are provided', async () => {
+        // arrange
+        const mock = generateFetchMock(stubData)
+        fetchSpy.mockImplementation(mock)
+
+        const timeoutSpy = jest.spyOn(global, 'setTimeout')
+
+        // act
+        await client.post(url, payload)
+
+        // assert
+        expect(timeoutSpy).toHaveBeenCalledWith(expect.anything(), 30000)
+      })
+
+      it('Should invoke an abort request for all post requests', async () => {
+        // arrange
+        const abortSpy = jest.spyOn(AbortController.prototype, 'abort')
+        const mock = generateFetchMock(stubData)
+        fetchSpy.mockImplementation(mock)
+
+        // act
+        await client.post(url, payload)
+
+        // assert
+        expect(abortSpy).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    describe('Unhappy Path', () => {
+      it('Should return a timeout error when the request times out', async () => {
+        // arrange
+        const mock = jest.fn(() =>
+          Promise.reject({
+            name: 'AbortError',
+          }),
+        ) as jest.Mock
+        fetchSpy.mockImplementation(mock)
+
+        // act
+        const result = await client.post(url, payload)
+
+        // assert
+        expect(result).toStrictEqual({isErrored: true, error: {errorType: FetchErrorTypes.RequestTimedOut, message: 'The request has reached the maximum duration of 30000 milliseconds'}})
+      })
+
+      it('Should return a fetch error when the response is not ok', async () => {
+        // arrange
+        const mock = generateFetchMock(stubData, false, {status: 401, statusText: 'Unauthorized'})
+        fetchSpy.mockImplementation(mock)
+
+        // act
+        const result = await client.post(url, payload)
+
+        // assert
+        expect(result).toStrictEqual({isErrored: true, error: {errorType: FetchErrorTypes.FetchError, message: 'The request failed due to Unauthorized'}})
+      })
+
+      it('Should return an unknown error when it is not a timeout or fetch error', async () => {
+        // arrange
+        const mock = jest.fn(() =>
+          Promise.reject({
+            'stub-unknown-error': 'unknown-error-message',
+          }),
+        ) as jest.Mock
+        fetchSpy.mockImplementation(mock)
+
+        // act
+        const result = await client.post(url, payload)
+
+        // assert
+        expect(result).toStrictEqual({isErrored: true, error: {errorType: FetchErrorTypes.UnknownFailure, message: 'We were not able to determine the type of error for the failed request'}})
+      })
     })
   })
 })
