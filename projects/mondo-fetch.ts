@@ -12,7 +12,7 @@ export function getMondoFetchProject(parentProject: LernaProject): void {
     outdir: 'packages/mondo-fetch',
     minMajorVersion: 20,
     jest: true,
-    packageManager: NodePackageManager.PNPM,
+    packageManager: parentProject.package.packageManager,
     deps: [
     '@mondopower/result-types',
     ],

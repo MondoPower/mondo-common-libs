@@ -3,24 +3,9 @@
 
     - Add token client?
     - Add interceptors
-    - Error handling
-    - Pass in interfaces for response?
-    - Check
-
-    In progress
-
-
-## Test cases
-
-- Post endpoint
-    - Happy path
-        - We can trigger the request
-        - We get back the expected payload
-
-    - Unhappy path
-        - Fetch error
-        - Unknown error
-        - Timeout Error
-
-- Get endpoint
-- Happy path
+    - Add other methods?
+    - Could we do smoke testing here?
+    - Get the repo story thing
+    - Make sure we're on node 20 and pnpm
+    - Run projen
+    - Remove the jest config stuff from the package.json (If it's removed by running projen)

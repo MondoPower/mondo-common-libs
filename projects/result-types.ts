@@ -8,6 +8,7 @@ export function getMondoResultTypeProject(parentProject: LernaProject): void {
     ...commonOptions,
     description: 'Library to use for result type of typescript functions and helper functions.',
     parent: parentProject,
+    packageManager: parentProject.package.packageManager,
     name: '@mondopower/result-types',
     outdir: 'packages/mondo-result-types',
     devDeps: [
