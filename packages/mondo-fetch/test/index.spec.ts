@@ -2,18 +2,53 @@ import {generateFetchMock, fetchSpy} from './testHelper'
 import {ContentTypes, FetchClient, FetchErrorTypes} from '../src/index'
 
 describe('#FetchClient', () => {
-  // top level arrange
-  const url = 'https://stub-url.com.au'
-  const client = new FetchClient()
   const stubData = {test: 100}
-  const payload = JSON.stringify({
-    client_id: 'stub-client-id',
-    client_secret: 'stub-secret',
-    grant_type: 'client_credentials',
-    scope: 'stub-scope',
+  const url = 'https://stub-url.com.au'
+
+  describe('Client', () => {
+    const stubToken = 'stub-token'
+
+    it('Should use a bearer token for a request when it is provided to the class constructor', async () => {
+      // arrange
+      const client = new FetchClient({authorizationToken: stubToken})
+      const mock = generateFetchMock(stubData)
+      fetchSpy.mockImplementation(mock)
+
+      // act
+      await client.get(url)
+
+      // assert
+      expect(fetchSpy).toHaveBeenCalledTimes(1)
+      expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: {'Authorization': `Bearer ${stubToken}`, 'Content-Type': ContentTypes.JSON}, method: 'GET'}))
+    })
+
+    it('Should be able to set an authorization token after the class has been initialised', async () => {
+      // arrange
+      const client = new FetchClient()
+      client.setAuthorizationToken(stubToken)
+      const mock = generateFetchMock(stubData)
+      fetchSpy.mockImplementation(mock)
+
+      // act
+      await client.get(url)
+
+      // assert
+      expect(fetchSpy).toHaveBeenCalledTimes(1)
+      expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: {'Authorization': `Bearer ${stubToken}`, 'Content-Type': ContentTypes.JSON}, method: 'GET'}))
+    })
   })
 
+
   describe('Requests', () => {
+    // top level arrange
+    const client = new FetchClient()
+    const payload = JSON.stringify({
+      client_id: 'stub-client-id',
+      client_secret: 'stub-secret',
+      grant_type: 'client_credentials',
+      scope: 'stub-scope',
+    })
+
     describe('Happy Path', () => {
       it('Should make a make a GET fetch request with the parameters we provide', async () => {
         // arrange
@@ -29,12 +64,12 @@ describe('#FetchClient', () => {
         expect(result).toStrictEqual({isErrored: false, data: stubData})
       })
 
-      it('Should prepend the base url when it is set by the class constructor', async () => {
+      it('Should prepend the base url when it is provided to the class constructor', async () => {
         // arrange
         const mock = generateFetchMock(stubData)
         fetchSpy.mockImplementation(mock)
 
-        const clientWithBaseUrl = new FetchClient('https://stub-base-url.com')
+        const clientWithBaseUrl = new FetchClient({baseUrl: 'https://stub-base-url.com'})
         const path = '/stub/test'
 
         // act
@@ -156,7 +191,7 @@ describe('#FetchClient', () => {
         fetchSpy.mockImplementation(mock)
 
         // act
-        const result = await client.post(url, {body: payload})
+        const result = await client.get(url)
 
         // assert
         expect(result).toStrictEqual({isErrored: true, error: {errorType: FetchErrorTypes.UnknownFailure, message: 'We were not able to determine the type of error for the failed request'}})

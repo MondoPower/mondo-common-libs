@@ -1,16 +1,25 @@
 import {Result, raiseFailure, raiseSuccess} from '@mondopower/result-types'
-import {AbortError, BaseRequestOptions, ContentTypes, FetchErrorTypes, HttpMethods, PostRequestOptions} from './types'
+import {AbortError, BaseRequestOptions, ContentTypes, FetchClientOptions, FetchErrorTypes, HttpMethods, PostRequestOptions} from './types'
 export * from './types'
 
 export class FetchClient {
   /**
    * @param baseUrl An optional parameter that if provided will be prepended to each request
+   * @param authorizationToken An optional token that will be provided to each request
    */
+
+  private authorizationToken?: string | undefined
   public baseUrl?: string | undefined
 
-  constructor(baseUrl?: string) {
-    this.baseUrl = baseUrl
+  constructor(props?: FetchClientOptions) {
+    this.baseUrl = props?.baseUrl
+    this.authorizationToken = props?.authorizationToken
   }
+
+  public setAuthorizationToken(authorizationToken: string) {
+    this.authorizationToken = authorizationToken
+  }
+
 
   /**
    * If a baseUrl is provided it will combine it with the provider url, otherwise returns the provided url
@@ -58,7 +67,7 @@ export class FetchClient {
   }
 
   /**
-   * Checks if the error is caused by a request timeout
+   * Checks if the error is a request timeout error
    * @param error the error we want to check
    * @returns true or false
    */
@@ -81,9 +90,13 @@ export class FetchClient {
     : Promise<Result<T, FetchErrorTypes>> {
 
     const {body, contentType = ContentTypes.JSON, timeout = 30000} = requestOptions ?? {}
+
     const headers = {
       'Content-Type': contentType,
     }
+
+    if (this.authorizationToken)
+      Object.assign(headers, {Authorization: `Bearer ${this.authorizationToken}`})
 
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), timeout)

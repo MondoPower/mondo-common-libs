@@ -9,17 +9,17 @@ export enum HttpMethods {
   GET = 'GET',
 }
 
-
-export interface FetchClientOptions {
-  baseUrl: string;
-}
-
 export enum FetchErrorTypes {
   FailedToGet = 'FailedToGet',
   FailedToPost = 'FailedToPost',
   RequestTimedOut = 'RequestTimedOut',
   FetchError = 'FetchError',
   UnknownFailure = 'UnknownFailure'
+}
+
+export interface FetchClientOptions {
+  baseUrl?: string;
+  authorizationToken?: string;
 }
 
 export interface PostRequestOptions extends BaseRequestOptions {

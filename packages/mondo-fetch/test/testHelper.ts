@@ -9,8 +9,6 @@ afterEach(() => {
   jest.clearAllMocks()
 })
 
-export const consoleErrorStub = jest.spyOn(console, 'error')
-
 export function generateFetchMock(response: Record<any, any>, isOk = true, additionalParams?: Record<any, any>) {
   return jest.fn(() =>
     Promise.resolve({
