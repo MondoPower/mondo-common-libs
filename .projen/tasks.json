@@ -287,7 +287,7 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,lerna,lerna-projen,projen,standard-version,ts-node,typescript"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=lerna,lerna-projen,projen,ts-node,typescript"
         },
         {
           "exec": "npm install"
