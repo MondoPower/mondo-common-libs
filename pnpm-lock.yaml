@@ -6,26 +6,26 @@ settings:
 
 devDependencies:
   '@mondo/projen-projects':
-    specifier: ^2.112.6
-    version: 2.112.6(constructs@10.3.0)(deployable-awscdk-app-ts@0.1.323)(lerna-projen@0.1.336)(projen@0.79.3)
+    specifier: ^2.119.1
+    version: 2.119.1(constructs@10.3.0)(deployable-awscdk-app-ts@0.1.331)(lerna-projen@0.1.343)(projen@0.79.21)
   constructs:
     specifier: ^10.0.0
     version: 10.3.0
   lerna:
-    specifier: '5'
+    specifier: ^5.6.2
     version: 5.6.2
   lerna-projen:
-    specifier: 0.1.336
-    version: 0.1.336(constructs@10.3.0)(projen@0.79.3)
+    specifier: 0.1.343
+    version: 0.1.343(constructs@10.3.0)(projen@0.79.21)
   projen:
-    specifier: ^0.79.3
-    version: 0.79.3(constructs@10.3.0)
+    specifier: ^0.79.21
+    version: 0.79.21(constructs@10.3.0)
   standard-version:
     specifier: ^9
     version: 9.5.0
   ts-node:
     specifier: ^10.9.2
-    version: 10.9.2(@types/node@20.11.4)(typescript@4.9.5)
+    version: 10.9.2(@types/node@20.11.17)(typescript@4.9.5)
   typescript:
     specifier: ^4.9.5
     version: 4.9.5
@@ -812,22 +812,22 @@ packages:
       write-file-atomic: 4.0.2
     dev: true
 
-  /@mondo/projen-projects@2.112.6(constructs@10.3.0)(deployable-awscdk-app-ts@0.1.323)(lerna-projen@0.1.336)(projen@0.79.3):
-    resolution: {integrity: sha512-llFaZjUIrWCVhrlkHPNbZaAK7QRcWtyAJKqXdpAGpbp56+vF3U9NXsWOoJNIL69ocDjJPDXqnL82JcsbaXcWoQ==}
+  /@mondo/projen-projects@2.119.1(constructs@10.3.0)(deployable-awscdk-app-ts@0.1.331)(lerna-projen@0.1.343)(projen@0.79.21):
+    resolution: {integrity: sha512-NiwhWaizd7jRpgbTCeNegFd9Y1TH0kjfB26caeKUW6+osisqogfxgLymYwp0yo4ixKOLmxDKHmEQ5eMIw7LUCw==}
     hasBin: true
     peerDependencies:
       constructs: ^10.3.0
-      deployable-awscdk-app-ts: ^0.1.323
-      lerna-projen: ^0.1.336
-      projen: ^0.79.3
+      deployable-awscdk-app-ts: ^0.1.325
+      lerna-projen: ^0.1.338
+      projen: ^0.79.9
     dependencies:
       change-case: 4.1.2
       commander: 10.0.1
       constructs: 10.3.0
-      deployable-awscdk-app-ts: 0.1.323(constructs@10.3.0)(projen@0.79.3)
+      deployable-awscdk-app-ts: 0.1.331(constructs@10.3.0)(projen@0.79.21)
       fs-extra: 10.1.0
-      lerna-projen: 0.1.336(constructs@10.3.0)(projen@0.79.3)
-      projen: 0.79.3(constructs@10.3.0)
+      lerna-projen: 0.1.343(constructs@10.3.0)(projen@0.79.21)
+      projen: 0.79.21(constructs@10.3.0)
     dev: true
     bundledDependencies:
       - change-case
@@ -1312,8 +1312,8 @@ packages:
     resolution: {integrity: sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==}
     dev: true
 
-  /@types/node@20.11.4:
-    resolution: {integrity: sha512-6I0fMH8Aoy2lOejL3s4LhyIYX34DPwY8bl5xlNjBvUEk8OHrcuzsFt+Ied4LvJihbtXPM+8zUqdydfIti86v9g==}
+  /@types/node@20.11.17:
+    resolution: {integrity: sha512-QmgQZGWu1Yw9TDyAP9ZzpFJKynYNeOvwMJmaxABfieQoVoiVOS6MN1WSpqpRcbeA5+RW82kraAVxCCJg+780Qw==}
     dependencies:
       undici-types: 5.26.5
     dev: true
@@ -2130,14 +2130,14 @@ packages:
     resolution: {integrity: sha512-bd2L678uiWATM6m5Z1VzNCErI3jiGzt6HGY8OVICs40JQq/HALfbyNJmp0UDakEY4pMMaN0Ly5om/B1VI/+xfQ==}
     dev: true
 
-  /deployable-awscdk-app-ts@0.1.323(constructs@10.3.0)(projen@0.79.3):
-    resolution: {integrity: sha512-G8KDUjiCFzCG5JvvfPzbY+4IaNJ68d4HeibcVvXp6brv8jsx2JOAXq9MEWGljVweaXWh7nycj2Jqa0vyO3CEww==}
+  /deployable-awscdk-app-ts@0.1.331(constructs@10.3.0)(projen@0.79.21):
+    resolution: {integrity: sha512-/YDvL+rhzgcwd7uK7wQFbcrVojh9nDdzirbPdV0R3h4hhib3WOzyruqiuosQh40oRaGHbsWkGytALtYCx8O6DQ==}
     peerDependencies:
       constructs: ^10.3.0
-      projen: ^0.79.3
+      projen: ^0.79.17
     dependencies:
       constructs: 10.3.0
-      projen: 0.79.3(constructs@10.3.0)
+      projen: 0.79.21(constructs@10.3.0)
     dev: true
     bundledDependencies:
       - semver
@@ -3065,17 +3065,17 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /lerna-projen@0.1.336(constructs@10.3.0)(projen@0.79.3):
-    resolution: {integrity: sha512-DCaqTSj8NPPmYdYAypQp3eaWHeikfFXRpvrM4+C717bAIL9MAqmeidZGTMwcUfXkh1vVhms9Db1/SfkI2j7elg==}
+  /lerna-projen@0.1.343(constructs@10.3.0)(projen@0.79.21):
+    resolution: {integrity: sha512-9vdgZxnd4QCMhFHENHB7AX/S27hbGqf0jZw1LWKH1FJ3cL0YM4oMN0W/SGFmx3Pv4Cz3jAW9JbZDF5HhELgHXg==}
     hasBin: true
     peerDependencies:
       constructs: ^10.3.0
-      projen: ^0.79.3
+      projen: ^0.79.17
     dependencies:
       commander: 11.1.0
       constructs: 10.3.0
       fs-extra: 9.1.0
-      projen: 0.79.3(constructs@10.3.0)
+      projen: 0.79.21(constructs@10.3.0)
     dev: true
     bundledDependencies:
       - commander
@@ -4081,8 +4081,8 @@ packages:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
     dev: true
 
-  /projen@0.79.3(constructs@10.3.0):
-    resolution: {integrity: sha512-nmYW1YXFNdZNNDlfHsT4sMfE5vMgMbpG061RT+gtuvGkhm+6nYd8+kWo6xk+2J/egoNvXyS5kEbh4fFc41I5hA==}
+  /projen@0.79.21(constructs@10.3.0):
+    resolution: {integrity: sha512-q1tdKuFMW9dIuPU27PqHs5iVAWWQ+9BCbLjihfnEkaCaPMl7F8k//+d7DpJcZhghMiYLcmBdr3N8jKVtw8iDeQ==}
     engines: {node: '>= 16.0.0'}
     hasBin: true
     peerDependencies:
@@ -4097,7 +4097,7 @@ packages:
       fast-json-patch: 3.1.1
       glob: 8.1.0
       ini: 2.0.0
-      semver: 7.5.4
+      semver: 7.6.0
       shx: 0.3.4
       xmlbuilder2: 3.1.1
       yaml: 2.3.4
@@ -4389,6 +4389,14 @@ packages:
 
   /semver@7.5.4:
     resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      lru-cache: 6.0.0
+    dev: true
+
+  /semver@7.6.0:
+    resolution: {integrity: sha512-EnwXhrlwXMk9gKu5/flx5sv/an57AkRplG3hTK68W7FRDN+k+OWBj65M7719OkA82XLBxrcX0KSHj+X5COhOVg==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
@@ -4739,7 +4747,7 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /ts-node@10.9.2(@types/node@20.11.4)(typescript@4.9.5):
+  /ts-node@10.9.2(@types/node@20.11.17)(typescript@4.9.5):
     resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
     hasBin: true
     peerDependencies:
@@ -4758,7 +4766,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.11.4
+      '@types/node': 20.11.17
       acorn: 8.11.3
       acorn-walk: 8.3.2
       arg: 4.1.3
