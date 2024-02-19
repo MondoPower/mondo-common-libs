@@ -17,7 +17,7 @@ export enum FetchErrorTypes {
   UnknownFailure = 'UnknownFailure'
 }
 
-export interface FetchClientOptions {
+export interface FetchClientConfig {
   baseUrl?: string;
   authorizationToken?: string;
 }
@@ -29,6 +29,7 @@ export interface PostRequestOptions extends BaseRequestOptions {
 export interface BaseRequestOptions {
   contentType?: ContentTypes;
   timeout?: number;
+  authorizationToken?: string;
 }
 
 export interface AbortError {

@@ -21,21 +21,6 @@ describe('#FetchClient', () => {
       expect(fetchSpy).toHaveBeenCalledTimes(1)
       expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: {'Authorization': `Bearer ${stubToken}`, 'Content-Type': ContentTypes.JSON}, method: 'GET'}))
     })
-
-    it('Should be able to set an authorization token after the class has been initialised', async () => {
-      // arrange
-      const client = new FetchClient()
-      client.setAuthorizationToken(stubToken)
-      const mock = generateFetchMock(stubData)
-      fetchSpy.mockImplementation(mock)
-
-      // act
-      await client.get(url)
-
-      // assert
-      expect(fetchSpy).toHaveBeenCalledTimes(1)
-      expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: {'Authorization': `Bearer ${stubToken}`, 'Content-Type': ContentTypes.JSON}, method: 'GET'}))
-    })
   })
 
 
@@ -149,6 +134,35 @@ describe('#FetchClient', () => {
 
         // assert
         expect(abortSpy).toHaveBeenCalledTimes(1)
+      })
+
+      it('Should use the token provided in the request', async () => {
+        // arrange
+        const stubToken = 'stub-token'
+        const mock = generateFetchMock(stubData)
+        fetchSpy.mockImplementation(mock)
+
+        // act
+        await client.post(url, {body: payload, authorizationToken: stubToken})
+
+        // assert
+        expect(fetchSpy).toHaveBeenCalledTimes(1)
+        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: {'Content-Type': ContentTypes.JSON, 'Authorization': `Bearer ${stubToken}`}, method: 'POST'}))
+      })
+
+      it('Should overwrite a client config token with a token provided in the request', async () => {
+        // arrange
+        const stubToken = 'stub-token'
+        const clientWithAuthToken = new FetchClient({authorizationToken: 'stub-client-token'})
+        const mock = generateFetchMock(stubData)
+        fetchSpy.mockImplementation(mock)
+
+        // act
+        await clientWithAuthToken.post(url, {body: payload, authorizationToken: stubToken})
+
+        // assert
+        expect(fetchSpy).toHaveBeenCalledTimes(1)
+        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: {'Content-Type': ContentTypes.JSON, 'Authorization': `Bearer ${stubToken}`}, method: 'POST'}))
       })
     })
 
