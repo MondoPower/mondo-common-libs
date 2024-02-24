@@ -26,7 +26,7 @@
   "devDependencies": {
     "constructs": "^10.0.0",
     "lerna": "5",
-    "lerna-projen": "0.1.348",
+    "lerna-projen": "0.1.349",
     "projen": "^0.79.27",
     "standard-version": "^9",
     "ts-node": "^10.9.2",
