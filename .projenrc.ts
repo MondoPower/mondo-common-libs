@@ -2,7 +2,7 @@ import {LernaProject} from 'lerna-projen'
 import {commonOptions, addNvmrc, addAutoMergeWorkflow} from './projects/common'
 import {getMondoResultTypeProject} from './projects/result-types'
 import {getMondoFetchProject} from './projects/mondo-fetch'
-import { NodePackageManager } from 'projen/lib/javascript'
+import {NodePackageManager} from 'projen/lib/javascript'
 
 const workflowNodeVersion = '20'
 

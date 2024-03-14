@@ -7,7 +7,7 @@ export const commonOptions = {
   defaultReleaseBranch: 'main',
   docgen: true,
   repository: 'https://github.com/MondoPower/mondo-common-libs.git',
-  packageManager: javascript.NodePackageManager.NPM,
+  packageManager: javascript.NodePackageManager.PNPM,
   sampleCode: false,
   jest: false,
   npmignore: [
