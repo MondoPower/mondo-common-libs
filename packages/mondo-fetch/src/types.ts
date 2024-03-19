@@ -7,6 +7,8 @@ export enum ContentTypes {
 export enum HttpMethods {
   POST = 'POST',
   GET = 'GET',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
 }
 
 export enum FetchErrorTypes {
@@ -23,6 +25,10 @@ export interface FetchClientConfig {
 }
 
 export interface PostRequestOptions extends BaseRequestOptions {
+  body?: string;
+}
+
+export interface PutRequestOptions extends BaseRequestOptions {
   body?: string;
 }
 

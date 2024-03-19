@@ -1,5 +1,5 @@
 import {Result, raiseFailure, raiseSuccess} from '@mondopower/result-types'
-import {AbortError, BaseRequestOptions, ContentTypes, FetchClientConfig, FetchErrorTypes, HttpMethods, PostRequestOptions} from './types'
+import {AbortError, BaseRequestOptions, ContentTypes, FetchClientConfig, FetchErrorTypes, HttpMethods, PostRequestOptions, PutRequestOptions} from './types'
 export * from './types'
 
 export class FetchClient {
@@ -61,6 +61,37 @@ export class FetchClient {
     return raiseSuccess(result.data)
   }
 
+  /**
+   * Makes a timed fetch PUT request to the provided url
+   * @param url target for the request, this can either be a path built on the base url or a full url
+   * @param requestOptions optional parameters that can be provided
+   * @returns Promise<Result<T, FetchErrorTypes>>
+   */
+  public async put<T>(url: string, requestOptions?: PutRequestOptions): Promise<Result<T, FetchErrorTypes>> {
+    const result = await this.createTimedFetchRequest<T>(this.getUrl(url, this.baseUrl), HttpMethods.PUT, requestOptions)
+    if (result.isErrored) {
+      console.error(result.error.message)
+      return raiseFailure(result.error)
+    }
+
+    return raiseSuccess(result.data)
+  }
+
+  /**
+   * Makes a timed fetch DELETE request to the provided url
+   * @param url target for the request, this can either be a path built on the base url or a full url
+   * @param requestOptions optional parameters that can be provided
+   * @returns Promise<Result<T, FetchErrorTypes>>
+   */
+  public async delete<T>(url: string, requestOptions?: BaseRequestOptions): Promise<Result<T, FetchErrorTypes>> {
+    const result = await this.createTimedFetchRequest<T>(this.getUrl(url, this.baseUrl), HttpMethods.DELETE, requestOptions)
+    if (result.isErrored) {
+      console.error(result.error.message)
+      return raiseFailure(result.error)
+    }
+
+    return raiseSuccess(result.data)
+  }
   /**
    * Checks if the error is a request timeout error
    * @param error the error we want to check

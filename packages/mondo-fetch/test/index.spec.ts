@@ -164,6 +164,34 @@ describe('#FetchClient', () => {
         expect(fetchSpy).toHaveBeenCalledTimes(1)
         expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: {'Content-Type': ContentTypes.JSON, 'Authorization': `Bearer ${stubToken}`}, method: 'POST'}))
       })
+
+      it('Should make a make a PUT fetch request with the parameters we provide', async () => {
+        // arrange
+        const mock = generateFetchMock(stubData)
+        fetchSpy.mockImplementation(mock)
+
+        // act
+        const result = await client.put(url, {body: payload})
+
+        // assert
+        expect(fetchSpy).toHaveBeenCalledTimes(1)
+        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: {'Content-Type': ContentTypes.JSON}, method: 'PUT'}))
+        expect(result).toStrictEqual({isErrored: false, data: stubData})
+      })
+
+      it('Should make a make a DELETE fetch request with the parameters we provide', async () => {
+        // arrange
+        const mock = generateFetchMock(stubData)
+        fetchSpy.mockImplementation(mock)
+
+        // act
+        const result = await client.delete(url)
+
+        // assert
+        expect(fetchSpy).toHaveBeenCalledTimes(1)
+        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: {'Content-Type': ContentTypes.JSON}, method: 'DELETE'}))
+        expect(result).toStrictEqual({isErrored: false, data: stubData})
+      })
     })
 
     describe('Unhappy Path', () => {
