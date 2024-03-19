@@ -16,7 +16,6 @@ export function getMondoResultTypeProject(parentProject: LernaProject): void {
       '@types/chai',
       'mocha',
       '@types/mocha',
-      '@types/babel__core',
       'ts-eager',
     ],
     tsconfig: {

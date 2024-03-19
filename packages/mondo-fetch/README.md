@@ -1,1 +1,1 @@
-# replace this
+This package represents an http client library to perform http requests with interceptors, redaction etc.
