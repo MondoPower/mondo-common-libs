@@ -22,14 +22,17 @@ export enum FetchErrorTypes {
 export interface FetchClientConfig {
   baseUrl?: string;
   authorizationToken?: string;
+  onBehalfOf?: string;
 }
 
 export interface PostRequestOptions extends BaseRequestOptions {
   body?: string;
+  onBehalfOf?: string;
 }
 
 export interface PutRequestOptions extends BaseRequestOptions {
   body?: string;
+  onBehalfOf?: string;
 }
 
 export interface BaseRequestOptions {

@@ -7,6 +7,7 @@ describe('#FetchClient', () => {
 
   describe('Client', () => {
     const stubToken = 'stub-token'
+    const onBehalfOf = 'stub-user'
 
     it('Should use a bearer token for a request when it is provided to the class constructor', async () => {
       // arrange
@@ -20,6 +21,22 @@ describe('#FetchClient', () => {
       // assert
       expect(fetchSpy).toHaveBeenCalledTimes(1)
       expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: {'Authorization': `Bearer ${stubToken}`, 'Content-Type': ContentTypes.JSON}, method: 'GET'}))
+    })
+
+
+    it('Should use an on-behalf of header for a request when it is provided to the class constructor', async () => {
+      // arrange
+      const client = new FetchClient({onBehalfOf})
+      const mock = generateFetchMock(stubData)
+      fetchSpy.mockImplementation(mock)
+      const body = JSON.stringify({data: 'data'})
+
+      // act
+      await client.post(url, {body})
+
+      // assert
+      expect(fetchSpy).toHaveBeenCalledTimes(1)
+      expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: {'X-On-Behalf-Of': onBehalfOf, 'Content-Type': ContentTypes.JSON}, method: 'POST', body}))
     })
   })
 

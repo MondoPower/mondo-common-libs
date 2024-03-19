@@ -6,14 +6,17 @@ export class FetchClient {
   /**
    * @param baseUrl An optional parameter that if provided will be prepended to each request
    * @param authorizationToken An optional token that will be provided to each request
+   * @param onBehalfOf An optional user identifier that will be provided to each request
    */
 
   private readonly authorizationToken?: string | undefined
+  private readonly onBehalfOf?: string | undefined
   private readonly baseUrl?: string | undefined
 
   constructor(config?: FetchClientConfig) {
     this.baseUrl = config?.baseUrl
     this.authorizationToken = config?.authorizationToken
+    this.onBehalfOf = config?.onBehalfOf
   }
 
   /**
@@ -124,6 +127,9 @@ export class FetchClient {
     const authorizationToken = requestOptions?.authorizationToken || this.authorizationToken
     if (authorizationToken)
       Object.assign(headers, {Authorization: `Bearer ${authorizationToken}`})
+    const onBehalfOf = requestOptions?.onBehalfOf || this.onBehalfOf
+    if (onBehalfOf)
+      Object.assign(headers, {'X-On-Behalf-Of': onBehalfOf})
 
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), timeout)
