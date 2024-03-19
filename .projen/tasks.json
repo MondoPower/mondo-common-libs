@@ -294,7 +294,7 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=lerna,lerna-projen,projen,ts-node,typescript"
+          "exec": "pnpm dlx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@mondo/projen-projects,lerna,lerna-projen,projen,ts-node,typescript"
         },
         {
           "exec": "pnpm i --no-frozen-lockfile"

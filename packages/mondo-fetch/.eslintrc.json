@@ -239,7 +239,10 @@
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
-        "vars": "local"
+        "vars": "local",
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
       }
     ],
     "no-unused-vars": "off",
