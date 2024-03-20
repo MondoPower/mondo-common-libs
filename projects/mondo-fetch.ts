@@ -1,5 +1,5 @@
 import {LernaProject} from 'lerna-projen'
-import {commonOptions} from './common'
+import {additionalRules, commonOptions} from './common'
 import {typescript} from 'projen'
 
 export function getMondoFetchProject(parentProject: LernaProject): void {
@@ -32,4 +32,5 @@ export function getMondoFetchProject(parentProject: LernaProject): void {
       'fetch'
     ]
   })
+  mondoFetchProject.eslint?.addRules(additionalRules);
 }
