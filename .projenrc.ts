@@ -11,6 +11,7 @@ const project = new LernaProject({
   projenrcTs: true,
   name: 'mondo-common-libs',
   packageManager: NodePackageManager.PNPM,
+  pnpmVersion: '8',
   releaseToNpm: true,
   publishTasks: true,
   docgen: true,
