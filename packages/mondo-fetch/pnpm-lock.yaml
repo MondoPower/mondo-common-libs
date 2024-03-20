@@ -10,9 +10,6 @@ dependencies:
     version: 1.1.521
 
 devDependencies:
-  '@mondo/projen-projects':
-    specifier: ^2
-    version: 2.124.5(constructs@10.3.0)(deployable-awscdk-app-ts@0.1.354)(lerna-projen@0.1.367)(projen@0.80.11)
   '@types/jest':
     specifier: ^29.5.12
     version: 29.5.12
@@ -34,15 +31,9 @@ devDependencies:
   eslint-import-resolver-typescript:
     specifier: ^2.7.1
     version: 2.7.1(eslint-plugin-import@2.29.1)(eslint@8.57.0)
-  eslint-plugin-check-file:
-    specifier: ^2.7.1
-    version: 2.7.1(eslint@8.57.0)
   eslint-plugin-import:
     specifier: ^2.29.1
     version: 2.29.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-typescript@2.7.1)(eslint@8.57.0)
-  eslint-plugin-no-only-tests:
-    specifier: ^3.1.0
-    version: 3.1.0
   jest:
     specifier: ^29.7.0
     version: 29.7.0(@types/node@18.19.26)
@@ -726,25 +717,6 @@ packages:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
-
-  /@mondo/projen-projects@2.124.5(constructs@10.3.0)(deployable-awscdk-app-ts@0.1.354)(lerna-projen@0.1.367)(projen@0.80.11):
-    resolution: {integrity: sha512-/nAEZxOe+85hN5k+FQhBhhbAH8kFKHeg3ZDOWRtmsU2AGRytFcrpUgZgy5sNq6JuPQHSXO4h3waKRWvCBTVE0A==}
-    hasBin: true
-    peerDependencies:
-      constructs: ^10.3.0
-      deployable-awscdk-app-ts: ^0.1.344
-      lerna-projen: ^0.1.356
-      projen: ^0.80.4
-    dependencies:
-      constructs: 10.3.0
-      deployable-awscdk-app-ts: 0.1.354(constructs@10.3.0)(projen@0.80.11)
-      lerna-projen: 0.1.367(constructs@10.3.0)(projen@0.80.11)
-      projen: 0.80.11(constructs@10.3.0)
-    dev: true
-    bundledDependencies:
-      - change-case
-      - commander
-      - fs-extra
 
   /@mondopower/result-types@1.1.521:
     resolution: {integrity: sha512-tD9pWuBZTgE7tSDqxcTqTo50QA6ocqylMulUvG7YHIoW1VUWVeayDpesUrowC61y9qNgwhLV2Sy7weC208678g==}
@@ -1555,18 +1527,6 @@ packages:
       object-keys: 1.1.1
     dev: true
 
-  /deployable-awscdk-app-ts@0.1.354(constructs@10.3.0)(projen@0.80.11):
-    resolution: {integrity: sha512-eRvjcq82v6262OsPCB4t2u8eJzbB2kQvGRLWbhjsWuDwRsvrh1HXSbTW+A8DZcTPBQI1h0gM41cZRx/qNIlvGw==}
-    peerDependencies:
-      constructs: ^10.3.0
-      projen: ^0.80.11
-    dependencies:
-      constructs: 10.3.0
-      projen: 0.80.11(constructs@10.3.0)
-    dev: true
-    bundledDependencies:
-      - semver
-
   /detect-newline@3.1.0:
     resolution: {integrity: sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==}
     engines: {node: '>=8'}
@@ -1782,17 +1742,6 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-check-file@2.7.1(eslint@8.57.0):
-    resolution: {integrity: sha512-vPCcKE+jHthIVLTwyCv61uygT/day3wuPTk/WASS/xPqbz0hTPxMTYIE5qBXSpSZVPdfj+H1kUAtdaLCYtfHBg==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      eslint: '>=7.28.0'
-    dependencies:
-      eslint: 8.57.0
-      is-glob: 4.0.3
-      micromatch: 4.0.5
-    dev: true
-
   /eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-typescript@2.7.1)(eslint@8.57.0):
     resolution: {integrity: sha512-BbPC0cuExzhiMo4Ff1BTVwHpjjv28C5R+btTOGaCRC7UEz801up0JadwkeSk5Ued6TG34uaczuVuH6qyy5YUxw==}
     engines: {node: '>=4'}
@@ -1826,11 +1775,6 @@ packages:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
       - supports-color
-    dev: true
-
-  /eslint-plugin-no-only-tests@3.1.0:
-    resolution: {integrity: sha512-Lf4YW/bL6Un1R6A76pRZyE1dl1vr31G/ev8UzIc/geCgFWyrKil8hVjYqWVKGB/UIGmb6Slzs9T0wNezdSVegw==}
-    engines: {node: '>=5.0.0'}
     dev: true
 
   /eslint-scope@7.2.2:
@@ -3006,20 +2950,6 @@ packages:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
     engines: {node: '>=6'}
     dev: true
-
-  /lerna-projen@0.1.367(constructs@10.3.0)(projen@0.80.11):
-    resolution: {integrity: sha512-cw2mWRJ0AjHC6rMXQayq4eo7XY9E9X2onILb1pzAc23u9AGVNN0wJi+dbQ1cy1eXm8W8NH8swPMTXqQLqdytNw==}
-    hasBin: true
-    peerDependencies:
-      constructs: ^10.3.0
-      projen: ^0.80.11
-    dependencies:
-      constructs: 10.3.0
-      projen: 0.80.11(constructs@10.3.0)
-    dev: true
-    bundledDependencies:
-      - commander
-      - fs-extra
 
   /leven@3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}

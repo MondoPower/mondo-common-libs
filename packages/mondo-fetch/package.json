@@ -1,5 +1,5 @@
 {
-  "name": "@mondo/mondopower-fetch",
+  "name": "@mondopower/fetch",
   "description": "Library to use to wrap node fetch",
   "repository": {
     "type": "git",
@@ -23,13 +23,7 @@
     "watch": "npx projen watch",
     "projen": "npx projen"
   },
-  "author": {
-    "name": "Mondo Power",
-    "email": "MondoUbiDevelopers@mondo.com.au",
-    "organization": false
-  },
   "devDependencies": {
-    "@mondo/projen-projects": "^2",
     "@types/jest": "^29.5.12",
     "@types/node": "^18",
     "@typescript-eslint/eslint-plugin": "^6",
@@ -37,9 +31,7 @@
     "constructs": "^10.0.0",
     "eslint": "^8",
     "eslint-import-resolver-typescript": "^2.7.1",
-    "eslint-plugin-check-file": "^2.7.1",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-no-only-tests": "^3.1.0",
     "jest": "^29.7.0",
     "jest-junit": "^15",
     "projen": "^0.80.11",

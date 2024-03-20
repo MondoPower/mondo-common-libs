@@ -1,9 +1,9 @@
 import {LernaProject} from 'lerna-projen'
 import {commonOptions} from './common'
-import {MondoTsProject} from '@mondo/projen-projects'
+import {typescript} from 'projen'
 
 export function getMondoFetchProject(parentProject: LernaProject): void {
-  const mondoFetchProject = new MondoTsProject({
+  const mondoFetchProject = new typescript.TypeScriptProject({
     ...commonOptions,
     description: 'Library to use to wrap node fetch',
     parent: parentProject,

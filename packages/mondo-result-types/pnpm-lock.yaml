@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 devDependencies:
-  '@mondo/projen-projects':
-    specifier: ^2
-    version: 2.124.5(constructs@10.3.0)(deployable-awscdk-app-ts@0.1.354)(lerna-projen@0.1.367)(projen@0.80.11)
   '@types/chai':
     specifier: ^4.3.13
     version: 4.3.13
@@ -35,15 +32,9 @@ devDependencies:
   eslint-import-resolver-typescript:
     specifier: ^2.7.1
     version: 2.7.1(eslint-plugin-import@2.29.1)(eslint@8.57.0)
-  eslint-plugin-check-file:
-    specifier: ^2.7.1
-    version: 2.7.1(eslint@8.57.0)
   eslint-plugin-import:
     specifier: ^2.29.1
     version: 2.29.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-typescript@2.7.1)(eslint@8.57.0)
-  eslint-plugin-no-only-tests:
-    specifier: ^3.1.0
-    version: 3.1.0
   mocha:
     specifier: ^9.2.2
     version: 9.2.2
@@ -127,25 +118,6 @@ packages:
   /@iarna/toml@2.2.5:
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
     dev: true
-
-  /@mondo/projen-projects@2.124.5(constructs@10.3.0)(deployable-awscdk-app-ts@0.1.354)(lerna-projen@0.1.367)(projen@0.80.11):
-    resolution: {integrity: sha512-/nAEZxOe+85hN5k+FQhBhhbAH8kFKHeg3ZDOWRtmsU2AGRytFcrpUgZgy5sNq6JuPQHSXO4h3waKRWvCBTVE0A==}
-    hasBin: true
-    peerDependencies:
-      constructs: ^10.3.0
-      deployable-awscdk-app-ts: ^0.1.344
-      lerna-projen: ^0.1.356
-      projen: ^0.80.4
-    dependencies:
-      constructs: 10.3.0
-      deployable-awscdk-app-ts: 0.1.354(constructs@10.3.0)(projen@0.80.11)
-      lerna-projen: 0.1.367(constructs@10.3.0)(projen@0.80.11)
-      projen: 0.80.11(constructs@10.3.0)
-    dev: true
-    bundledDependencies:
-      - change-case
-      - commander
-      - fs-extra
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -758,18 +730,6 @@ packages:
       object-keys: 1.1.1
     dev: true
 
-  /deployable-awscdk-app-ts@0.1.354(constructs@10.3.0)(projen@0.80.11):
-    resolution: {integrity: sha512-eRvjcq82v6262OsPCB4t2u8eJzbB2kQvGRLWbhjsWuDwRsvrh1HXSbTW+A8DZcTPBQI1h0gM41cZRx/qNIlvGw==}
-    peerDependencies:
-      constructs: ^10.3.0
-      projen: ^0.80.11
-    dependencies:
-      constructs: 10.3.0
-      projen: 0.80.11(constructs@10.3.0)
-    dev: true
-    bundledDependencies:
-      - semver
-
   /diff@5.0.0:
     resolution: {integrity: sha512-/VTCrvm5Z0JGty/BWHljh+BAiw3IK+2j87NGMu8Nwc/f48WoDAC395uomO9ZD117ZOBaHmkX1oyLvkVM/aIT3w==}
     engines: {node: '>=0.3.1'}
@@ -952,17 +912,6 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-check-file@2.7.1(eslint@8.57.0):
-    resolution: {integrity: sha512-vPCcKE+jHthIVLTwyCv61uygT/day3wuPTk/WASS/xPqbz0hTPxMTYIE5qBXSpSZVPdfj+H1kUAtdaLCYtfHBg==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      eslint: '>=7.28.0'
-    dependencies:
-      eslint: 8.57.0
-      is-glob: 4.0.3
-      micromatch: 4.0.5
-    dev: true
-
   /eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-typescript@2.7.1)(eslint@8.57.0):
     resolution: {integrity: sha512-BbPC0cuExzhiMo4Ff1BTVwHpjjv28C5R+btTOGaCRC7UEz801up0JadwkeSk5Ued6TG34uaczuVuH6qyy5YUxw==}
     engines: {node: '>=4'}
@@ -996,11 +945,6 @@ packages:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
       - supports-color
-    dev: true
-
-  /eslint-plugin-no-only-tests@3.1.0:
-    resolution: {integrity: sha512-Lf4YW/bL6Un1R6A76pRZyE1dl1vr31G/ev8UzIc/geCgFWyrKil8hVjYqWVKGB/UIGmb6Slzs9T0wNezdSVegw==}
-    engines: {node: '>=5.0.0'}
     dev: true
 
   /eslint-scope@7.2.2:
@@ -1613,20 +1557,6 @@ packages:
     dependencies:
       json-buffer: 3.0.1
     dev: true
-
-  /lerna-projen@0.1.367(constructs@10.3.0)(projen@0.80.11):
-    resolution: {integrity: sha512-cw2mWRJ0AjHC6rMXQayq4eo7XY9E9X2onILb1pzAc23u9AGVNN0wJi+dbQ1cy1eXm8W8NH8swPMTXqQLqdytNw==}
-    hasBin: true
-    peerDependencies:
-      constructs: ^10.3.0
-      projen: ^0.80.11
-    dependencies:
-      constructs: 10.3.0
-      projen: 0.80.11(constructs@10.3.0)
-    dev: true
-    bundledDependencies:
-      - commander
-      - fs-extra
 
   /levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}

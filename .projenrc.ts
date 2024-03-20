@@ -18,7 +18,6 @@ const project = new LernaProject({
   sinceLastRelease: true,
   devDeps: [
     'lerna-projen',
-    '@mondo/projen-projects',
   ],
   majorVersion: 1,
   stale: true,
