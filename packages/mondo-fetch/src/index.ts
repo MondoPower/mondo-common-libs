@@ -1,5 +1,5 @@
 import {Result, raiseFailure, raiseSuccess} from '@mondopower/result-types'
-import {AbortError, ContentTypes, FetchClientConfig, FetchErrorTypes, RequestOptionsWithoutBody, HttpMethods, RequestOptions} from './types'
+import {ContentTypes, FetchClientConfig, FetchErrorTypes, RequestOptionsWithoutBody, HttpMethods, RequestOptions} from './types'
 export * from './types'
 
 export class FetchClient {
@@ -86,17 +86,18 @@ export class FetchClient {
 
     return raiseSuccess(result.data)
   }
+
   /**
    * Checks if the error is a request timeout error
    * @param error the error we want to check
    * @returns true or false
    */
-  private isTimeoutError(error: unknown): error is AbortError {
+  private isAbortError(error: unknown): error is Error {
     if (typeof error !== 'object' || !error)
       return false
 
-    const typedError = error as AbortError
-    return typedError.name === 'TimeoutError'
+    const typedError = error as Error
+    return typedError.name === 'AbortError'
   }
 
   private hasBody(requestOptions: RequestOptions | RequestOptionsWithoutBody | undefined): requestOptions is RequestOptions {
@@ -137,27 +138,25 @@ export class FetchClient {
 
     try {
       const result = await fetch(url, requestInfo)
-      return raiseFailure({
-        errorType: FetchErrorTypes.FetchError,
-        message: `The request failed due to ${result.statusText}`,
-      })
+      if (!result.ok)
+        return raiseFailure({
+          errorType: FetchErrorTypes.FetchError,
+          message: `The request failed due to ${result.statusText}`,
+        })
 
       return raiseSuccess(await result.json() as T)
     } catch (error) {
-
-      const isTimeOutErrorType = this.isTimeoutError(error)
-      if (isTimeOutErrorType)
+      const isAbortError = this.isAbortError(error)
+      if (isAbortError)
         return raiseFailure({
           errorType: FetchErrorTypes.RequestTimedOut,
-          message: `The request has reached the maximum duration of ${timeout} milliseconds`,
+          message: `The request has reached the maximum duration of ${timeout} milliseconds, ${error.message}`,
         })
 
-      const message = 'We were not able to determine the type of error for the failed request'
-      console.error(message)
-      console.error('Error', error)
+      const typeError = error as TypeError
       return raiseFailure({
         errorType: FetchErrorTypes.UnknownFailure,
-        message: message,
+        message: typeError.message,
       })
     }
 

@@ -57,7 +57,3 @@ export interface RequestOptions {
    */
   onBehalfOf?: string;
 }
-
-export interface AbortError {
-  name: string;
-}
