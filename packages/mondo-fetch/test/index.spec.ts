@@ -16,8 +16,8 @@ describe('#FetchClient', () => {
       const client = new FetchClient({authorizationToken: stubToken})
       const mock = generateFetchMock(stubData)
       fetchSpy.mockImplementation(mock)
-        const expectedHeaders = jsonHeaders
-        expectedHeaders.set('Authorization', `Bearer ${stubToken}`)
+      const expectedHeaders = jsonHeaders
+      expectedHeaders.set('Authorization', `Bearer ${stubToken}`)
 
       // act
       await client.get(url)
@@ -33,8 +33,8 @@ describe('#FetchClient', () => {
       const mock = generateFetchMock(stubData)
       fetchSpy.mockImplementation(mock)
       const body = JSON.stringify({data: 'data'})
-        const expectedHeaders = jsonHeaders
-        expectedHeaders.set('X-On-Behalf-Of', onBehalfOf)
+      const expectedHeaders = jsonHeaders
+      expectedHeaders.set('X-On-Behalf-Of', onBehalfOf)
 
       // act
       await client.post(url, {body})
@@ -279,7 +279,7 @@ describe('#FetchClient', () => {
         const mock = jest.fn(() =>
           Promise.reject({
             name: 'AbortError',
-            message: 'stub-error-message'
+            message: 'stub-error-message',
           }),
         ) as jest.Mock
         fetchSpy.mockImplementation(mock)
