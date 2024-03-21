@@ -4,6 +4,8 @@ import {ContentTypes, FetchClient, FetchErrorTypes} from '../src/index'
 describe('#FetchClient', () => {
   const stubData = {test: 100}
   const url = 'https://stub-url.com.au/'
+  const jsonHeaders = new Headers({'Content-Type': ContentTypes.JSON})
+
 
   describe('Client', () => {
     const stubToken = 'stub-token'
@@ -14,15 +16,16 @@ describe('#FetchClient', () => {
       const client = new FetchClient({authorizationToken: stubToken})
       const mock = generateFetchMock(stubData)
       fetchSpy.mockImplementation(mock)
+        const expectedHeaders = jsonHeaders
+        expectedHeaders.set('Authorization', `Bearer ${stubToken}`)
 
       // act
       await client.get(url)
 
       // assert
       expect(fetchSpy).toHaveBeenCalledTimes(1)
-      expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: {'Authorization': `Bearer ${stubToken}`, 'Content-Type': ContentTypes.JSON}, method: 'GET'}))
+      expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: expectedHeaders, method: 'GET'}))
     })
-
 
     it('Should use an on-behalf of header for a request when it is provided to the class constructor', async () => {
       // arrange
@@ -30,13 +33,15 @@ describe('#FetchClient', () => {
       const mock = generateFetchMock(stubData)
       fetchSpy.mockImplementation(mock)
       const body = JSON.stringify({data: 'data'})
+        const expectedHeaders = jsonHeaders
+        expectedHeaders.set('X-On-Behalf-Of', onBehalfOf)
 
       // act
       await client.post(url, {body})
 
       // assert
       expect(fetchSpy).toHaveBeenCalledTimes(1)
-      expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: {'X-On-Behalf-Of': onBehalfOf, 'Content-Type': ContentTypes.JSON}, method: 'POST', body}))
+      expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: expectedHeaders, method: 'POST', body}))
     })
   })
 
@@ -114,7 +119,7 @@ describe('#FetchClient', () => {
 
         // assert
         expect(fetchSpy).toHaveBeenCalledTimes(1)
-        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: {'Content-Type': ContentTypes.JSON}, method: 'GET'}))
+        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: jsonHeaders, method: 'GET'}))
         expect(result).toStrictEqual({isErrored: false, data: stubData})
       })
 
@@ -131,7 +136,7 @@ describe('#FetchClient', () => {
 
         // assert
         expect(fetchSpy).toHaveBeenCalledTimes(1)
-        expect(fetchSpy).toHaveBeenCalledWith('https://stub-base-url.com/stub/test', expect.objectContaining({headers: {'Content-Type': ContentTypes.JSON}, method: 'GET'}))
+        expect(fetchSpy).toHaveBeenCalledWith('https://stub-base-url.com/stub/test', expect.objectContaining({headers: jsonHeaders, method: 'GET'}))
         expect(result).toStrictEqual({isErrored: false, data: stubData})
       })
 
@@ -145,7 +150,7 @@ describe('#FetchClient', () => {
 
         // assert
         expect(fetchSpy).toHaveBeenCalledTimes(1)
-        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: {'Content-Type': ContentTypes.JSON}, method: 'POST'}))
+        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: jsonHeaders, method: 'POST'}))
         expect(result).toStrictEqual({isErrored: false, data: stubData})
       })
 
@@ -159,7 +164,7 @@ describe('#FetchClient', () => {
 
         // assert
         expect(fetchSpy).toHaveBeenCalledTimes(1)
-        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: {'Content-Type': ContentTypes.XFORM}, method: 'POST'}))
+        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: new Headers({'Content-Type': ContentTypes.XFORM}), method: 'POST'}))
         expect(result).toStrictEqual({isErrored: false, data: stubData})
       })
 
@@ -210,13 +215,15 @@ describe('#FetchClient', () => {
         const stubToken = 'stub-token'
         const mock = generateFetchMock(stubData)
         fetchSpy.mockImplementation(mock)
+        const expectedHeaders = jsonHeaders
+        expectedHeaders.set('Authorization', `Bearer ${stubToken}`)
 
         // act
         await client.post(url, {body: payload, authorizationToken: stubToken})
 
         // assert
         expect(fetchSpy).toHaveBeenCalledTimes(1)
-        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: {'Content-Type': ContentTypes.JSON, 'Authorization': `Bearer ${stubToken}`}, method: 'POST'}))
+        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: expectedHeaders, method: 'POST'}))
       })
 
       it('Should overwrite a client config token with a token provided in the request', async () => {
@@ -225,13 +232,15 @@ describe('#FetchClient', () => {
         const clientWithAuthToken = new FetchClient({authorizationToken: 'stub-client-token'})
         const mock = generateFetchMock(stubData)
         fetchSpy.mockImplementation(mock)
+        const expectedHeaders = jsonHeaders
+        expectedHeaders.set('Authorization', `Bearer ${stubToken}`)
 
         // act
         await clientWithAuthToken.post(url, {body: payload, authorizationToken: stubToken})
 
         // assert
         expect(fetchSpy).toHaveBeenCalledTimes(1)
-        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: {'Content-Type': ContentTypes.JSON, 'Authorization': `Bearer ${stubToken}`}, method: 'POST'}))
+        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: expectedHeaders, method: 'POST'}))
       })
 
       it('Should make a make a PUT fetch request with the parameters we provide', async () => {
@@ -244,7 +253,7 @@ describe('#FetchClient', () => {
 
         // assert
         expect(fetchSpy).toHaveBeenCalledTimes(1)
-        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: {'Content-Type': ContentTypes.JSON}, method: 'PUT'}))
+        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({body: payload, headers: jsonHeaders, method: 'PUT'}))
         expect(result).toStrictEqual({isErrored: false, data: stubData})
       })
 
@@ -253,12 +262,13 @@ describe('#FetchClient', () => {
         const mock = generateFetchMock(stubData)
         fetchSpy.mockImplementation(mock)
 
+
         // act
         const result = await client.delete(url)
 
         // assert
         expect(fetchSpy).toHaveBeenCalledTimes(1)
-        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: {'Content-Type': ContentTypes.JSON}, method: 'DELETE'}))
+        expect(fetchSpy).toHaveBeenCalledWith(url, expect.objectContaining({headers: new Headers({'Content-Type': ContentTypes.JSON}), method: 'DELETE'}))
         expect(result).toStrictEqual({isErrored: false, data: stubData})
       })
     })
@@ -268,7 +278,8 @@ describe('#FetchClient', () => {
         // arrange
         const mock = jest.fn(() =>
           Promise.reject({
-            name: 'TimeoutError',
+            name: 'AbortError',
+            message: 'stub-error-message'
           }),
         ) as jest.Mock
         fetchSpy.mockImplementation(mock)
@@ -277,7 +288,7 @@ describe('#FetchClient', () => {
         const result = await client.post(url, {body: payload})
 
         // assert
-        expect(result).toStrictEqual({isErrored: true, error: {errorType: FetchErrorTypes.RequestTimedOut, message: 'The request has reached the maximum duration of 30000 milliseconds'}})
+        expect(result).toStrictEqual({isErrored: true, error: {errorType: FetchErrorTypes.RequestTimedOut, message: 'The request has reached the maximum duration of 30000 milliseconds, stub-error-message'}})
       })
 
       it('Should return a fetch error when the response is not ok', async () => {
@@ -296,7 +307,8 @@ describe('#FetchClient', () => {
         // arrange
         const mock = jest.fn(() =>
           Promise.reject({
-            'stub-unknown-error': 'unknown-error-message',
+            name: 'stubErrorName',
+            message: 'stub-error-message',
           }),
         ) as jest.Mock
         fetchSpy.mockImplementation(mock)
@@ -305,7 +317,7 @@ describe('#FetchClient', () => {
         const result = await client.get(url)
 
         // assert
-        expect(result).toStrictEqual({isErrored: true, error: {errorType: FetchErrorTypes.UnknownFailure, message: 'We were not able to determine the type of error for the failed request'}})
+        expect(result).toStrictEqual({isErrored: true, error: {errorType: FetchErrorTypes.UnknownFailure, message: 'stub-error-message'}})
       })
     })
   })

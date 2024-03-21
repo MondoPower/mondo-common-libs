@@ -1,4 +1,3 @@
-
 export let fetchSpy: jest.SpyInstance<Promise<Response>>
 
 beforeEach(() => {
