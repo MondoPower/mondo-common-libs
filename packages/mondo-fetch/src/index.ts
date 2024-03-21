@@ -99,7 +99,7 @@ export class FetchClient {
     return typedError.name === 'TimeoutError'
   }
 
-  private isRequestOptions(requestOptions: RequestOptions | RequestOptionsWithoutBody | undefined): requestOptions is RequestOptions {
+  private hasBody(requestOptions: RequestOptions | RequestOptionsWithoutBody | undefined): requestOptions is RequestOptions {
     return !!requestOptions && ('body' in requestOptions)
   }
 
@@ -115,29 +115,32 @@ export class FetchClient {
 
     const {contentType = ContentTypes.JSON, timeout = 30000} = requestOptions ?? {}
 
-    const headers = {
-      'Content-Type': contentType,
-    }
+    const headers = new Headers()
+    headers.set('Content-Type', contentType)
 
     const authorizationToken = requestOptions?.authorizationToken ?? this.authorizationToken
     if (authorizationToken)
-      Object.assign(headers, {Authorization: `Bearer ${authorizationToken}`})
+      headers.set('Authorization', `Bearer ${authorizationToken}`)
 
     const onBehalfOf = requestOptions?.onBehalfOf ?? this.onBehalfOf
     if (onBehalfOf)
-      Object.assign(headers, {'X-On-Behalf-Of': onBehalfOf})
+      headers.set('X-On-Behalf-Of', onBehalfOf)
 
-    const baseFetchRequest = {signal: AbortSignal.timeout(timeout), method, headers}
-    const requestOptionsHasBody = this.isRequestOptions(requestOptions)
+    const requestInfo: RequestInit = {
+      signal: AbortSignal.timeout(timeout),
+      method,
+      headers,
+    }
+
+    if (this.hasBody(requestOptions))
+      requestInfo.body = requestOptions.body
 
     try {
-      const result = await fetch(url, requestOptionsHasBody ? {...baseFetchRequest, body: requestOptions.body} : baseFetchRequest)
-
-      if (!result.ok)
-        return raiseFailure({
-          errorType: FetchErrorTypes.FetchError,
-          message: `The request failed due to ${result.statusText}`,
-        })
+      const result = await fetch(url, requestInfo)
+      return raiseFailure({
+        errorType: FetchErrorTypes.FetchError,
+        message: `The request failed due to ${result.statusText}`,
+      })
 
       return raiseSuccess(await result.json() as T)
     } catch (error) {
