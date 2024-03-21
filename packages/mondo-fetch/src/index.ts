@@ -7,11 +7,6 @@ export class FetchClient {
   private readonly onBehalfOf?: string | undefined
   private readonly baseUrl?: string | undefined
 
-  /**
-   * @param baseUrl An optional parameter that if provided will be prepended to each request
-   * @param authorizationToken An optional token that will be provided to each request
-   * @param onBehalfOf An optional user identifier that will be provided to each request
-   */
   constructor(config?: FetchClientConfig) {
     this.baseUrl = config?.baseUrl
     this.authorizationToken = config?.authorizationToken
@@ -25,13 +20,7 @@ export class FetchClient {
    * @returns A url
    */
   private getUrl(providedUrl: string, baseUrl?: string): string {
-    if (!baseUrl)
-      return providedUrl
-
-    if (!providedUrl.startsWith('/') && !baseUrl.endsWith('/'))
-      return `${baseUrl}/${providedUrl}`
-
-    return `${baseUrl}${providedUrl}`
+    return new URL(providedUrl, baseUrl).href
   }
 
   /**
@@ -107,7 +96,7 @@ export class FetchClient {
       return false
 
     const typedError = error as AbortError
-    return typedError.name === 'AbortError'
+    return typedError.name === 'TimeoutError'
   }
 
   private isRequestOptions(requestOptions: RequestOptions | RequestOptionsWithoutBody | undefined): requestOptions is RequestOptions {
@@ -126,7 +115,6 @@ export class FetchClient {
 
     const {contentType = ContentTypes.JSON, timeout = 30000} = requestOptions ?? {}
 
-
     const headers = {
       'Content-Type': contentType,
     }
@@ -139,16 +127,11 @@ export class FetchClient {
     if (onBehalfOf)
       Object.assign(headers, {'X-On-Behalf-Of': onBehalfOf})
 
-    const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), timeout)
-
-    const baseFetchRequest = {signal: controller.signal, method, headers}
+    const baseFetchRequest = {signal: AbortSignal.timeout(timeout), method, headers}
     const requestOptionsHasBody = this.isRequestOptions(requestOptions)
 
     try {
-      controller.abort()
       const result = await fetch(url, requestOptionsHasBody ? {...baseFetchRequest, body: requestOptions.body} : baseFetchRequest)
-      clearTimeout(timeoutId)
 
       if (!result.ok)
         return raiseFailure({
@@ -158,7 +141,6 @@ export class FetchClient {
 
       return raiseSuccess(await result.json() as T)
     } catch (error) {
-      clearTimeout(timeoutId)
 
       const isTimeOutErrorType = this.isTimeoutError(error)
       if (isTimeOutErrorType)

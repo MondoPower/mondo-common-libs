@@ -3,7 +3,7 @@ import {ContentTypes, FetchClient, FetchErrorTypes} from '../src/index'
 
 describe('#FetchClient', () => {
   const stubData = {test: 100}
-  const url = 'https://stub-url.com.au'
+  const url = 'https://stub-url.com.au/'
 
   describe('Client', () => {
     const stubToken = 'stub-token'
@@ -40,6 +40,58 @@ describe('#FetchClient', () => {
     })
   })
 
+  describe('getUrl', () => {
+    it('Returns a valid url when there is an invalid url due to extra slashes(/)', async () => {
+      // arrange
+      const client = new FetchClient({baseUrl: `${url}`})
+      const providedUrl = '/stub/test'
+
+      const mock = generateFetchMock(stubData)
+      fetchSpy.mockImplementation(mock)
+
+      const expectedUrl = `${url}stub/test`
+
+      // act
+      await client.get(providedUrl)
+
+      // assert
+      expect(fetchSpy).toHaveBeenCalledWith(expectedUrl, expect.anything())
+    })
+
+    it('Returns a valid url when there is an invalid url due to missing slashes(/)', async () => {
+      // arrange
+      const client = new FetchClient({baseUrl: url.substring(0, url.length -1)})
+      const providedUrl = 'stub/test'
+
+      const mock = generateFetchMock(stubData)
+      fetchSpy.mockImplementation(mock)
+
+      const expectedUrl = `${url}stub/test`
+
+      // act
+      await client.get(providedUrl)
+
+      // assert
+      expect(fetchSpy).toHaveBeenCalledWith(expectedUrl, expect.anything())
+    })
+
+    it('Returns a url there is no base url provided', async () => {
+      // arrange
+      const client = new FetchClient()
+      const providedUrl = `${url}/stub/test`
+
+      const mock = generateFetchMock(stubData)
+      fetchSpy.mockImplementation(mock)
+
+      const expectedUrl = `${url}/stub/test`
+
+      // act
+      await client.get(providedUrl)
+
+      // assert
+      expect(fetchSpy).toHaveBeenCalledWith(expectedUrl, expect.anything())
+    })
+  })
 
   describe('Requests', () => {
     // top level arrange
@@ -117,13 +169,13 @@ describe('#FetchClient', () => {
         fetchSpy.mockImplementation(mock)
         const timeout = 99999
 
-        const timeoutSpy = jest.spyOn(global, 'setTimeout')
+        const timeoutSpy = jest.spyOn(AbortSignal, 'timeout')
 
         // act
         await client.post(url, {body: payload, timeout})
 
         // assert
-        expect(timeoutSpy).toHaveBeenCalledWith(expect.anything(), timeout)
+        expect(timeoutSpy).toHaveBeenCalledWith(timeout)
       })
 
       it('Should use the default timeout if none are provided', async () => {
@@ -131,23 +183,23 @@ describe('#FetchClient', () => {
         const mock = generateFetchMock(stubData)
         fetchSpy.mockImplementation(mock)
 
-        const timeoutSpy = jest.spyOn(global, 'setTimeout')
+        const timeoutSpy = jest.spyOn(AbortSignal, 'timeout')
 
         // act
         await client.post(url, {body: payload})
 
         // assert
-        expect(timeoutSpy).toHaveBeenCalledWith(expect.anything(), 30000)
+        expect(timeoutSpy).toHaveBeenCalledWith(30000)
       })
 
-      it('Should invoke an abort request for all post requests', async () => {
+      it('Should invoke a timeout signal for any requests', async () => {
         // arrange
-        const abortSpy = jest.spyOn(AbortController.prototype, 'abort')
+        const abortSpy = jest.spyOn(AbortSignal, 'timeout')
         const mock = generateFetchMock(stubData)
         fetchSpy.mockImplementation(mock)
 
         // act
-        await client.post(url, {body: payload})
+        await client.post(url, {body: payload, timeout: 0})
 
         // assert
         expect(abortSpy).toHaveBeenCalledTimes(1)
@@ -216,7 +268,7 @@ describe('#FetchClient', () => {
         // arrange
         const mock = jest.fn(() =>
           Promise.reject({
-            name: 'AbortError',
+            name: 'TimeoutError',
           }),
         ) as jest.Mock
         fetchSpy.mockImplementation(mock)

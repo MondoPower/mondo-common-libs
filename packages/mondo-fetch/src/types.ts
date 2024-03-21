@@ -20,27 +20,41 @@ export enum FetchErrorTypes {
 }
 
 export interface FetchClientConfig {
+  /**
+   * An optional parameter that if provided will be prepended to each request
+   */
   baseUrl?: string;
+  /**
+   * An optional token that will be provided to each request
+   */
   authorizationToken?: string;
+  /**
+   * An optional user identifier that will be provided to each request
+   */
   onBehalfOf?: string;
 }
 
-
 export type RequestOptionsWithoutBody = Omit<RequestOptions, 'body'>
-
-/**
-   * RequestOptions that are optional parameters used for requests
-   * @param contentType The type of content @default 'application/json; charset=utf-8'
-   * @param timeout Optional parameter that dictates how long a request takes in milliseconds before timing out @default 30000
-   * @param authorizationToken An optional token that will be provided to each request @default undefined
-   * @param body Optional parameter that contains a payload to send with the request @default undefined
-   * @param onBehalfOf An optional user identifier that will be provided to each request @default undefined
-   */
 export interface RequestOptions {
+  /**
+   * The type of content @default 'application/json; charset=utf-8'
+   */
   contentType?: ContentTypes;
+  /**
+   *  Optional parameter that dictates how long a request takes in milliseconds before timing out @default 30000
+   */
   timeout?: number;
+  /**
+   * An optional token that will be provided to each request @default undefined
+   */
   authorizationToken?: string;
+  /**
+   * Optional parameter that contains a payload to send with the request @default undefined
+   */
   body?: string;
+  /**
+   * An optional user identifier that will be provided to each request @default undefined
+   */
   onBehalfOf?: string;
 }
 
