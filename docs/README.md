@@ -1,1 +1,2 @@
 - ## [@mondopower/result-types](../packages/mondo-result-types/README.md)
+- ## [@mondopower/fetch](../packages/mondo-fetch/README.md)

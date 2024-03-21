@@ -22,12 +22,16 @@ jobs:
       - name: Fetch tags
         if: ${{ github.workflow == 'build' }}
         run: if [ $(git rev-parse --is-shallow-repository) != "false" ] ; then git fetch origin main --tags --unshallow; fi
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: "8"
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
       - name: Install dependencies
-        run: npm install
+        run: pnpm i --no-frozen-lockfile
       - name: build
         run: npx projen build
       - name: Find mutations

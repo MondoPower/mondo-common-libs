@@ -29,6 +29,7 @@ jspm_packages/
 *.tgz
 .yarn-integrity
 .cache
+!/.npmrc
 !/test/
 !/tsconfig.json
 !/tsconfig.dev.json

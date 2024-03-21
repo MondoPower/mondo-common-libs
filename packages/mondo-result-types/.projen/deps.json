@@ -1,10 +1,6 @@
 {
   "dependencies": [
     {
-      "name": "@types/babel__core",
-      "type": "build"
-    },
-    {
       "name": "@types/chai",
       "type": "build"
     },
