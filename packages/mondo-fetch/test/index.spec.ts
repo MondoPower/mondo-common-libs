@@ -48,7 +48,7 @@ describe('#FetchClient', () => {
   describe('getUrl', () => {
     it('Returns a valid url when there is an invalid url due to extra slashes(/)', async () => {
       // arrange
-      const client = new FetchClient({baseUrl: `${url}`})
+      const client = new FetchClient({baseUrl: url})
       const providedUrl = '/stub/test'
 
       const mock = generateFetchMock(stubData)
@@ -89,6 +89,40 @@ describe('#FetchClient', () => {
       fetchSpy.mockImplementation(mock)
 
       const expectedUrl = `${url}/stub/test`
+
+      // act
+      await client.get(providedUrl)
+
+      // assert
+      expect(fetchSpy).toHaveBeenCalledWith(expectedUrl, expect.anything())
+    })
+
+    it('Returns a url if there is a path in the base url provided', async () => {
+      // arrange
+      const client = new FetchClient({baseUrl: `${url}path/`})
+      const providedUrl = 'stub/test'
+
+      const mock = generateFetchMock(stubData)
+      fetchSpy.mockImplementation(mock)
+
+      const expectedUrl = `${url}path/stub/test`
+
+      // act
+      await client.get(providedUrl)
+
+      // assert
+      expect(fetchSpy).toHaveBeenCalledWith(expectedUrl, expect.anything())
+    })
+
+    it('Returns a url if there is a base url provided and a full url', async () => {
+      // arrange
+      const client = new FetchClient({baseUrl: `${url}/path`})
+      const providedUrl = 'https://stub.com/stub/test'
+
+      const mock = generateFetchMock(stubData)
+      fetchSpy.mockImplementation(mock)
+
+      const expectedUrl = providedUrl
 
       // act
       await client.get(providedUrl)

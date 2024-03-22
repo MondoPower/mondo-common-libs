@@ -19,8 +19,9 @@ export class FetchClient {
    * @param baseUrl optional parameter that can be set when the client is created
    * @returns A url
    */
-  private getUrl(providedUrl: string, baseUrl?: string): string {
-    return new URL(providedUrl, baseUrl).href
+  private getUrl(providedUrl: string): string {
+    return new URL(providedUrl, this.baseUrl).href
+
   }
 
   /**
@@ -30,13 +31,7 @@ export class FetchClient {
    * @returns Promise<Result<T, FetchErrorTypes>>
    */
   async get<T>(url: string, requestOptions?: RequestOptionsWithoutBody): Promise<Result<T, FetchErrorTypes>> {
-    const result = await this.createTimedFetchRequest<T>(this.getUrl(url, this.baseUrl), HttpMethods.GET, requestOptions)
-    if (result.isErrored) {
-      console.error(result.error.message)
-      return raiseFailure(result.error)
-    }
-
-    return raiseSuccess(result.data)
+    return this.createTimedFetchRequest<T>(this.getUrl(url), HttpMethods.GET, requestOptions)
   }
 
   /**
@@ -46,13 +41,7 @@ export class FetchClient {
    * @returns Promise<Result<T, FetchErrorTypes>>
    */
   public async post<T>(url: string, requestOptions?: RequestOptions): Promise<Result<T, FetchErrorTypes>> {
-    const result = await this.createTimedFetchRequest<T>(this.getUrl(url, this.baseUrl), HttpMethods.POST, requestOptions)
-    if (result.isErrored) {
-      console.error(result.error.message)
-      return raiseFailure(result.error)
-    }
-
-    return raiseSuccess(result.data)
+    return this.createTimedFetchRequest<T>(this.getUrl(url), HttpMethods.POST, requestOptions)
   }
 
   /**
@@ -62,13 +51,7 @@ export class FetchClient {
    * @returns Promise<Result<T, FetchErrorTypes>>
    */
   public async put<T>(url: string, requestOptions?: RequestOptions): Promise<Result<T, FetchErrorTypes>> {
-    const result = await this.createTimedFetchRequest<T>(this.getUrl(url, this.baseUrl), HttpMethods.PUT, requestOptions)
-    if (result.isErrored) {
-      console.error(result.error.message)
-      return raiseFailure(result.error)
-    }
-
-    return raiseSuccess(result.data)
+    return this.createTimedFetchRequest<T>(this.getUrl(url), HttpMethods.PUT, requestOptions)
   }
 
   /**
@@ -78,13 +61,7 @@ export class FetchClient {
    * @returns Promise<Result<T, FetchErrorTypes>>
    */
   public async delete<T>(url: string, requestOptions?: RequestOptionsWithoutBody): Promise<Result<T, FetchErrorTypes>> {
-    const result = await this.createTimedFetchRequest<T>(this.getUrl(url, this.baseUrl), HttpMethods.DELETE, requestOptions)
-    if (result.isErrored) {
-      console.error(result.error.message)
-      return raiseFailure(result.error)
-    }
-
-    return raiseSuccess(result.data)
+    return this.createTimedFetchRequest<T>(this.getUrl(url), HttpMethods.DELETE, requestOptions)
   }
 
   /**
