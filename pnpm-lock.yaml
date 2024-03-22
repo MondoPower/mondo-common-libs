@@ -12,11 +12,11 @@ devDependencies:
     specifier: ^5.6.2
     version: 5.6.2
   lerna-projen:
-    specifier: 0.1.367
-    version: 0.1.367(constructs@10.3.0)(projen@0.80.11)
+    specifier: 0.1.369
+    version: 0.1.369(constructs@10.3.0)(projen@0.80.12)
   projen:
-    specifier: ^0.80.11
-    version: 0.80.11(constructs@10.3.0)
+    specifier: ^0.80.12
+    version: 0.80.12(constructs@10.3.0)
   standard-version:
     specifier: ^9
     version: 9.5.0
@@ -2415,7 +2415,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.0.5
+      minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: true
@@ -2892,15 +2892,15 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /lerna-projen@0.1.367(constructs@10.3.0)(projen@0.80.11):
-    resolution: {integrity: sha512-cw2mWRJ0AjHC6rMXQayq4eo7XY9E9X2onILb1pzAc23u9AGVNN0wJi+dbQ1cy1eXm8W8NH8swPMTXqQLqdytNw==}
+  /lerna-projen@0.1.369(constructs@10.3.0)(projen@0.80.12):
+    resolution: {integrity: sha512-Iu2Tov5j/jrsH/ts+HcBn8xsakqsMfDHIOMRaa9lbs6JWIwbxiczSmXXW3t5SFN6R9EC+bWO/oLH+pRP0ODkeQ==}
     hasBin: true
     peerDependencies:
       constructs: ^10.3.0
       projen: ^0.80.11
     dependencies:
       constructs: 10.3.0
-      projen: 0.80.11(constructs@10.3.0)
+      projen: 0.80.12(constructs@10.3.0)
     dev: true
     bundledDependencies:
       - commander
@@ -3876,8 +3876,8 @@ packages:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
     dev: true
 
-  /projen@0.80.11(constructs@10.3.0):
-    resolution: {integrity: sha512-ss5sN6RTCOGwaXbrAcxXqpxi0gjjSOXk4SArUGLy1Weux9mRFuPhw0GLRtPxRUlbEoa3orx6iQAQBHSHQd9H1A==}
+  /projen@0.80.12(constructs@10.3.0):
+    resolution: {integrity: sha512-emMvNBi8gGEeLg71IL/8Xx262hnPvzTnbl0Oua+Ce+25yXCAclGfDjzPGEoHgXpmaVYtFWp8jVnaGvXKfNTKgQ==}
     engines: {node: '>= 16.0.0'}
     hasBin: true
     peerDependencies:

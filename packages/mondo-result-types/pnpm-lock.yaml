@@ -6,8 +6,8 @@ settings:
 
 devDependencies:
   '@types/chai':
-    specifier: ^4.3.13
-    version: 4.3.13
+    specifier: ^4.3.14
+    version: 4.3.14
   '@types/mocha':
     specifier: ^9.1.1
     version: 9.1.1
@@ -39,8 +39,8 @@ devDependencies:
     specifier: ^9.2.2
     version: 9.2.2
   projen:
-    specifier: ^0.80.11
-    version: 0.80.11(constructs@10.3.0)
+    specifier: ^0.80.12
+    version: 0.80.12(constructs@10.3.0)
   ts-eager:
     specifier: ^2.0.2
     version: 2.0.2
@@ -136,8 +136,8 @@ packages:
       fastq: 1.17.1
     dev: true
 
-  /@types/chai@4.3.13:
-    resolution: {integrity: sha512-+LxQEbg4BDUf88utmhpUpTyYn1zHao443aGnXIAQak9ZMt9Rtsic0Oig0OS1xyIqdDXc5uMekoC6NaiUlkT/qA==}
+  /@types/chai@4.3.14:
+    resolution: {integrity: sha512-Wj71sXE4Q4AkGdG9Tvq1u/fquNz9EdG4LIJMwVVII7ashjD/8cf8fyIfJAjRr6YcsXnSE8cOGQPq1gqeR8z+3w==}
     dev: true
 
   /@types/json-schema@7.0.15:
@@ -1799,8 +1799,8 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /projen@0.80.11(constructs@10.3.0):
-    resolution: {integrity: sha512-ss5sN6RTCOGwaXbrAcxXqpxi0gjjSOXk4SArUGLy1Weux9mRFuPhw0GLRtPxRUlbEoa3orx6iQAQBHSHQd9H1A==}
+  /projen@0.80.12(constructs@10.3.0):
+    resolution: {integrity: sha512-emMvNBi8gGEeLg71IL/8Xx262hnPvzTnbl0Oua+Ce+25yXCAclGfDjzPGEoHgXpmaVYtFWp8jVnaGvXKfNTKgQ==}
     engines: {node: '>= 16.0.0'}
     hasBin: true
     peerDependencies:
