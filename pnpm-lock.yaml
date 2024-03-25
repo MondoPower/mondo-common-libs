@@ -12,8 +12,8 @@ devDependencies:
     specifier: ^5.6.2
     version: 5.6.2
   lerna-projen:
-    specifier: 0.1.369
-    version: 0.1.369(constructs@10.3.0)(projen@0.80.12)
+    specifier: 0.1.371
+    version: 0.1.371(constructs@10.3.0)(projen@0.80.12)
   projen:
     specifier: ^0.80.12
     version: 0.80.12(constructs@10.3.0)
@@ -2892,12 +2892,12 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /lerna-projen@0.1.369(constructs@10.3.0)(projen@0.80.12):
-    resolution: {integrity: sha512-Iu2Tov5j/jrsH/ts+HcBn8xsakqsMfDHIOMRaa9lbs6JWIwbxiczSmXXW3t5SFN6R9EC+bWO/oLH+pRP0ODkeQ==}
+  /lerna-projen@0.1.371(constructs@10.3.0)(projen@0.80.12):
+    resolution: {integrity: sha512-p/H8ih8bmvMlT1A7KrGbtPDSgCLnvnIXVjqBkYOfZV6rtO4kfi1Esf5XPok/MaBFiooLp0csTyDu4ZVKlOaAgA==}
     hasBin: true
     peerDependencies:
       constructs: ^10.3.0
-      projen: ^0.80.11
+      projen: ^0.80.12
     dependencies:
       constructs: 10.3.0
       projen: 0.80.12(constructs@10.3.0)
