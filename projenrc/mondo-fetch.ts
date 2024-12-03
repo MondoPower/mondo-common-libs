@@ -1,8 +1,8 @@
-import {LernaProject} from 'lerna-projen'
-import {additionalRules, commonOptions} from './common'
-import {typescript} from 'projen'
+import { LernaTypescriptProject } from 'lerna-projen';
+import { typescript } from 'projen';
+import { additionalRules, commonOptions } from './common';
 
-export function getMondoFetchProject(parentProject: LernaProject): void {
+export function getMondoFetchProject(parentProject: LernaTypescriptProject): void {
   const mondoFetchProject = new typescript.TypeScriptProject({
     ...commonOptions,
     description: 'Library to use to wrap node fetch',
@@ -16,7 +16,7 @@ export function getMondoFetchProject(parentProject: LernaProject): void {
       '@mondopower/result-types',
     ],
     devDeps: [
-      '@types/jest'
+      '@types/jest',
     ],
     tsconfig: {
       compilerOptions: {
@@ -29,8 +29,8 @@ export function getMondoFetchProject(parentProject: LernaProject): void {
       'typescript',
       'projen',
       'mondo',
-      'fetch'
-    ]
-  })
+      'fetch',
+    ],
+  });
   mondoFetchProject.eslint?.addRules(additionalRules);
 }

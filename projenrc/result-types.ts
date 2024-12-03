@@ -1,8 +1,8 @@
-import {LernaProject} from 'lerna-projen'
-import {typescript} from 'projen'
-import {additionalRules, addMocha, commonOptions} from './common'
+import { LernaTypescriptProject } from 'lerna-projen';
+import { typescript } from 'projen';
+import { additionalRules, addMocha, commonOptions } from './common';
 
-export function getMondoResultTypeProject(parentProject: LernaProject): void {
+export function getMondoResultTypeProject(parentProject: LernaTypescriptProject): void {
   const mondoResultTypeProject = new typescript.TypeScriptProject({
     ...commonOptions,
     description: 'Library to use for result type of typescript functions and helper functions.',
@@ -27,8 +27,8 @@ export function getMondoResultTypeProject(parentProject: LernaProject): void {
       'typescript',
       'projen',
       'mondo',
-      'result'
-    ]
+      'result',
+    ],
   });
   mondoResultTypeProject.eslint?.addRules(additionalRules);
   addMocha(mondoResultTypeProject);

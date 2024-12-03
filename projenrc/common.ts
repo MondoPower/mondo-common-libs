@@ -1,5 +1,5 @@
-import {javascript, JsonFile, TextFile} from 'projen'
-import {LernaProject} from 'lerna-projen'
+import { LernaTypescriptProject } from 'lerna-projen';
+import { javascript, JsonFile, TextFile } from 'projen';
 
 export const commonOptions = {
   author: 'Mondo Power',
@@ -13,21 +13,12 @@ export const commonOptions = {
   npmignore: [
     '.mocharc.json',
     'docs',
-    'projects'
+    'projects',
   ],
-  npmAccess: javascript.NpmAccess.PUBLIC
+  npmAccess: javascript.NpmAccess.PUBLIC,
 };
 
 export const additionalRules = {
-  'curly': [
-    'error',
-    'multi',
-    'consistent',
-  ],
-  'semi': [
-    'error',
-    'never',
-  ],
   'object-curly-spacing': 'error',
   'nonblock-statement-body-position': ['error', 'below'],
 };
@@ -40,21 +31,20 @@ export function addMocha(project: javascript.NodeProject) {
       extension: ['ts'],
       spec: ['test/*.spec.ts'],
     },
-  })
+  });
 
-  project.testTask.exec('mocha')
+  project.testTask.exec('mocha');
 }
 
 export function addNvmrc(project: javascript.NodeProject, nodeVersion: string): void {
   new TextFile(project, '.nvmrc', {
-    lines: [nodeVersion]
+    lines: [nodeVersion],
   });
 }
 
-export function addAutoMergeWorkflow(project: LernaProject): void {
-  const workflow = project.github?.addWorkflow('auto-merge')
-  if (!workflow)
-    throw new Error('Failed to create auto-merge workflow')
+export function addAutoMergeWorkflow(project: LernaTypescriptProject): void {
+  const workflow = project.github?.addWorkflow('auto-merge');
+  if (!workflow) {throw new Error('Failed to create auto-merge workflow');}
 
   workflow.on({
     pullRequestTarget: {
@@ -64,10 +54,10 @@ export function addAutoMergeWorkflow(project: LernaProject): void {
         'opened',
         'synchronize',
         'reopened',
-        'ready_for_review'
-      ]
-    }
-  })
+        'ready_for_review',
+      ],
+    },
+  });
   workflow.addJob('auto-merge', {
     name: 'Enable Auto Merge',
     permissions: {},
@@ -75,14 +65,14 @@ export function addAutoMergeWorkflow(project: LernaProject): void {
     steps: [
       {
         name: 'Enable Pull Request Automatic merge',
-        if: `contains(github.event.pull_request.labels.*.name, 'auto-approve') && (github.event.pull_request.user.login == 'ci-mondo')`,
+        if: 'contains(github.event.pull_request.labels.*.name, \'auto-approve\') && (github.event.pull_request.user.login == \'ci-mondo\')',
         uses: 'peter-evans/enable-pull-request-automerge@v1',
         with: {
-          token: '${{ secrets.PROJEN_GITHUB_TOKEN }}',
+          'token': '${{ secrets.PROJEN_GITHUB_TOKEN }}',
           'pull-request-number': '${{ github.event.pull_request.number }}',
-          'merge-method': 'squash'
-        }
-      }
-    ]
-  })
+          'merge-method': 'squash',
+        },
+      },
+    ],
+  });
 }
