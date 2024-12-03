@@ -1,16 +1,16 @@
-import {Result, raiseFailure, raiseSuccess} from '@mondopower/result-types'
-import {ContentTypes, FetchClientConfig, FetchErrorTypes, RequestOptionsWithoutBody, HttpMethods, RequestOptions} from './types'
-export * from './types'
+import {Result, raiseFailure, raiseSuccess} from '@mondopower/result-types';
+import {ContentTypes, FetchClientConfig, FetchErrorTypes, RequestOptionsWithoutBody, HttpMethods, RequestOptions} from './types';
+export * from './types';
 
 export class FetchClient {
-  private readonly authorizationToken?: string | undefined
-  private readonly onBehalfOf?: string | undefined
-  private readonly baseUrl?: string | undefined
+  private readonly authorizationToken?: string | undefined;
+  private readonly onBehalfOf?: string | undefined;
+  private readonly baseUrl?: string | undefined;
 
   constructor(config?: FetchClientConfig) {
-    this.baseUrl = config?.baseUrl
-    this.authorizationToken = config?.authorizationToken
-    this.onBehalfOf = config?.onBehalfOf
+    this.baseUrl = config?.baseUrl;
+    this.authorizationToken = config?.authorizationToken;
+    this.onBehalfOf = config?.onBehalfOf;
   }
 
   /**
@@ -20,7 +20,7 @@ export class FetchClient {
    * @returns A url
    */
   private getUrl(providedUrl: string): string {
-    return new URL(providedUrl, this.baseUrl).href
+    return new URL(providedUrl, this.baseUrl).href;
 
   }
 
@@ -31,7 +31,7 @@ export class FetchClient {
    * @returns Promise<Result<T, FetchErrorTypes>>
    */
   async get<T>(url: string, requestOptions?: RequestOptionsWithoutBody): Promise<Result<T, FetchErrorTypes>> {
-    return this.createTimedFetchRequest<T>(this.getUrl(url), HttpMethods.GET, requestOptions)
+    return this.createTimedFetchRequest<T>(this.getUrl(url), HttpMethods.GET, requestOptions);
   }
 
   /**
@@ -41,7 +41,7 @@ export class FetchClient {
    * @returns Promise<Result<T, FetchErrorTypes>>
    */
   public async post<T>(url: string, requestOptions?: RequestOptions): Promise<Result<T, FetchErrorTypes>> {
-    return this.createTimedFetchRequest<T>(this.getUrl(url), HttpMethods.POST, requestOptions)
+    return this.createTimedFetchRequest<T>(this.getUrl(url), HttpMethods.POST, requestOptions);
   }
 
   /**
@@ -51,7 +51,7 @@ export class FetchClient {
    * @returns Promise<Result<T, FetchErrorTypes>>
    */
   public async put<T>(url: string, requestOptions?: RequestOptions): Promise<Result<T, FetchErrorTypes>> {
-    return this.createTimedFetchRequest<T>(this.getUrl(url), HttpMethods.PUT, requestOptions)
+    return this.createTimedFetchRequest<T>(this.getUrl(url), HttpMethods.PUT, requestOptions);
   }
 
   /**
@@ -61,7 +61,7 @@ export class FetchClient {
    * @returns Promise<Result<T, FetchErrorTypes>>
    */
   public async delete<T>(url: string, requestOptions?: RequestOptionsWithoutBody): Promise<Result<T, FetchErrorTypes>> {
-    return this.createTimedFetchRequest<T>(this.getUrl(url), HttpMethods.DELETE, requestOptions)
+    return this.createTimedFetchRequest<T>(this.getUrl(url), HttpMethods.DELETE, requestOptions);
   }
 
   /**
@@ -70,15 +70,14 @@ export class FetchClient {
    * @returns true or false
    */
   private isAbortError(error: unknown): error is Error {
-    if (typeof error !== 'object' || !error)
-      return false
+    if (typeof error !== 'object' || !error) {return false;}
 
-    const typedError = error as Error
-    return typedError.name === 'AbortError'
+    const typedError = error as Error;
+    return typedError.name === 'AbortError';
   }
 
   private hasBody(requestOptions: RequestOptions | RequestOptionsWithoutBody | undefined): requestOptions is RequestOptions {
-    return !!requestOptions && ('body' in requestOptions)
+    return !!requestOptions && ('body' in requestOptions);
   }
 
   /**
@@ -91,50 +90,49 @@ export class FetchClient {
   private async createTimedFetchRequest<T>(url: string, method: HttpMethods, requestOptions?: RequestOptions | RequestOptionsWithoutBody)
     : Promise<Result<T, FetchErrorTypes>> {
 
-    const {contentType = ContentTypes.JSON, timeout = 30000} = requestOptions ?? {}
+    const {contentType = ContentTypes.JSON, timeout = 30000} = requestOptions ?? {};
 
-    const headers = new Headers()
-    headers.set('Content-Type', contentType)
+    const headers = new Headers();
+    headers.set('Content-Type', contentType);
 
-    const authorizationToken = requestOptions?.authorizationToken ?? this.authorizationToken
-    if (authorizationToken)
-      headers.set('Authorization', `Bearer ${authorizationToken}`)
+    const authorizationToken = requestOptions?.authorizationToken ?? this.authorizationToken;
+    if (authorizationToken) {headers.set('Authorization', `Bearer ${authorizationToken}`);}
 
-    const onBehalfOf = requestOptions?.onBehalfOf ?? this.onBehalfOf
-    if (onBehalfOf)
-      headers.set('X-On-Behalf-Of', onBehalfOf)
+    const onBehalfOf = requestOptions?.onBehalfOf ?? this.onBehalfOf;
+    if (onBehalfOf) {headers.set('X-On-Behalf-Of', onBehalfOf);}
 
     const requestInfo: RequestInit = {
       signal: AbortSignal.timeout(timeout),
       method,
       headers,
-    }
+    };
 
-    if (this.hasBody(requestOptions))
-      requestInfo.body = requestOptions.body
+    if (this.hasBody(requestOptions)) {requestInfo.body = requestOptions.body;}
 
     try {
-      const result = await fetch(url, requestInfo)
-      if (!result.ok)
+      const result = await fetch(url, requestInfo);
+      if (!result.ok) {
         return raiseFailure({
           errorType: FetchErrorTypes.FetchError,
           message: `The request failed due to ${result.statusText}`,
-        })
+        });
+      }
 
-      return raiseSuccess(await result.json() as T)
+      return raiseSuccess(await result.json() as T);
     } catch (error) {
-      const isAbortError = this.isAbortError(error)
-      if (isAbortError)
+      const isAbortError = this.isAbortError(error);
+      if (isAbortError) {
         return raiseFailure({
           errorType: FetchErrorTypes.RequestTimedOut,
           message: `The request has reached the maximum duration of ${timeout} milliseconds, ${error.message}`,
-        })
+        });
+      }
 
-      const typeError = error as TypeError
+      const typeError = error as TypeError;
       return raiseFailure({
         errorType: FetchErrorTypes.UnknownFailure,
         message: typeError.message,
-      })
+      });
     }
 
   }

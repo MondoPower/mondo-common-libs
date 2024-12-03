@@ -36,7 +36,7 @@
           "builtin": "release/bump-version"
         }
       ],
-      "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
+      "condition": "git log --oneline -1 | grep -qv \"chore(release):\""
     },
     "compile": {
       "name": "compile",
@@ -63,6 +63,9 @@
     "eslint": {
       "name": "eslint",
       "description": "Runs eslint against the codebase",
+      "env": {
+        "ESLINT_USE_FLAT_CONFIG": "false"
+      },
       "steps": [
         {
           "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools",
@@ -96,7 +99,7 @@
           "exec": "mkdir -p dist/js"
         },
         {
-          "exec": "mv $(pnpm pack) dist/js/"
+          "exec": "pnpm pack --pack-destination dist/js"
         }
       ]
     },
@@ -153,13 +156,13 @@
       },
       "steps": [
         {
-          "exec": "pnpm dlx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/chai,@types/mocha,chai,eslint-import-resolver-typescript,eslint-plugin-import,mocha,projen,ts-eager,typedoc,typescript"
+          "exec": "pnpm dlx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/chai,@types/mocha,@types/node,chai,eslint-import-resolver-typescript,eslint-plugin-import,mocha,ts-eager,typedoc,typescript"
         },
         {
           "exec": "pnpm i --no-frozen-lockfile"
         },
         {
-          "exec": "pnpm update @types/chai @types/mocha @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser chai constructs eslint-import-resolver-typescript eslint-plugin-import eslint mocha projen ts-eager typedoc typescript"
+          "exec": "pnpm update @stylistic/eslint-plugin @types/chai @types/mocha @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser chai eslint-import-resolver-typescript eslint-plugin-import eslint mocha ts-eager typedoc typescript"
         },
         {
           "exec": "npx projen"

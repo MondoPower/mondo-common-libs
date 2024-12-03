@@ -1,12 +1,12 @@
-export let fetchSpy: jest.SpyInstance<Promise<Response>>
+export let fetchSpy: jest.SpyInstance<Promise<Response>>;
 
 beforeEach(() => {
-  fetchSpy = jest.spyOn(global, 'fetch')
-})
+  fetchSpy = jest.spyOn(global, 'fetch');
+});
 
 afterEach(() => {
-  jest.clearAllMocks()
-})
+  jest.clearAllMocks();
+});
 
 export function generateFetchMock(response: Record<any, any>, isOk = true, additionalParams?: Record<any, any>) {
   return jest.fn(() =>
@@ -15,5 +15,5 @@ export function generateFetchMock(response: Record<any, any>, isOk = true, addit
       ok: isOk,
       ...additionalParams,
     }),
-  ) as jest.Mock
+  ) as jest.Mock;
 }

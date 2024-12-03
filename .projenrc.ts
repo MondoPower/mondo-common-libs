@@ -1,17 +1,17 @@
-import {LernaProject} from 'lerna-projen'
-import {commonOptions, addNvmrc, addAutoMergeWorkflow} from './projects/common'
-import {getMondoResultTypeProject} from './projects/result-types'
-import {getMondoFetchProject} from './projects/mondo-fetch'
-import {NodePackageManager} from 'projen/lib/javascript'
+import { LernaTypescriptProject } from 'lerna-projen';
+import { NodePackageManager } from 'projen/lib/javascript';
+import { commonOptions, addNvmrc, addAutoMergeWorkflow } from './projenrc/common';
+import { getMondoFetchProject } from './projenrc/mondo-fetch';
+import { getMondoResultTypeProject } from './projenrc/result-types';
 
-const workflowNodeVersion = '20'
+const workflowNodeVersion = '20';
 
-const project = new LernaProject({
+const project = new LernaTypescriptProject({
   ...commonOptions,
   projenrcTs: true,
   name: 'mondo-common-libs',
   packageManager: NodePackageManager.PNPM,
-  pnpmVersion: '8',
+  pnpmVersion: '9',
   releaseToNpm: true,
   publishTasks: true,
   docgen: true,
@@ -24,15 +24,15 @@ const project = new LernaProject({
   stale: true,
   depsUpgradeOptions: {
     workflowOptions: {
-      labels: ['auto-approve']
-    }
+      labels: ['auto-approve'],
+    },
   },
-})
+});
 
-addNvmrc(project, workflowNodeVersion)
-addAutoMergeWorkflow(project)
+addNvmrc(project, workflowNodeVersion);
+addAutoMergeWorkflow(project);
 
-getMondoResultTypeProject(project)
-getMondoFetchProject(project)
+getMondoResultTypeProject(project);
+getMondoFetchProject(project);
 
-project.synth()
+project.synth();
