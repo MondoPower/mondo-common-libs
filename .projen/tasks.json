@@ -40,7 +40,7 @@
           "builtin": "release/bump-version"
         },
         {
-          "exec": "lerna run bump --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna run bump --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
         }
       ],
       "condition": "git log --oneline -1 | grep -qv \"chore(release):\""
@@ -82,7 +82,7 @@
       "description": "Only compile",
       "steps": [
         {
-          "exec": "lerna run compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna run compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
         }
       ]
     },
@@ -94,7 +94,7 @@
           "exec": "ts-node --project tsconfig.dev.json .projenrc.ts"
         },
         {
-          "exec": "lerna run default --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna run default --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
         }
       ]
     },
@@ -103,7 +103,7 @@
       "description": "Generate TypeScript API reference docs/",
       "steps": [
         {
-          "exec": "lerna run docgen --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna run docgen --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
         }
       ]
     },
@@ -118,7 +118,7 @@
           "spawn": "default"
         },
         {
-          "exec": "lerna run eject --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna run eject --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
         }
       ]
     },
@@ -143,7 +143,7 @@
           "exec": "pnpm i --no-frozen-lockfile"
         },
         {
-          "exec": "lerna run install --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna run install --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
         }
       ]
     },
@@ -155,7 +155,7 @@
           "exec": "pnpm i --frozen-lockfile"
         },
         {
-          "exec": "lerna run install:ci --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna run install:ci --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
         }
       ]
     },
@@ -167,7 +167,7 @@
           "exec": "mkdir -p dist/js"
         },
         {
-          "exec": "lerna run package --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna run package --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
         },
         {
           "exec": "lerna-projen copy-dist packages/mondo-result-types/dist dist"
@@ -185,7 +185,7 @@
           "spawn": "docgen"
         },
         {
-          "exec": "lerna run post-compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna run post-compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
         },
         {
           "exec": "lerna-projen move-docs docs/ packages/mondo-result-types docs"
@@ -215,7 +215,7 @@
           "exec": "lerna-projen clean-dist dist"
         },
         {
-          "exec": "lerna run pre-compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna run pre-compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
         }
       ]
     },
@@ -280,7 +280,7 @@
           "exec": "git diff --ignore-space-at-eol --exit-code"
         },
         {
-          "exec": "lerna run release --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna run release --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
         }
       ]
     },
@@ -292,7 +292,7 @@
           "spawn": "eslint"
         },
         {
-          "exec": "lerna run test --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna run test --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
         }
       ]
     },
@@ -312,7 +312,7 @@
           "builtin": "release/reset-version"
         },
         {
-          "exec": "lerna run unbump --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna run unbump --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
         }
       ]
     },
@@ -348,7 +348,7 @@
           "exec": "tsc --build -w"
         },
         {
-          "exec": "lerna run watch --stream --since $(git describe --abbrev=0 --tags --match \"v*\")"
+          "exec": "lerna run watch --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
         }
       ]
     }

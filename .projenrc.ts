@@ -1,5 +1,5 @@
 import { LernaTypescriptProject } from 'lerna-projen';
-import { NodePackageManager } from 'projen/lib/javascript';
+import { NodePackageManager, UpgradeDependenciesSchedule } from 'projen/lib/javascript';
 import { commonOptions, addNvmrc, addAutoMergeWorkflow } from './projenrc/common';
 import { getMondoFetchProject } from './projenrc/mondo-fetch';
 import { getMondoResultTypeProject } from './projenrc/result-types';
@@ -25,6 +25,7 @@ const project = new LernaTypescriptProject({
   depsUpgradeOptions: {
     workflowOptions: {
       labels: ['auto-approve'],
+      schedule: UpgradeDependenciesSchedule.NEVER,
     },
   },
 });

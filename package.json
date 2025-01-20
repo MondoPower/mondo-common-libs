@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^2",
-    "@types/node": "^20.11.30",
+    "@types/node": "^20.17.14",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
     "commit-and-tag-version": "^12",
@@ -37,10 +37,10 @@
     "eslint-import-resolver-typescript": "^3.7.0",
     "eslint-plugin-import": "^2.31.0",
     "lerna": "^5.6.2",
-    "lerna-projen": "0.1.528",
-    "projen": "^0.90.6",
+    "lerna-projen": "0.1.549",
+    "projen": "^0.91.6",
     "ts-node": "^10.9.2",
-    "typedoc": "^0.27.2",
+    "typedoc": "^0.27.6",
     "typescript": "^4.9.5"
   },
   "pnpm": {},
