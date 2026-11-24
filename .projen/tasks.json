@@ -1,4 +1,8 @@
 {
+  "manifestVersion": 3,
+  "env": {
+    "PATH": "$(pnpm -c exec \"node --print process.env.PATH\")"
+  },
   "tasks": {
     "build": {
       "name": "build",
@@ -33,46 +37,81 @@
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
         "RELEASE_TAG_PREFIX": "",
-        "BUMP_PACKAGE": "commit-and-tag-version@^12"
+        "BUMP_PACKAGE": "commit-and-tag-version@^13"
       },
       "steps": [
         {
-          "builtin": "release/bump-version"
+          "builtin": "release/resolve-latest-tag",
+          "outputEnv": "LATEST_TAG"
         },
         {
-          "exec": "lerna run bump --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
+          "spawn": "bump:releasable-commits",
+          "outputEnv": "RELEASABLE_COMMITS",
+          "condition": "git rev-parse --verify --quiet \"refs/tags/$LATEST_TAG\""
+        },
+        {
+          "builtin": "release/suggest-version-bump",
+          "outputEnv": "SUGGESTED_BUMP"
+        },
+        {
+          "builtin": "release/apply-version-bump"
+        },
+        {
+          "exec": "lerna run bump --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)",
+          "shell": [
+            "bash",
+            "-c"
+          ]
         }
       ],
-      "condition": "git log --oneline -1 | grep -qv \"chore(release):\""
+      "condition": "git log --oneline -1 | grep -v \"chore(release):\" > /dev/null"
+    },
+    "bump:releasable-commits": {
+      "name": "bump:releasable-commits",
+      "description": "Print the releasable commits since the latest release",
+      "steps": [
+        {
+          "exec": "git log --oneline $LATEST_TAG..HEAD"
+        }
+      ]
     },
     "clobber": {
       "name": "clobber",
       "description": "hard resets to HEAD of origin and cleans the local repo",
       "env": {
-        "BRANCH": "$(git branch --show-current)"
+        "BRANCH": "$(git branch --show-current)",
+        "HEAD_COMMIT": "$(git rev-parse --short HEAD)"
       },
       "steps": [
         {
-          "exec": "git checkout -b scratch",
-          "name": "save current HEAD in \"scratch\" branch"
+          "exec": "git checkout -B \"scratch-$HEAD_COMMIT\"",
+          "name": "save current HEAD in a \"scratch-<commit>\" branch"
         },
         {
-          "exec": "git checkout $BRANCH"
+          "exec": "git checkout \"$BRANCH\""
         },
         {
-          "exec": "git fetch origin",
+          "execArgs": [
+            "git",
+            "fetch",
+            "origin"
+          ],
           "name": "fetch latest changes from origin"
         },
         {
-          "exec": "git reset --hard origin/$BRANCH",
+          "exec": "git reset --hard \"origin/$BRANCH\"",
           "name": "hard reset to origin commit"
         },
         {
-          "exec": "git clean -fdx",
+          "execArgs": [
+            "git",
+            "clean",
+            "-fdx"
+          ],
           "name": "clean all untracked files"
         },
         {
-          "say": "ready to rock! (unpushed commits are under the \"scratch\" branch)"
+          "say": "ready to rock! (unpushed commits are under a \"scratch-<commit>\" branch)"
         }
       ],
       "condition": "git diff --exit-code > /dev/null"
@@ -82,7 +121,11 @@
       "description": "Only compile",
       "steps": [
         {
-          "exec": "lerna run compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
+          "exec": "lerna run compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)",
+          "shell": [
+            "bash",
+            "-c"
+          ]
         }
       ]
     },
@@ -91,10 +134,19 @@
       "description": "Synthesize project files",
       "steps": [
         {
-          "exec": "ts-node --project tsconfig.dev.json .projenrc.ts"
+          "execArgs": [
+            "ts-node",
+            "--project",
+            "projenrc/tsconfig.json",
+            ".projenrc.ts"
+          ]
         },
         {
-          "exec": "lerna run default --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
+          "exec": "lerna run default --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)",
+          "shell": [
+            "bash",
+            "-c"
+          ]
         }
       ]
     },
@@ -103,7 +155,11 @@
       "description": "Generate TypeScript API reference docs/",
       "steps": [
         {
-          "exec": "lerna run docgen --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
+          "exec": "lerna run docgen --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)",
+          "shell": [
+            "bash",
+            "-c"
+          ]
         }
       ]
     },
@@ -118,7 +174,11 @@
           "spawn": "default"
         },
         {
-          "exec": "lerna run eject --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
+          "exec": "lerna run eject --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)",
+          "shell": [
+            "bash",
+            "-c"
+          ]
         }
       ]
     },
@@ -126,11 +186,23 @@
       "name": "eslint",
       "description": "Runs eslint against the codebase",
       "env": {
-        "ESLINT_USE_FLAT_CONFIG": "false"
+        "ESLINT_USE_FLAT_CONFIG": "false",
+        "NODE_NO_WARNINGS": "1"
       },
       "steps": [
         {
-          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools projenrc .projenrc.ts",
+          "execArgs": [
+            "eslint",
+            "--ext",
+            ".ts,.tsx",
+            "--fix",
+            "--no-error-on-unmatched-pattern",
+            "$@",
+            "projenrc",
+            "test",
+            "build-tools",
+            ".projenrc.ts"
+          ],
           "receiveArgs": true
         }
       ]
@@ -143,7 +215,11 @@
           "exec": "pnpm i --no-frozen-lockfile"
         },
         {
-          "exec": "lerna run install --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
+          "exec": "lerna run install --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)",
+          "shell": [
+            "bash",
+            "-c"
+          ]
         }
       ]
     },
@@ -155,7 +231,11 @@
           "exec": "pnpm i --frozen-lockfile"
         },
         {
-          "exec": "lerna run install:ci --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
+          "exec": "lerna run install:ci --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)",
+          "shell": [
+            "bash",
+            "-c"
+          ]
         }
       ]
     },
@@ -167,7 +247,11 @@
           "exec": "mkdir -p dist/js"
         },
         {
-          "exec": "lerna run package --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
+          "exec": "lerna run package --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)",
+          "shell": [
+            "bash",
+            "-c"
+          ]
         },
         {
           "exec": "lerna-projen copy-dist packages/mondo-result-types/dist dist"
@@ -185,7 +269,11 @@
           "spawn": "docgen"
         },
         {
-          "exec": "lerna run post-compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
+          "exec": "lerna run post-compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)",
+          "shell": [
+            "bash",
+            "-c"
+          ]
         },
         {
           "exec": "lerna-projen move-docs docs/ packages/mondo-result-types docs"
@@ -215,24 +303,36 @@
           "exec": "lerna-projen clean-dist dist"
         },
         {
-          "exec": "lerna run pre-compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
+          "exec": "lerna run pre-compile --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)",
+          "shell": [
+            "bash",
+            "-c"
+          ]
         }
       ]
     },
     "publish:github": {
       "name": "publish:github",
       "description": "Publish this package to GitHub Releases",
+      "env": {
+        "RELEASE_TAG_FILE": "dist/releasetag.txt",
+        "CHANGELOG_FILE": "dist/changelog.md",
+        "PUBLISH_BRANCH": "main",
+        "CURRENT_BRANCH": "$(git rev-parse --abbrev-ref HEAD)"
+      },
       "requiredEnv": [
-        "GITHUB_TOKEN",
-        "GITHUB_REPOSITORY",
-        "GITHUB_REF"
+        "GITHUB_TOKEN"
       ],
       "steps": [
         {
-          "exec": "test \"$(git branch --show-current)\" = \"main\""
+          "execArgs": [
+            "node",
+            "-e",
+            "const { CURRENT_BRANCH: current, PUBLISH_BRANCH: expected } = process.env;\nif (current !== expected) {\n  console.error(`cannot publish from branch \"${current}\": this task publishes \"${expected}\"`);\n  process.exit(1);\n}"
+          ]
         },
         {
-          "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \"Release.tag_name already exists\" $errout; then cat $errout; exit $exitcode; fi"
+          "exec": "tag=$(cat \"$RELEASE_TAG_FILE\") &&\ngh release view \"$tag\" -R \"$GITHUB_REPOSITORY\" 2>/dev/null ||\ngh release create \"$tag\" -R \"$GITHUB_REPOSITORY\" -F \"$CHANGELOG_FILE\" -t \"$tag\" --target \"$GITHUB_SHA\""
         }
       ]
     },
@@ -242,17 +342,28 @@
       "env": {
         "NPM_DIST_TAG": "latest",
         "NPM_REGISTRY": "registry.npmjs.org",
-        "NPM_CONFIG_PROVENANCE": "true"
+        "NPM_CONFIG_PROVENANCE": "true",
+        "PUBLISH_BRANCH": "main",
+        "CURRENT_BRANCH": "$(git rev-parse --abbrev-ref HEAD)"
       },
       "requiredEnv": [
         "NPM_TOKEN"
       ],
       "steps": [
         {
-          "exec": "test \"$(git branch --show-current)\" = \"main\""
+          "execArgs": [
+            "node",
+            "-e",
+            "const { CURRENT_BRANCH: current, PUBLISH_BRANCH: expected } = process.env;\nif (current !== expected) {\n  console.error(`cannot publish from branch \"${current}\": this task publishes \"${expected}\"`);\n  process.exit(1);\n}"
+          ]
         },
         {
-          "exec": "npx -p publib@latest publib-npm"
+          "execArgs": [
+            "npx",
+            "-p",
+            "publib@latest",
+            "publib-npm"
+          ]
         }
       ]
     },
@@ -265,7 +376,11 @@
       },
       "steps": [
         {
-          "exec": "rm -fr dist"
+          "execArgs": [
+            "rm",
+            "-fr",
+            "dist"
+          ]
         },
         {
           "spawn": "bump"
@@ -280,9 +395,14 @@
           "exec": "git diff --ignore-space-at-eol --exit-code"
         },
         {
-          "exec": "lerna run release --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
+          "exec": "lerna run release --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)",
+          "shell": [
+            "bash",
+            "-c"
+          ]
         }
-      ]
+      ],
+      "condition": "git log --oneline -1 | grep -v \"chore(release):\" > /dev/null"
     },
     "test": {
       "name": "test",
@@ -292,7 +412,11 @@
           "spawn": "eslint"
         },
         {
-          "exec": "lerna run test --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
+          "exec": "lerna run test --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)",
+          "shell": [
+            "bash",
+            "-c"
+          ]
         }
       ]
     },
@@ -305,14 +429,18 @@
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
         "RELEASE_TAG_PREFIX": "",
-        "BUMP_PACKAGE": "commit-and-tag-version@^12"
+        "BUMP_PACKAGE": "commit-and-tag-version@^13"
       },
       "steps": [
         {
           "builtin": "release/reset-version"
         },
         {
-          "exec": "lerna run unbump --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
+          "exec": "lerna run unbump --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)",
+          "shell": [
+            "bash",
+            "-c"
+          ]
         }
       ]
     },
@@ -324,16 +452,44 @@
       },
       "steps": [
         {
-          "exec": "pnpm dlx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/node,eslint-import-resolver-typescript,eslint-plugin-import,lerna,lerna-projen,projen,ts-node,typedoc,typescript"
+          "execArgs": [
+            "pnpm",
+            "dlx",
+            "npm-check-updates@20",
+            "--upgrade",
+            "--target=minor",
+            "--peer",
+            "--no-deprecated",
+            "--dep=dev,prod,peer,optional",
+            "--filter=eslint-import-resolver-typescript,eslint-plugin-import,lerna,lerna-projen,projen,ts-node,typedoc"
+          ]
         },
         {
           "exec": "pnpm i --no-frozen-lockfile"
         },
         {
-          "exec": "pnpm update @stylistic/eslint-plugin @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint lerna lerna-projen projen ts-node typedoc typescript"
+          "execArgs": [
+            "pnpm",
+            "update",
+            "@stylistic/eslint-plugin",
+            "@types/node",
+            "@typescript-eslint/eslint-plugin",
+            "@typescript-eslint/parser",
+            "commit-and-tag-version",
+            "constructs",
+            "eslint-import-resolver-typescript",
+            "eslint-plugin-import",
+            "eslint",
+            "lerna",
+            "lerna-projen",
+            "projen",
+            "ts-node",
+            "typedoc",
+            "typescript"
+          ]
         },
         {
-          "exec": "npx projen"
+          "exec": "pnpm exec projen"
         },
         {
           "spawn": "post-upgrade"
@@ -345,16 +501,21 @@
       "description": "Watch & compile in the background",
       "steps": [
         {
-          "exec": "tsc --build -w"
+          "execArgs": [
+            "tsc",
+            "--build",
+            "-w"
+          ]
         },
         {
-          "exec": "lerna run watch --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)"
+          "exec": "lerna run watch --stream --since $(git describe --abbrev=0 --tags --match \"v*\" HEAD^)",
+          "shell": [
+            "bash",
+            "-c"
+          ]
         }
       ]
     }
   },
-  "env": {
-    "PATH": "$(pnpm -c exec \"node --print process.env.PATH\")"
-  },
-  "//": "~~ Generated by projen. To modify, edit .projenrc.ts and run \"npx projen\"."
+  "//": "~~ Generated by projen. To modify, edit .projenrc.ts and run \"pnpm exec projen\"."
 }

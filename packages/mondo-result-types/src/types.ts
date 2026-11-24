@@ -7,7 +7,7 @@ export interface SuccessVoid {
   isErrored: false;
 }
 
-export type ErrorType = string
+export type ErrorType = string;
 
 export interface CustomError<T extends ErrorType> {
   message: string;
@@ -19,8 +19,8 @@ export interface Failure<T extends ErrorType> {
   error: CustomError<T>;
 }
 
-export type Result<ResponseType, T extends ErrorType> = Success<ResponseType> | Failure<T>
-export type ResultVoid<T extends ErrorType> = SuccessVoid | Failure<T>
+export type Result<ResponseType, T extends ErrorType> = Success<ResponseType> | Failure<T>;
+export type ResultVoid<T extends ErrorType> = SuccessVoid | Failure<T>;
 
 export interface ResultArray<Data, Errors extends ErrorType> {
   successes: Data[];

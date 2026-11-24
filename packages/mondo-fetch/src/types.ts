@@ -1,7 +1,7 @@
 
 export enum ContentTypes {
   XFORM = 'application/x-www-form-urlencoded',
-  JSON = 'application/json; charset=utf-8'
+  JSON = 'application/json; charset=utf-8',
 }
 
 export enum HttpMethods {
@@ -16,7 +16,7 @@ export enum FetchErrorTypes {
   FailedToPost = 'FailedToPost',
   RequestTimedOut = 'RequestTimedOut',
   FetchError = 'FetchError',
-  UnknownFailure = 'UnknownFailure'
+  UnknownFailure = 'UnknownFailure',
 }
 
 export interface FetchClientConfig {
@@ -34,7 +34,7 @@ export interface FetchClientConfig {
   onBehalfOf?: string;
 }
 
-export type RequestOptionsWithoutBody = Omit<RequestOptions, 'body'>
+export type RequestOptionsWithoutBody = Omit<RequestOptions, 'body'>;
 export interface RequestOptions {
   /**
    * The type of content @default 'application/json; charset=utf-8'

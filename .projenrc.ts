@@ -4,14 +4,15 @@ import { commonOptions, addNvmrc, addAutoMergeWorkflow } from './projenrc/common
 import { getMondoFetchProject } from './projenrc/mondo-fetch';
 import { getMondoResultTypeProject } from './projenrc/result-types';
 
-const workflowNodeVersion = '20';
+const workflowNodeVersion = '22';
 
 const project = new LernaTypescriptProject({
   ...commonOptions,
   projenrcTs: true,
   name: 'mondo-common-libs',
   packageManager: NodePackageManager.PNPM,
-  pnpmVersion: '9',
+  pnpmOptions: { workspaceYamlOptions: { packages: ['packages/*'] } },
+  allowScripts: ['esbuild'],
   releaseToNpm: true,
   publishTasks: true,
   docgen: true,

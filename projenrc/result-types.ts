@@ -11,10 +11,11 @@ export function getMondoResultTypeProject(parentProject: LernaTypescriptProject)
     name: '@mondopower/result-types',
     outdir: 'packages/mondo-result-types',
     devDeps: [
-      'chai',
-      '@types/chai',
+      'chai@^4',
+      '@types/chai@^4',
       'mocha',
       '@types/mocha',
+      '@types/node@^22',
       'ts-eager',
     ],
     tsconfig: {
