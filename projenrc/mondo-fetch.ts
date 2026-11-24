@@ -15,8 +15,12 @@ export function getMondoFetchProject(parentProject: LernaTypescriptProject): voi
     deps: [
       '@mondopower/result-types',
     ],
+    jestOptions: {
+      jestVersion: '^30',
+    },
     devDeps: [
       '@types/jest',
+      '@types/node@^22',
     ],
     tsconfig: {
       compilerOptions: {

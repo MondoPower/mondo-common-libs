@@ -9,6 +9,7 @@ export const commonOptions = {
   repository: 'https://github.com/MondoPower/mondo-common-libs.git',
   packageManager: javascript.NodePackageManager.PNPM,
   sampleCode: false,
+  typescriptVersion: '^5.9.3',
   jest: false,
   npmignore: [
     '.mocharc.json',
@@ -20,16 +21,17 @@ export const commonOptions = {
 
 export const additionalRules = {
   'object-curly-spacing': 'error',
+  '@stylistic/object-curly-spacing': 'off',
   'nonblock-statement-body-position': ['error', 'below'],
 };
 
 export function addMocha(project: javascript.NodeProject) {
   new JsonFile(project, '.mocharc.json', {
     obj: {
-      recursive: true,
-      require: ['ts-eager/register'],
-      extension: ['ts'],
-      spec: ['test/*.spec.ts'],
+      'recursive': true,
+      'node-option': ['require=ts-eager/register'],
+      'extension': ['ts'],
+      'spec': ['test/*.spec.ts'],
     },
   });
 
